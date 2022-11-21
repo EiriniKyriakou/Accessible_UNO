@@ -8,7 +8,7 @@ import { Component, OnInit, Renderer2} from '@angular/core';
 export class PhoneComponent implements OnInit {
 
   constructor(private renderer: Renderer2) {
-    this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/phone/background.png)');
+    this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/background.png)');
   }
 
   ngOnInit() { }

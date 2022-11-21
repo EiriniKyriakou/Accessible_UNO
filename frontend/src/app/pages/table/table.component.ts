@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Renderer2 } from '@angular/core';
 
 @Component({
   selector: 'app-table',
@@ -7,7 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TableComponent implements OnInit {
 
-  constructor() { }
+  constructor(private renderer: Renderer2) {
+    this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/background.png)');
+  }
 
   ngOnInit() { }
 
