@@ -7,6 +7,8 @@ import { Component, OnInit, Renderer2} from '@angular/core';
 })
 export class PhoneComponent implements OnInit {
   sign=false
+  main=false
+  hourglass=false
   constructor(private renderer: Renderer2) {
     this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/background.png)');
   }
@@ -15,5 +17,15 @@ export class PhoneComponent implements OnInit {
 
   signIn(){
     this.sign=true
+  }
+
+  signInB(){
+    this.sign=false
+    this.main=true
+  }
+
+  startGame(){
+    this.main=false
+    this.hourglass=true
   }
 }
