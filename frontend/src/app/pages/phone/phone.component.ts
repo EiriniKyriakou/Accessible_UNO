@@ -6,11 +6,14 @@ import { Component, OnInit, Renderer2} from '@angular/core';
   styleUrls: ['./phone.component.scss']
 })
 export class PhoneComponent implements OnInit {
-
+  sign=false
   constructor(private renderer: Renderer2) {
     this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/background.png)');
   }
 
   ngOnInit() { }
 
+  signIn(){
+    this.sign=true
+  }
 }
