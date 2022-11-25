@@ -1,12 +1,12 @@
-<my-sidebar>loading</my-sidebar>
+<my-sidebar (click)="hide()">loading</my-sidebar>
 <div class="phone-main">
-    <div class="container mt-5">
+    <div class="container mt-5" *ngIf="!hided">
       <img class="center" src="../../../assets/table-images/UNO-logo.png" alt="UNO logo">
-      <ul *ngIf="!sign&&!main&&!hourglass">
+      <ul *ngIf="!sign&&!main&&!hourglass&&!hided">
         <li><button class="button" type="button" id="#button1">Sign Up</button></li>
         <li><button class="button" type="button" id="#button2" (click)="signIn()">Sign In</button></li>
       </ul>
-      <form *ngIf="sign">
+      <form *ngIf="sign&&!hided">
         <br>
         <label for="username">Username:</label><br>
         <input type="text" id="fname" name="username" ><br>
