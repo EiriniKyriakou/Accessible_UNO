@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'my-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: [ './sidebar.component.css' ]
 })
-export class SidebarComponent  implements OnInit {
-  name = 'Angular';
-  ngOnInit() { }
+export class SidebarComponent  {
+  //name = 'Angular';
 }

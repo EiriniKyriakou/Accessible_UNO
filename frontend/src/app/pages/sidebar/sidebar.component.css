@@ -68,7 +68,7 @@
         width: 22px;
         left:10px;
         top:10px;
-        display: none;
+        /* display: none; */
        
     }
     .spinner {
@@ -121,9 +121,9 @@
     }
     
     
-     @media screen and (max-width: 950px) {
+     /* @media screen and (max-width: 950px) {
           .sidebarIconToggle{
               display:block
               
            }
-        }
+        } */

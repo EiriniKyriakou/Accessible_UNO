@@ -1,0 +1,45 @@
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.upside-down{
+    top: 0;
+    right: 1000px;
+    /* Rotate from top left corner (not default) */
+    transform-origin: 0 0;
+    transform: rotate(180deg);
+}
+.right {
+    position: absolute;
+    transform: rotate(90deg);
+}
+
+.left {
+    position: absolute;
+    transform: rotate(-90deg);
+}
+
+aside {
+    float: left;
+}
+
+.columns {
+    float: left;
+    width: 25%;
+
+}
+
+.column {
+    float: left;
+    width: 50%;
+
+}
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
