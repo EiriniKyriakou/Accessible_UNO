@@ -3,9 +3,11 @@ import { CommonModule } from '@angular/common';
 
 import { PhoneRoutingModule } from './phone-routing.module';
 import { SidebarComponent } from '../sidebar/sidebar.component';
+import { PhoneComponent } from './phone.component';
+
 
 @NgModule({
-  declarations: [],
+  declarations: [PhoneComponent, SidebarComponent],
   imports: [
     CommonModule,
     PhoneRoutingModule,
