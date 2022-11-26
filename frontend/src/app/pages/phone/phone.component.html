@@ -3,7 +3,7 @@
 <div class="phone-main">
     <div class="container mt-5" *ngIf="!hided">
       <img class="center" src="../../../assets/table-images/UNO-logo.png" alt="UNO logo">
-      <ul *ngIf="!sign&&!main&&!hourglass&&!hided">
+      <ul *ngIf="!sign&&!main&&!hourglass&&!hided" class="ul-center">
         <li><button class="button" type="button" id="#button1" (click)="signUp()">Sign Up</button></li>
         <li><button class="button" type="button" id="#button2" (click)="signIn()">Sign In</button></li>
       </ul>
@@ -18,27 +18,24 @@
 
       <form *ngIf="sign&&signup&&!hided">
         <br>
-        <label for="username">Username:</label><br>
+        <label  class="left" for="username">Username:</label><br>
         <input type="text" id="fname" name="username" ><br><br>
-        <label for="Password">Password:</label><br>
+        <label  class="left" for="Password">Password:</label><br>
         <input type="password" id="lname" name="password" ><br><br>
-        <label for="Confirm Password">Confirm Password:</label><br>
+        <label  class="left" for="Confirm Password">Confirm Password:</label><br>
         <input type="password" id="lname" name="confirm_password" ><br><br>
         
-        <ul class="access">
-          <li>
+        <div class="access">
             <input type="checkbox" class="form-check-input" id="dysrhythmia" name="dysrhythmia" value="dysrhythmia">
-            <label for="dysrhythmia">Dysrhythmia</label>
-          </li>
-          <li>
+            <label  class="left" for="dysrhythmia">Dysrhythmia</label>
+            <br>
             <input type="checkbox" class="form-check-input" id="dyslexia" name="dyslexia" value="dyslexia">
-            <label for="dyslexia">Dyslexia</label>
-          </li>
-          <li>
+            <label  class="left" for="dyslexia">Dyslexia</label>
+            <br>
             <input type="checkbox" class="form-check-input" id="impaired vision" name="impaired vision" value="impaired vision">
-            <label for="impaired vision">Impaired vision</label>
-          </li>
-        </ul>
+            <label  class="left" for="impaired vision">Impaired vision</label>
+            <br>
+        </div>
         <br>
         <button class="button" type="button" id="#button2" >Sign Up</button>
         <br><br><br>

@@ -13,6 +13,10 @@ div.container {
     text-align: center;
 }
 
+label {
+    text-align: left;
+    width:100%
+}
 #button1 , #button2 {
     display:inline-block;
     /* additional code */
@@ -22,15 +26,18 @@ ul{
     list-style: none;
 }
 
-ul li {
+.ul-center li {
     margin: 15px;
   }
 
 
 .access{
-   // display: inline-block; 
+    //display: inline-block; 
 	text-align: left; 
+    margin:7%//30px;
 }
+
+
 input {
     position: relative;
     width:100%;
