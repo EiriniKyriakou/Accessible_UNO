@@ -1,22 +1,15 @@
-// img {  
-//     max-width: 100%;  
-//     height: auto;  
-    
-// }  
 .center {
     display: block;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
 }
-// .upside-down-hourglass {
-//     top: 0;
-//     right: 0;
-//     margin: auto;
-//     padding: 10px;
-//     /* Rotate from top left corner (not default) */
-//     transform: rotate(180deg);
-// } 
+
+.parent{
+    position: relative;
+    top: 0;
+    left: 0;
+}
 
 .upside-down{
     top: 0;
@@ -49,24 +42,34 @@
   white-space: nowrap;
 }
 
-// aside {
-//     float: left;
-// }
-
-.columns {
-    float: left;
-    width: 25%;
-
-}
-
 .column {
     float: left;
     width: 50%;
 
 }
-/* Clear floats after the columns */
+
 .row:after {
     content: "";
     display: table;
     clear: both;
-  }
+}
+
+.test{
+    position: relative;
+}
+
+.image1 {
+    position: absolute;
+    // top: 30px;
+    // left: 30px;
+    top: 25%;
+    left: 15%;
+}
+
+.image2 {
+    position: absolute;
+    // top: 30px;
+    // left: 30px;
+    top: 25%;
+    right: 15%;
+}
