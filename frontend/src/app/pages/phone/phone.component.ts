@@ -10,13 +10,19 @@ export class PhoneComponent implements OnInit {
   main=false
   hourglass=false
   hided=false
+  signup=false
   constructor(private renderer: Renderer2) {
     this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/background.png)');
   }
 
   ngOnInit() { }
-
+  
   signIn(){
+    this.sign=true
+  }
+
+  signUp(){
+    this.signup=true
     this.sign=true
   }
 

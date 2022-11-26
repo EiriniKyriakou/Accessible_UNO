@@ -1,19 +1,47 @@
 <my-sidebar (onClickAction)="getClickAction($event)" >loading</my-sidebar>
 
-<div class="phone-main" [ngClass]="hided ? 'hidded' : 'shown'">
+<div class="phone-main">
     <div class="container mt-5" *ngIf="!hided">
       <img class="center" src="../../../assets/table-images/UNO-logo.png" alt="UNO logo">
       <ul *ngIf="!sign&&!main&&!hourglass&&!hided">
-        <li><button class="button" type="button" id="#button1">Sign Up</button></li>
+        <li><button class="button" type="button" id="#button1" (click)="signUp()">Sign Up</button></li>
         <li><button class="button" type="button" id="#button2" (click)="signIn()">Sign In</button></li>
       </ul>
-      <form *ngIf="sign&&!hided">
+      <form *ngIf="sign&&!hided&&!signup">
         <br>
         <label for="username">Username:</label><br>
         <input type="text" id="fname" name="username" ><br>
         <label for="Password">Password:</label><br>
         <input type="password" id="lname" name="password" ><br><br>
         <button class="button" type="button" id="#button2" (click)="signInB()">Sign In</button>
+      </form>
+
+      <form *ngIf="sign&&signup&&!hided">
+        <br>
+        <label for="username">Username:</label><br>
+        <input type="text" id="fname" name="username" ><br><br>
+        <label for="Password">Password:</label><br>
+        <input type="password" id="lname" name="password" ><br><br>
+        <label for="Confirm Password">Confirm Password:</label><br>
+        <input type="password" id="lname" name="confirm_password" ><br><br>
+        
+        <ul class="access">
+          <li>
+            <input type="checkbox" class="form-check-input" id="dysrhythmia" name="dysrhythmia" value="dysrhythmia">
+            <label for="dysrhythmia">Dysrhythmia</label>
+          </li>
+          <li>
+            <input type="checkbox" class="form-check-input" id="dyslexia" name="dyslexia" value="dyslexia">
+            <label for="dyslexia">Dyslexia</label>
+          </li>
+          <li>
+            <input type="checkbox" class="form-check-input" id="impaired vision" name="impaired vision" value="impaired vision">
+            <label for="impaired vision">Impaired vision</label>
+          </li>
+        </ul>
+        <br>
+        <button class="button" type="button" id="#button2" >Sign Up</button>
+        <br><br><br>
       </form>
 
       <ul *ngIf="main">
