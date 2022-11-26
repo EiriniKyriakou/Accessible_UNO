@@ -1,5 +1,6 @@
-<my-sidebar (click)="hide()">loading</my-sidebar>
-<div class="phone-main">
+<my-sidebar (onClickAction)="getClickAction($event)" >loading</my-sidebar>
+
+<div class="phone-main" [ngClass]="hided ? 'hidded' : 'shown'">
     <div class="container mt-5" *ngIf="!hided">
       <img class="center" src="../../../assets/table-images/UNO-logo.png" alt="UNO logo">
       <ul *ngIf="!sign&&!main&&!hourglass&&!hided">
