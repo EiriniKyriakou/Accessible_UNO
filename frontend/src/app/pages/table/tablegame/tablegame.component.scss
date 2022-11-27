@@ -1,3 +1,22 @@
+.uno-card{
+    height: 100px;
+    margin-right:-25px;
+    box-shadow: 0 0 3px;
+}
+.player{
+    display: flex; 
+    height: 100px;
+}
+.player-card{
+    width: 99%; 
+}
+.pause{
+    flex-grow: 1; 
+    margin-left: 25px;
+}
+.message{
+    margin-top: -25px;
+}
 .center {
     display: block;
     margin-left: auto;
@@ -54,6 +73,7 @@
     // left: 30px;
     top: 25%;
     left: 15%;
+    height:40%;
 }
 
 .image2 {
@@ -62,4 +82,5 @@
     // left: 30px;
     top: 25%;
     right: 15%;
+    height:40%;
 }
