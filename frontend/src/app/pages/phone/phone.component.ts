@@ -11,6 +11,7 @@ export class PhoneComponent implements OnInit {
   hourglass=false
   hided=false
   signup=false
+  isSigned=false
   constructor(private renderer: Renderer2) {
     this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/background.png)');
   }
@@ -29,6 +30,7 @@ export class PhoneComponent implements OnInit {
   signInB(){
     this.sign=false
     this.main=true
+    this.isSigned=true
   }
 
   startGame(){

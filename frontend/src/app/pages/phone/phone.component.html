@@ -1,4 +1,4 @@
-<my-sidebar (onClickAction)="getClickAction($event)" >loading</my-sidebar>
+<my-sidebar (onClickAction)="getClickAction($event)" *ngIf="isSigned">loading</my-sidebar>
 
 <div class="phone-main">
     <div class="container mt-5" *ngIf="!hided">
@@ -42,6 +42,7 @@
       </form>
 
       <ul *ngIf="main">
+        <br>
         <li><button class="button" type="button" id="#button1" (click)="startGame()">Start Game</button></li>
       </ul>
 
