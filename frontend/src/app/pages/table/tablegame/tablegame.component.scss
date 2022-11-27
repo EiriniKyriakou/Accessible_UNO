@@ -12,7 +12,9 @@
 }
 .pause{
     flex-grow: 1; 
-    margin-left: 25px;
+    margin-left: 40px;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 .message{
     margin-top: -25px;
@@ -39,10 +41,10 @@
 }
 
 .left {
-  position: absolute;
-  top: 45%;
-  right: 0;
-  transform: rotate(-90deg);
+    position: absolute;
+    top: 45%;
+    right: 0;
+    transform: rotate(-90deg);
 }
 
 .bottom{
@@ -69,18 +71,14 @@
 
 .image1 {
     position: absolute;
-    // top: 30px;
-    // left: 30px;
-    top: 25%;
-    left: 15%;
+    top: 30%;
+    left: 20%;
     height:40%;
 }
 
 .image2 {
     position: absolute;
-    // top: 30px;
-    // left: 30px;
-    top: 25%;
-    right: 15%;
+    top: 30%;
+    right: 20%;
     height:40%;
 }
