@@ -9,6 +9,11 @@ export class WallComponent implements OnInit {
 
   constructor( private renderer: Renderer2 ) {
     this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/background-tv-wall.png)');
+
+    setTimeout(()=>{ 
+                   }
+    ,10000);
+
   }
   ngOnInit() { }
 
