@@ -1,7 +1,23 @@
+
+.access{
+	text-align: left; 
+    margin:30px;
+}
+
+.form-check-input {
+    display: inline-block!important;
+    width: auto;
+    text-align: left;
+  }
+
+
 .center{
     text-align: center;
 }
 
+.left{
+    text-align: left;
+}
 .body{
     width: 100%;
     height: 100%
@@ -122,9 +138,17 @@
     }
     
     
-     /* @media screen and (max-width: 950px) {
-          .sidebarIconToggle{
-              display:block
-              
-           }
-        } */
+    label {
+        text-align: left;
+        width:100%
+    }
+    
+input {
+    position: relative;
+    width:100%;
+    left: 0.25%;
+    right: 0.25%;
+    background: #FFFEFE;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+}

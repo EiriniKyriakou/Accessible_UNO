@@ -6,7 +6,7 @@
         <div class="spinner horizontal"></div>
         <div class="spinner diagonal part-2"></div>
     </label>
-    <div id="sidebarMenu" *ngIf="!inProfile"><div class="center">Menu</div>
+    <div id="sidebarMenu" *ngIf="!inProfile&&!editUsername&&!editPassword&&!editAccessibility"><div class="center">Menu</div>
           <div class="main-content-wrapper">
               <a (click)="profile()" ><img class="center" src="../../../assets/sidebar/user.png" alt="user logo">Profile</a>
               <a href="#statistics"><img class="center" src="../../../assets/sidebar/pie-chart.png" alt="statistics logo">Statistics</a>
@@ -15,10 +15,61 @@
       </div>
       <div id="sidebarMenu" *ngIf="inProfile"><div class="center">Profile</div>
       <div class="main-content-wrapper">
-        <a  ><img class="center" src="../../../assets/sidebar/user.png" alt="user logo"> Katerina</a>
-        <a href="#statistics"><img class="center" src="../../../assets/sidebar/padlock.png" alt="password logo"> Password</a>
-        <a href="#logout"><img class="center" src="../../../assets/sidebar/accessibility.png" alt="accessibility"> Accessibility</a>
+        <a (click)="username()" ><img class="center" src="../../../assets/sidebar/user.png" alt="user logo"> Username</a>
+        <a (click)="password()"><img class="center" src="../../../assets/sidebar/padlock.png" alt="password logo"> Password</a>
+        <a (click)="accessibility()"><img class="center" src="../../../assets/sidebar/accessibility.png" alt="accessibility"> Accessibility</a>
+        </div>
     </div>
-  </div>
+
+    <div id="sidebarMenu" *ngIf="editUsername"><div class="center">Edit Username</div>
+      <div class="main-content-wrapper">
+        <form class="center">
+            <br>
+            <label class="left" for="username">Username:</label><br>
+            <input type="text" id="fname" name="username" ><br><br><br>
+            <button class="button" type="button" id="#button2" (click)="editUsernameFunction()">Sign In</button>
+            <br>
+          </form>
+        </div>
+    </div>
+
+    <div id="sidebarMenu" *ngIf="editPassword"><div class="center">Edit Password</div>
+      <div class="main-content-wrapper">
+        <form class="center">
+            <br>
+            <label  class="left" for="New Password">New Password:</label><br>
+            <input type="password" id="password" name="password" >
+            <br><br>
+            <label  class="left" for="Confirm Password">Confirm Password:</label><br>
+            <input type="password" id="cpassword" name="confirm_password" >
+            <br>
+            <br>
+            <button class="button" type="button" id="#button2" (click)="editPasswordFunction()">Change password</button>
+            <br>
+          </form>
+        </div>
+    </div>
+
+    <div id="sidebarMenu" *ngIf="editAccessibility"><div class="center">Edit Password</div>
+      <div class="main-content-wrapper">
+        <form class="center">
+            <div class="access"> 
+                <br><br>
+                  <input type="checkbox" class="form-check-input" id="dysrhythmia"name="dysrhythmia" value="true">
+                  <label  class="left" for="dysrhythmia">Dysrhythmia</label>
+                  <br>
+                  <input type="checkbox" class="form-check-input" id="dyslexia" name="dyslexia" value="true">
+                  <label  class="left" for="dyslexia">Dyslexia</label>
+                  <br>
+                  <input type="checkbox" class="form-check-input" id="impaired vision" name="impaired vision" value="true">
+                  <label  class="left" for="impaired vision">Impaired vision</label>
+                  <br>
+              </div>
+            <br>
+            <button class="button" type="button" id="#button2" (click)="editAccessibilityFunction()">Change password</button>
+            <br>
+          </form>
+        </div>
+    </div>
   </div>
   
