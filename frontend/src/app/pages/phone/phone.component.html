@@ -10,10 +10,9 @@
       <form *ngIf="sign&&!hided&&!signup">
         <br>
         <label for="username">Username:</label><br>
-        <!--{{ player.username }}-->
         <input type="text" id="fname" name="username" ><br>
         <label for="Password">Password:</label><br>
-        <input type="password" id="lname" name="password" ><br><br>
+        <input type="password" id="password" name="password" ><br><br>
         <button class="button" type="button" id="#button2" (click)="signInB()">Sign In</button>
         <br>
         <br><p>Don't have an account? Sign up <a href="/phone">here</a>.</p>
@@ -29,7 +28,8 @@
         <input type="password" id="password" [(ngModel)]="password" name="password" >
         <br><br>
         <label  class="left" for="Confirm Password">Confirm Password:</label><br>
-        <input type="password" id="cpassword" name="confirm_password" >
+        <input type="password" id="cpassword" [(ngModel)]="cpassword" name="cpassword" >
+        <div  class="passwordCheck" *ngIf="!(cpassword===password)"> Passwords do not match. </div>
         <br><br>
         <label>Select avatar:</label>
         <table border="0"  cellpadding="2" cellspacing="0">
@@ -106,7 +106,7 @@
             <label  class="left" for="impaired vision">Impaired vision</label>
             <br>
         </div>
-        <button class="button" type="submit" id="#button2" >Sign Up</button>
+        <button class="button" type="submit" id="#button2" [disabled]="!(cpassword===password)">Sign Up</button>
         <br>
         <br><br><p>You already have an account? Sign in <a href="/phone">here</a>.</p>
       </form>

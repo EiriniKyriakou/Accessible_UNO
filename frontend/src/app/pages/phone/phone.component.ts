@@ -19,6 +19,7 @@ export class PhoneComponent implements OnInit {
   public player: PlayerModel[] = [];
   public username: string = '';
   public password: string = '';
+  public cpassword: string = '';
   public avatar: string = '';
   public wins: number = 0;
   public games: number = 0;
