@@ -17,29 +17,33 @@
         <button class="button" type="button" id="#button2" (click)="signInB()">Sign In</button>
       </form>
 
-      <form *ngIf="sign&&signup&&!hided">
+      <!--<form #playerForm="ngForm" (ngSubmit)="postPlayer()" *ngIf="sign&&signup&&!hided">-->
+        <form  #playerForm="ngForm" (ngSubmit)="playerForm.form.valid && postPlayer()" *ngIf="sign&&signup&&!hided">
         <br>
         <label  class="left" for="username">Username:</label><br>
-        <input type="text" id="fname" name="username" ><br><br>
+        <input type="text" id="fname" [(ngModel)]="username" name="username" >
+        <br><br>
         <label  class="left" for="Password">Password:</label><br>
-        <input type="password" id="lname" name="password" ><br><br>
+        <input type="password" id="lname" [(ngModel)]="password" name="password" >
+        <br><br>
         <label  class="left" for="Confirm Password">Confirm Password:</label><br>
-        <input type="password" id="lname" name="confirm_password" ><br><br>
+        <input type="password" id="lname" name="confirm_password" >
+        <br><br>
         
         <div class="access">
-            <input type="checkbox" class="form-check-input" id="dysrhythmia" name="dysrhythmia" value="dysrhythmia">
+            <input type="checkbox" class="form-check-input" id="dysrhythmia" [(ngModel)]="dysrhythmia" name="dysrhythmia" value="true">
             <label  class="left" for="dysrhythmia">Dysrhythmia</label>
             <br>
-            <input type="checkbox" class="form-check-input" id="dyslexia" name="dyslexia" value="dyslexia">
+            <input type="checkbox" class="form-check-input" id="dyslexia" [(ngModel)]="dyslexia" name="dyslexia" value="true">
             <label  class="left" for="dyslexia">Dyslexia</label>
             <br>
-            <input type="checkbox" class="form-check-input" id="impaired vision" name="impaired vision" value="impaired vision">
+            <input type="checkbox" class="form-check-input" id="impaired vision" [(ngModel)]="impairedVision" name="impaired vision" value="true">
             <label  class="left" for="impaired vision">Impaired vision</label>
             <br>
         </div>
+        <button class="button" type="submit" id="#button2" >Sign Up</button>
         <br>
-        <button class="button" type="button" id="#button2" >Sign Up</button>
-        <br><br><br>
+        <br><br><p>You already have an account? Sign in <a href="/phone">here</a>.</p>
       </form>
 
       <ul *ngIf="main">

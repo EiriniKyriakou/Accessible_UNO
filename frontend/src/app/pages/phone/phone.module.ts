@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { PhoneRoutingModule } from './phone-routing.module';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { PhoneComponent } from './phone.component';
+import { FormsModule }   from '@angular/forms';
 
 
 @NgModule({
@@ -11,6 +12,7 @@ import { PhoneComponent } from './phone.component';
   imports: [
     CommonModule,
     PhoneRoutingModule,
+    FormsModule
   ]
 })
 export class PhoneModule { }
