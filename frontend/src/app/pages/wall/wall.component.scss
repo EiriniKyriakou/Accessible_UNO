@@ -19,6 +19,18 @@
     height: 50px;
     border-radius: 50%;
   }
+  .avatarWinner {
+    vertical-align: middle;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+  }
+
+  .Winner {
+    vertical-align: middle;
+    width: 200px;
+    height: 200px;
+  }
 
   .left{
     text-align: left;
@@ -53,4 +65,14 @@ td:nth-child(2) {
   flex-grow: 1; 
   margin-top: auto;
   margin-bottom: auto;
+}
+
+.blue{
+  color: #2952A3;
+}
+.rectangle {
+  height: 500px;
+  width: 1000px;
+  background-color: whitesmoke;
+  text-align: center;
 }

@@ -1,4 +1,4 @@
-<div class="container mt-5">
+<div class="container mt-5" *ngIf="!condition">
   <ul><h1>Scores:</h1>
     <li class="left"> <td>
                           <div class='parent'>
@@ -27,7 +27,7 @@
                             <div class='parent'>
                             <div class='child flex-child'>
                             <img class="" src="../../../assets/photos/wild-uno.png" alt="wild cards"></div>
-                            <h5 class='child flex-child'>4</h5>
+                            <h5 class='child flex-child'>2</h5>
                             </div>
                           </td>
                           <td><h5>6 wild cards</h5></td>
@@ -43,7 +43,7 @@
                               <div class='parent'>
                               <div class='child flex-child'>
                               <img class="" src="../../../assets/photos/wild-uno.png" alt="wild cards"></div>
-                              <h5 class='child flex-child'>4</h5>
+                              <h5 class='child flex-child'>1</h5>
                               </div>
                             </td>
                             <td><h5>3 wild cards</h5></td>
@@ -59,11 +59,27 @@
                                 <div class='parent'>
                                 <div class='child flex-child'>
                                 <img class="" src="../../../assets/photos/wild-uno.png" alt="wild cards"></div>
-                                <h5 class='child flex-child'>4</h5>
+                                <h5 class='child flex-child'>0</h5>
                                 </div>
                               </td>
-                              <td><h5>14 wild cards</h5></td>
+                              <td><h5>1 wild cards</h5></td>
                               </li>
   </ul>
+  
+</div>
+
+<div class="container mt-5" *ngIf="condition">
+  <br>
+  <div class="rectangle"> 
+  <h1 class="blue">And the winner is ...</h1>
+  <div class='parent'>
+    <div class='child flex-child'>
+      <img class="avatarWinner" src="../../../assets/avatars/avatar1.jpg" alt="avatar"></div>
+      <h1 class='child flex-child blue'>Sonia</h1>
+  </div>
+  <h2 class="blue">Winner winner ...CHICKEN DINNER!</h2>
+  <h3>300 points</h3>
+  <img class="Winner" src="../../../assets/photos/winner.svg" alt="wild cards">
+</div>                      
   
 </div>
