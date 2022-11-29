@@ -1,4 +1,5 @@
 import { Component, OnInit, Renderer2} from '@angular/core';
+import { Router } from '@angular/router'; 
 import { PlayerModel } from 'src/app/global/models/players/player.model';
 import { SocketsService } from 'src/app/global/services/sockets/sockets.service';
 import { PlayersService } from 'src/app/global/services/players/players.service';
@@ -27,6 +28,7 @@ export class PhoneComponent implements OnInit {
   public dyslexia: boolean = false;
   public impairedVision: boolean = false;
   constructor(
+    private router: Router,
     private playersService: PlayersService,
     private socketService: SocketsService,
     private renderer: Renderer2
@@ -78,6 +80,11 @@ export class PhoneComponent implements OnInit {
   startGame(){
     this.main=false
     this.hourglass=true
+    setTimeout(() => this.changePage(), 5000);  //60s
+  }
+
+  changePage(){
+    this.router.navigate(['/phonegame']);
   }
 
   getClickAction(_event: any) {

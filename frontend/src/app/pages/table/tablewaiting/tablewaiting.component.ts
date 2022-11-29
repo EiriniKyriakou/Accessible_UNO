@@ -16,7 +16,7 @@ export class TableWaitingComponent implements OnInit {
   }
   
   timer(){
-    setTimeout(() => this.changePage(), 10000);  //60s
+    setTimeout(() => this.changePage(), 5000);  //60s
   }
 
   changePage(){
