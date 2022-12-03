@@ -22,7 +22,7 @@ const routes: Routes = [
   { path: 'tv',loadChildren: () => import('./pages/tv/tv.module').then(m=>m.TVModule)},
   { path: 'wall',loadChildren: () => import('./pages/wall/wall.module').then(m=>m.WallModule)},
   { path: 'item-shop', component: ItemShopComponent},
-  //{ path: '**', redirectTo: 'home', pathMatch: 'full' },
+  { path: '**', redirectTo: 'home', pathMatch: 'full' },
   //{ path: '**', redirectTo: 'phone', pathMatch: 'full' },
 ];
 
