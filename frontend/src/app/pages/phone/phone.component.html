@@ -106,7 +106,7 @@
             <label  class="left" for="impaired vision">Impaired vision</label>
             <br>
         </div>
-        <button class="button" type="submit" id="#button2" [disabled]="!(cpassword===password)">Sign Up</button>
+        <button class="button" type="submit" id="#button2" [disabled]="!(cpassword===password)" (click)="signUpB()">Sign Up</button>
         <br>
         <br><br><p>You already have an account? Sign in <a href="/phone">here</a>.</p>
       </form>

@@ -7,10 +7,10 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   title = 'Accessible UNO';
-  selected=false;
-  clicked(){
-    this.selected=!this.selected;
-  }
+  // selected=false;
+  // clicked(){
+  //   this.selected=!this.selected;
+  // }
   constructor(public router: Router) {
     console.log(this.router.url)
   }

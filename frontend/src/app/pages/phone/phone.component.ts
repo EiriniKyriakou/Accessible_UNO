@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { PlayerModel } from 'src/app/global/models/players/player.model';
 import { SocketsService } from 'src/app/global/services/sockets/sockets.service';
 import { PlayersService } from 'src/app/global/services/players/players.service';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-home',
   templateUrl: './phone.component.html',
@@ -77,6 +77,12 @@ export class PhoneComponent implements OnInit {
     this.isSigned=true
   }
 
+ signUpB(){
+  Swal.fire('Your account is ready!', 'Sign in to start playing!', 'info')
+  this.sign=true
+  this.signup=false
+
+ }
   startGame(){
     this.main=false
     this.hourglass=true
