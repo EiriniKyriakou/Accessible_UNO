@@ -4,10 +4,11 @@ import { CommonModule } from '@angular/common';
 import { PhoneGameRoutingModule } from './phonegame-routing.module';
 import { PhoneGameComponent } from './phonegame.component';
 import { FormsModule }   from '@angular/forms';
+import { CardComponent } from '../../card/card.component';
 
 
 @NgModule({
-  declarations: [PhoneGameComponent],
+  declarations: [PhoneGameComponent,CardComponent],
   imports: [
     CommonModule,
     PhoneGameRoutingModule,

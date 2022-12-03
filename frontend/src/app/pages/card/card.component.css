@@ -1,0 +1,64 @@
+.phonegame-main {
+  margin-top: 1%;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.head {
+  text-align: center;
+}
+
+.clock {
+  border-style: solid;
+  border-color: black;
+  border-width: 2px;
+  border-radius: 10px;
+  width: fit-content;
+
+}
+
+.pad {
+  padding: 0 !important;
+}
+
+.clockicon {
+  width: 100%;
+}
+
+h4 {
+  margin: 0;
+}
+
+h3 {
+  margin: 0;
+}
+
+.right {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  padding-right: 0;
+}
+
+.cards {
+  margin-right: -10% !important;
+  box-shadow: 0 0 3px;
+}
+
+.card {
+  width: 23%;
+}
+
+.gamebutton {
+  width: 100%;
+  background: #2952A3;
+  color: #FFFFFF;
+  border-radius: 20px;
+  font-family: 'Verdana';
+  font-style: normal;
+  height: 150%;
+}
