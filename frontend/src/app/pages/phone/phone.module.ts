@@ -13,6 +13,7 @@ import { FormsModule }   from '@angular/forms';
     CommonModule,
     PhoneRoutingModule,
     FormsModule
-  ]
+  ],
+  exports:[SidebarComponent]
 })
 export class PhoneModule { }
