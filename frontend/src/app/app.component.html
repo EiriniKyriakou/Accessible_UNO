@@ -21,3 +21,12 @@
 <!-- END: menu navbar. Delete this code in order to remove the menu -->
 
 <router-outlet></router-outlet>
+<div *ngIf="!selected" class="container mt-5">
+<h1>Select device:</h1>
+<ul  class="ul-center">
+  <li><button class="button" type="button" id="#button1" (click)="clicked()"><a  routerLink="/wall">Wall</a></button></li>
+  <li><button class="button" type="button" id="#button2" (click)="clicked()"><a  routerLink="/tv">TV</a></button></li>
+  <li><button class="button" type="button" id="#button1" (click)="clicked()"><a  routerLink="/table">Table</a></button></li>
+  <li><button class="button" type="button" id="#button2" (click)="clicked()"><a  routerLink="/phone">Phone</a></button></li>
+</ul>
+</div>

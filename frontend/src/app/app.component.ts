@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'frontend';
+  selected=false;
+  clicked(){
+    this.selected=!this.selected;
+  }
 }
