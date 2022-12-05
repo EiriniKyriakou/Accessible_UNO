@@ -69,6 +69,8 @@ export class PhoneComponent implements OnInit {
     this.playersService.getByUsername(this.username).subscribe((result) => {
       var current_player = result;
       this.socketService.publish("players_update", player);
+      console.log(current_player)
+      //console.log(JSON.parse(current_player))
     });
   }
 
