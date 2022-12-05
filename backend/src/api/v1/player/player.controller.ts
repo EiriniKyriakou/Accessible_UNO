@@ -19,8 +19,8 @@ export class PlayerController extends ResourceController<IPlayer>{
         const router = Router();
         router
             .get('/', this.getPlayers)
-            .get('/initialize', this.initializePlayers)
             .get('/:id', this.getPlayerById)
+            .get('/:username', this.getPlayerByUsername)
             .post('/', this.postPlayer)
             .put('/:id', this.updatePlayer)
             .delete('/:id', this.deletePlayer);
@@ -96,21 +96,15 @@ export class PlayerController extends ResourceController<IPlayer>{
     }
 
     /**
-     * Initialize players
+     * Get single player by username
      * @param req 
      * @param res 
      */
-    initializePlayers = async (req: Request, res: Response) => {
-        // this.logger.debug('initialize players request');
-
-        // await PlayerModel.insertMany(players)
-        //     .then(function (docs) {
-        //         res.json(docs);
-        //     })
-        //     .catch(function (err) {
-        //         res.status(500);
-        //     });
-        // return res
-        //     .status(StatusCodes.OK);
+    getPlayerByUsername = async (req: Request, res: Response) => {
+        this.logger.debug('getPlayerByUsername request');
+        const player = await this.getOne(req.params.username, req, res);
+        return res
+            .status(StatusCodes.OK)
+            .json(player);
     }
 }

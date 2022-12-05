@@ -25,9 +25,15 @@ export class PlayersService {
       .pipe(map(result => _.map(result, (t) => new PlayerModel(t))));
   }
 
-  public getById(username: string): Observable<PlayerModel> {
+  public getById(id: string): Observable<PlayerModel> {
     return this.http
-      .get<PlayerModel>(`${this.hostURl}/api/player/${username}`)
+      .get<PlayerModel>(`${this.hostURl}/api/players/${id}`)
+      .pipe(map(result => new PlayerModel(result)));
+  }
+
+  public getByUsername(username: string): Observable<PlayerModel> {
+    return this.http
+      .get<PlayerModel>(`${this.hostURl}/api/players/${username}`)
       .pipe(map(result => new PlayerModel(result)));
   }
 

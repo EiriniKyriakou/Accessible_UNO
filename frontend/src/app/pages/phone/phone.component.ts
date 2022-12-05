@@ -66,7 +66,7 @@ export class PhoneComponent implements OnInit {
     const player = new PlayerModel();
     player.username = this.username;
     player.password = this.password;
-    this.playersService.getById(this.username).subscribe((result) => {
+    this.playersService.getByUsername(this.username).subscribe((result) => {
       var current_player = result;
       this.socketService.publish("players_update", player);
     });
@@ -82,9 +82,9 @@ export class PhoneComponent implements OnInit {
   }
 
   signInB(){
-    this.sign=false
-    this.main=true
-    this.isSigned=true
+    // this.sign=false
+    // this.main=true
+    // this.isSigned=true
   }
 
  signUpB(){
