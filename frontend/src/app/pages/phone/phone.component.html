@@ -19,7 +19,7 @@
         <input type="password" id="password" [(ngModel)]="password" name="password" ><br><br>
         <button class="button" type="button" id="#button2" (click)="signInB(); signinPlayer()">Sign In</button>
         <br>
-        <br><p>Don't have an account? Sign up <a href="/phone">here</a>.</p>
+        <br><p>Don't have an account? Sign up <button class="a" (click)="signUp()">here</button>.</p>
       </form>
 
       <!--Sign up-->
@@ -90,7 +90,7 @@
         </div>
         <button class="button" type="button" id="#button2" [disabled]="!(cpassword===password)" (click)="signUpB(); postPlayer()">Sign Up</button>
         <br>
-        <br><br><p>You already have an account? Sign in <a href="/phone">here</a>.</p>
+        <br><br><p>You already have an account? Sign in <button class="a" (click)="signIn()">here</button>.</p>
       </form>
 
       <ul *ngIf="main">

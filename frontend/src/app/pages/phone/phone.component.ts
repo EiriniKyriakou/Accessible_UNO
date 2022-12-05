@@ -74,6 +74,7 @@ export class PhoneComponent implements OnInit {
 
   signIn(){
     this.sign=true
+    this.signup=false
   }
 
   signUp(){
