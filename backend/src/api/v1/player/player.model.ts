@@ -13,6 +13,11 @@ export interface IPlayer extends Document {
   dysrhythmia: boolean;
   dyslexia: boolean;
   impairedVision: boolean;
+  unos: number;
+  wild_cards:number;
+  score:number;
+  cards_hand:string[];
+
 }
 
 // ------------------------------------------
@@ -26,7 +31,11 @@ const playerSchema = new Schema(
     games: {type: Number, required: true},
     dysrhythmia: {type: Boolean, required: true},
     dyslexia: {type: Boolean, required: true},
-    impairedVision: {type: Boolean, required: true}
+    impairedVision: {type: Boolean, required: true},
+    unos: {type:Number, required:true},
+    wild_cards: {type:Number, required:true},
+    score:{type:Number, required:true},
+    cards_hand:  {type: Array<string>, required:true}
   },
   { ...DefaultSchemaOptions }
 );
