@@ -17,10 +17,12 @@
     <br><br><br>
     <div class="row">
         <div class="col-10 row center">
-            <div class="card " *ngFor="let card of cards" #hoverCard (mouseenter)="onMouseEnter(hoverCard)"
-                (mouseleave)="onMouseOut(hoverCard)">
-                <card class="cards"></card>
-            </div>
+            <div class="card cards"
+            *ngFor="let card of cards"
+            #hoverCard
+            (mouseenter)="onMouseEnter(hoverCard)"
+            (mouseleave)="onMouseOut(hoverCard)"><card ></card></div>
+         
             <!-- <card class="card" 
             [ngClass]="hov? 'cards' : 'cardsh'"
             (mouseenter)="onMouseEnter($event)" ></card> -->
