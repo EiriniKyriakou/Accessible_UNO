@@ -62,6 +62,16 @@ export class PhoneComponent implements OnInit {
     });
   }
 
+  public signinPlayer():void {
+    const player = new PlayerModel();
+    player.username = this.username;
+    player.password = this.password;
+    this.playersService.getById(this.username).subscribe((result) => {
+      var current_player = result;
+      this.socketService.publish("players_update", player);
+    });
+  }
+
   signIn(){
     this.sign=true
   }
