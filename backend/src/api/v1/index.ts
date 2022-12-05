@@ -3,6 +3,7 @@ import { ExampleController } from './example/example.controller';
 import { ItemShopController } from './item-shop/item-shop.controller';
 import { TaskController } from './task/task.controller';
 import { PlayerController } from './player/player.controller';
+import { GameController } from './game/game.controller';
 const apiV1Router = express.Router();
 
 
@@ -23,6 +24,10 @@ apiV1Router
   .use(
     '/players',
     new PlayerController().applyRoutes()
+  )
+  .use(
+    '/games',
+    new GameController().applyRoutes()
   );
 
 
