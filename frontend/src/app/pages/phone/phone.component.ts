@@ -69,17 +69,20 @@ export class PhoneComponent implements OnInit {
       this.dyslexia = false;
       this.impairedVision = false;
 
-      this.socketService.publish("players_update", player);
+      this.socketService.publish("players_create", player);
     });
   }
+
 
   public signinPlayer():void {
     const player = new PlayerModel();
     player.username = this.username;
     player.password = this.password;
     this.playersService.getByUsername(this.username, this.password).subscribe((result) => {
-      var current_player = result;
-      this.socketService.publish("players_update", player);
+      var current_player = result[0];
+      //console.log(result[0].password, typeof(result));
+      this.socketService.publish("players_signin", player);
+      console.log(current_player.username)
       if(JSON.stringify(current_player) === "{}"){
         Swal.fire({
           icon: 'error',
@@ -89,7 +92,6 @@ export class PhoneComponent implements OnInit {
       } else{
         this.signInB();
       }
-      //console.log(JSON.parse(current_player))
     });
   }
 

@@ -50,6 +50,7 @@ export class PlayerController extends ResourceController<IPlayer>{
     postPlayer = async (req: Request, res: Response) => {
         this.logger.debug('postPlayer request');
         const player = await this.create(req, res);
+        console.log(player)
         return res
             .status(StatusCodes.OK)
             .json(player);
