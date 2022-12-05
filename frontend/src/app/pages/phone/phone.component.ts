@@ -70,7 +70,11 @@ export class PhoneComponent implements OnInit {
       var current_player = result;
       this.socketService.publish("players_update", player);
       if(JSON.stringify(current_player) === "{}"){
-        alert("User doesn't exist!!")
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Wrong username or password!',
+        })
       } else{
         this.signInB();
       }
