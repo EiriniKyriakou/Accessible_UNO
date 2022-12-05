@@ -31,9 +31,9 @@ export class PlayersService {
       .pipe(map(result => new PlayerModel(result)));
   }
 
-  public getByUsername(username: string): Observable<PlayerModel> {
+  public getByUsername(username: string, password:string): Observable<PlayerModel> {
     return this.http
-      .get<PlayerModel>(`${this.hostURl}/api/players/?username=${username}`)
+      .get<PlayerModel>(`${this.hostURl}/api/players/?username=${username}&password=${password}`)
       .pipe(map(result => new PlayerModel(result)));
   }
 

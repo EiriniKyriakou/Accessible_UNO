@@ -66,7 +66,7 @@ export class PhoneComponent implements OnInit {
     const player = new PlayerModel();
     player.username = this.username;
     player.password = this.password;
-    this.playersService.getByUsername(this.username).subscribe((result) => {
+    this.playersService.getByUsername(this.username, this.password).subscribe((result) => {
       var current_player = result;
       this.socketService.publish("players_update", player);
       console.log(current_player)
