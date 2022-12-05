@@ -2,24 +2,27 @@
 
 <div class="phone-main">
     <div class="container mt-5" *ngIf="!hided">
+      <!--Options Sign in or Sign up-->
       <img class="center" src="../../../assets/table-images/UNO-logo.png" alt="UNO logo">
       <ul *ngIf="!sign&&!main&&!hourglass&&!hided" class="ul-center">
         <li><button class="button" type="button" id="#button1" (click)="signUp()">Sign Up</button></li>
         <li><button class="button" type="button" id="#button2" (click)="signIn()">Sign In</button></li>
       </ul>
-      <form *ngIf="sign&&!hided&&!signup">
+
+      <!--Sign in-->
+      <form #playerInForm="ngForm" (ngSubmit)="playerInForm.form.valid && signinPlayer()" *ngIf="sign&&!hided&&!signup">
         <br>
         <label for="username">Username:</label><br>
-        <input type="text" id="fname" name="username" ><br>
+        <input type="text" id="fname" [(ngModel)]="username" name="username" ><br>
         <label for="Password">Password:</label><br>
-        <input type="password" id="password" name="password" ><br><br>
-        <button class="button" type="button" id="#button2" (click)="signInB()">Sign In</button>
+        <input type="password" id="password" [(ngModel)]="password" name="password" ><br><br>
+        <button class="button" type="submit" id="#button2" (click)="signInB()">Sign In</button>
         <br>
         <br><p>Don't have an account? Sign up <a href="/phone">here</a>.</p>
       </form>
 
-      <!--<form #playerForm="ngForm" (ngSubmit)="postPlayer()" *ngIf="sign&&signup&&!hided">-->
-        <form  #playerForm="ngForm" (ngSubmit)="playerForm.form.valid && postPlayer()" *ngIf="sign&&signup&&!hided">
+      <!--Sign up-->
+      <form  #playerForm="ngForm" (ngSubmit)="playerForm.form.valid && postPlayer()" *ngIf="sign&&signup&&!hided">
         <br>
         <label  class="left" for="username">Username:</label><br>
         <input type="text" id="fname" [(ngModel)]="username" name="username" >
@@ -32,68 +35,46 @@
         <div  class="passwordCheck" *ngIf="!(cpassword===password)"> Passwords do not match. </div>
         <br><br>
         <label>Select avatar:</label>
-        <table border="0"  cellpadding="2" cellspacing="0">
+        <table border="0" cellpadding="2" cellspacing="0">
           <tr>
             <td>
-              <input 
-              type="radio" name="avatar" value="avatar1" [(ngModel)]="avatar"
-              id="avatar1" class="input-hidden" />
-            <label for="avatar1">
-              <img 
-                src="../../../assets/avatars/avatar1.jpg"
-                alt="avatar" />
-            </label></td>
+              <input type="radio" name="avatar" value="avatar1" [(ngModel)]="avatar" id="avatar1" class="input-hidden" />
+              <label for="avatar1">
+                <img src="../../../assets/avatars/avatar1.jpg" alt="avatar" />
+              </label>
+            </td>
             <td>
-              <input 
-              type="radio" name="avatar" value="avatar2" [(ngModel)]="avatar"
-              id="avatar2" class="input-hidden" />
-            <label for="avatar2">
-              <img 
-                src="../../../assets/avatars/avatar2.jpg"
-                alt="avatar" />
-            </label></td>
+              <input type="radio" name="avatar" value="avatar2" [(ngModel)]="avatar" id="avatar2" class="input-hidden" />
+              <label for="avatar2">
+                <img src="../../../assets/avatars/avatar2.jpg" alt="avatar" />
+              </label>
+            </td>
             <td>
-            <input 
-              type="radio" name="avatar" value="avatar3" [(ngModel)]="avatar"
-              id="avatar3" class="input-hidden" />
-            <label for="avatar3">
-              <img 
-                src="../../../assets/avatars/avatar3.jpg"
-                alt="avatar" />
-            </label></td>
+              <input type="radio" name="avatar" value="avatar3" [(ngModel)]="avatar" id="avatar3" class="input-hidden" />
+              <label for="avatar3">
+                <img src="../../../assets/avatars/avatar3.jpg" alt="avatar" />
+              </label>
+            </td>
             <td>
-            <input 
-              type="radio" name="avatar" value="avatar4" [(ngModel)]="avatar"
-              id="avatar4" class="input-hidden" />
-            <label for="avatar4">
-              <img 
-                src="../../../assets/avatars/avatar4.jpg"
-                alt="avatar" />
-            </label>
-          </td>
-          <td>
-            <input 
-              type="radio" name="avatar" value="avatar5" [(ngModel)]="avatar" 
-              id="avatar5" class="input-hidden" />
-            <label for="avatar5">
-              <img 
-                src="../../../assets/avatars/avatar5.jpg"
-                alt="avatar" />
-            </label></td>
+              <input type="radio" name="avatar" value="avatar4" [(ngModel)]="avatar" id="avatar4" class="input-hidden" />
+              <label for="avatar4">
+                <img src="../../../assets/avatars/avatar4.jpg" alt="avatar" />
+              </label>
+            </td>
             <td>
-              <input 
-                type="radio" name="avatar" value="avatar6" [(ngModel)]="avatar"
-                id="avatar6" class="input-hidden" />
+              <input type="radio" name="avatar" value="avatar5" [(ngModel)]="avatar" id="avatar5" class="input-hidden" />
+              <label for="avatar5">
+                <img src="../../../assets/avatars/avatar5.jpg" alt="avatar" />
+              </label>
+            </td>
+            <td>
+              <input type="radio" name="avatar" value="avatar6" [(ngModel)]="avatar" id="avatar6" class="input-hidden" />
               <label for="avatar6">
-                <img 
-                  src="../../../assets/avatars/avatar6.jpg"
-                  alt="avatar" />
-              </label></td>
-            </tr>
-          </table>
-    
-
-
+                <img src="../../../assets/avatars/avatar6.jpg" alt="avatar" />
+              </label>
+            </td>
+          </tr>
+        </table>
         <div class="access"> 
           <br><br>
             <input type="checkbox" class="form-check-input" id="dysrhythmia" [(ngModel)]="dysrhythmia" name="dysrhythmia" value="true">
