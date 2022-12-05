@@ -69,7 +69,11 @@ export class PhoneComponent implements OnInit {
     this.playersService.getByUsername(this.username, this.password).subscribe((result) => {
       var current_player = result;
       this.socketService.publish("players_update", player);
-      console.log(current_player)
+      if(JSON.stringify(current_player) === "{}"){
+        alert("User doesn't exist!!")
+      } else{
+        this.signInB();
+      }
       //console.log(JSON.parse(current_player))
     });
   }
@@ -85,9 +89,9 @@ export class PhoneComponent implements OnInit {
   }
 
   signInB(){
-    // this.sign=false
-    // this.main=true
-    // this.isSigned=true
+    this.sign=false
+    this.main=true
+    this.isSigned=true
   }
 
  signUpB(){
