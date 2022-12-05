@@ -18,4 +18,6 @@ import { PhoneModule } from '../phone.module';
   ],
   // exports:[SidebarComponent]
 })
-export class PhoneGameModule { }
+export class PhoneGameModule {
+  
+ }

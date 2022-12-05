@@ -37,7 +37,7 @@ export class PhoneComponent implements OnInit {
   }
 
   ngOnInit() { }
-  
+ 
   public postPlayer(): void {
     // Emit event for update tasks
     const player = new PlayerModel();
@@ -105,20 +105,7 @@ export class PhoneComponent implements OnInit {
     }
   }
 
-  // hide(){
-  //   console.log("out")
-  //   this.hided=!this.hided;
-  //   this.sign=!this.sign;
-  //   if(this.hided){
-  //     this.renderer.setStyle(document.body,'background','whitesmoke');
-  //   }
-  //   else {
-  //     this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/background.png)');
-  //   }
-   
-    
-    
-  // }
+ 
  
 
 }

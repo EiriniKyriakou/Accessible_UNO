@@ -17,11 +17,15 @@
     <br><br><br>
     <div class="row">
         <div class="col-10 row center">
-            <card class="card cards"></card>
-            <card class="card cards"></card>
-            <card class="card cards"></card>
-            <card class="card cards"></card>
-            <img class="card cards" src="../../../../assets/cards/normal/Blank Green Card (normal).png">
+            <div class="card wrapper" 
+            *ngFor="let card of cards"
+            #hoverCard
+            (mouseenter)="onMouseEnter(hoverCard)"
+            (mouseleave)="onMouseOut(hoverCard)" ><card class="cards"></card></div>
+         
+            <!-- <card class="card" 
+            [ngClass]="hov? 'cards' : 'cardsh'"
+            (mouseenter)="onMouseEnter($event)" ></card> -->
         </div>
         <div class="col-2 right">
             <img class="unobutton "  src="../../../../assets/photos/unobutton.png" alt="say uno">
