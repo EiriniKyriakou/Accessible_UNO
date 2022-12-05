@@ -1,42 +1,33 @@
-
-  .phone-main{
-    position: relative;
-    margin-top: 10%;
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 }
 
-.center{
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+.button1 {
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  background: #2952A3;
+  border: 1px solid #DAD8DB;
+  border-radius: 20px;
+  width: 20%;
+  font-family: 'Verdana';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 100%;
+  line-height: 49px;
+  text-align: center;
+  color: #FFFFFF;
 }
 
-div.container {
-    text-align: center;
-}
-
-label {
-    text-align: left;
-    width:100%
-}
-#button1 , #button2 {
-    display:inline-block;
-    /* additional code */
-}
-
-
-
-ul{
-    list-style: none;
+ul {
+  list-style: none;
 }
 
 .ul-center li {
-    margin: 15px;
-  }
-
-a{
-  color:white;
+  margin: 15px;
 }
 
-
-
-  
+a {
+  color: white;
+}
