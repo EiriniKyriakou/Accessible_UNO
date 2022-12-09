@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {GameModel} from 'src/app/global/models/games/game.model';
 import {GamesService} from 'src/app/global/services/games/game.service';
 import {SocketsService} from 'src/app/global/services/sockets/sockets.service';
+import arrayShuffle from 'array-shuffle';
 
 @Component({selector: 'app-table', templateUrl: './table.component.html', styleUrls: ['./table.component.scss']})
 export class TableComponent implements OnInit {
@@ -25,7 +26,7 @@ export class TableComponent implements OnInit {
 
     public postGame(): void { // Emit event for update tasks
         const game = new GameModel();
-        game.cards_on_deck = [
+        game.cards_on_deck = arrayShuffle([
             '0 Red.png',
             '0 Yellow.png',
             '0 Green.png',
@@ -134,7 +135,7 @@ export class TableComponent implements OnInit {
             '+4 WildCard4.png',
             '+4 WildCard4.png',
             '+4 WildCard4.png',
-        ];
+        ]);
         game.played_cards = [];
         game.turn = '';
         game.last_card = '';
