@@ -151,8 +151,11 @@ export class PhoneComponent implements OnInit {
       this.socketService.publish("player_joined", this.player._id);
       console.log(this.my_id)
     });
-    // this.main=false
-    // this.hourglass=true
+    this.main=false
+    this.hourglass=true
+    this.socketService.subscribe("game_start", (data: any) => {
+      this.changePage()
+    });
     // setTimeout(() => this.changePage(), 5000);  //60s
   }
 

@@ -42,12 +42,11 @@ export class TableWaitingComponent implements OnInit {
   }
 
   changePage(){
-    
     let newGame=this.game;
     newGame.players=this.players;
     this.gamesService.update(newGame).subscribe((result:any) => {
     });
-
+    this.socketService.publish("game_start", newGame._id);
     this.router.navigate(['/tablegame']);
   }
 }
