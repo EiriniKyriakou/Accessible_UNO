@@ -1,24 +1,41 @@
-.uno-card{
+html,
+body {
+    height: 100%;
+}
+
+.parent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 1080px;
+}
+
+.uno-card {
     height: 85%;
-    margin-right:-25px;
+    margin-right: -25px;
     box-shadow: 0 0 3px;
 }
-.player{
+
+.player {
     display: flex;
-    height:15%;
+    height: 15%;
 }
-.player-card{
-    width: 99%; 
+
+.player-card {
+    width: 99%;
 }
-.pause{
-    flex-grow: 1; 
+
+.pause {
+    flex-grow: 1;
     margin-left: 40px;
     margin-top: auto;
     margin-bottom: auto;
 }
-.message{
+
+.message {
     margin-top: -25px;
 }
+
 .center {
     display: block;
     margin-left: auto;
@@ -26,18 +43,19 @@
     text-align: center;
 }
 
-.upside-down{
+.upside-down {
     position: absolute;
     top: 5%;
     right: 40%;
     transform: rotate(180deg);
 }
+
 .right {
     position: absolute;
     top: 45%;
     left: 0;
     width: fit-content;
-    transform: rotate(90deg);  
+    transform: rotate(90deg);
 }
 
 .left {
@@ -47,7 +65,7 @@
     transform: rotate(-90deg);
 }
 
-.bottom{
+.bottom {
     position: absolute;
     bottom: 5%;
     right: 40%;
@@ -56,7 +74,6 @@
 .column {
     float: left;
     width: 50%;
-
 }
 
 .row:after {
@@ -65,8 +82,11 @@
     clear: both;
 }
 
-.arrows{
-    position: relative;
+.arrows {
+    height: 500px;
+    position: absolute;
+    top: 26%;
+    left: 33%;
 }
 
 
@@ -76,39 +96,20 @@
 //     left: 20%;
 //     height:10%;
 // }
-.cards-center{
+.cards-center {
     display: flex;
-    width:100%;
-    margin:0;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: auto;
 }
-.card{
-    //position: absolute;
-    margin: 0 20%;
+
+.card {
+    margin-right: 10%;
     width: 15%;
-    height:15%;
 }
-  
+
 .stack {
     width: 15%;
-    height:15%;
 
-}
-
-.v-h-center{
-    width: 50%;
-    height: 50%;
-    //-color: blue;
-    position: fixed; /*Can also be `fixed`*/
-    left: 10;
-    right: 0;
-    top: 0;
-    bottom: 20;
-    margin-top:22%;
-    margin-bottom: 25%;
-    margin-left:20%;
-    margin-right: 20%;
-    /*Solves a problem in which the content is being cut when the div is smaller than its' wrapper:*/
-    // max-width: 100%;
-    // max-height: 100%;
-    overflow: auto;
 }
