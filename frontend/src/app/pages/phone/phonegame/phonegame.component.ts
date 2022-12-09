@@ -18,12 +18,7 @@ export class PhoneGameComponent implements OnInit {
   onMouseOut(hoverCard: HTMLElement) {
     hoverCard.style.marginTop ="0%";
   }
-  // onMouseEnter(_event:any) {
-  //   console.log(_event);
-  //  //mou faineta xirsimo somehow
-  //  //https://www.telerik.com/blogs/angular-basics-how-to-use-angular-mouseenter-event
-    
-  // }
+  
   
   changeText: boolean;
   hided = false;
