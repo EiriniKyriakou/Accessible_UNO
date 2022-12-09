@@ -12,7 +12,7 @@ export class PhoneGameComponent implements OnInit {
 
   cards: string[] = ["jane", "mary", "bob", "john", "alex"];
   onMouseEnter(hoverCard: HTMLElement) {
-    hoverCard.style.marginTop ="-20%";
+    hoverCard.style.marginTop ="-12%";
   }
 
   onMouseOut(hoverCard: HTMLElement) {
