@@ -11,24 +11,24 @@
 }
 
 .letters{
-  font-size: 3vw;
+  font-size: 250%;
   color: white;
 }
 
 .letterGreen{
-  font-size: 5vw;
+  font-size: 450%;
   color: #00AA00;
 }
 .letterBlue{
-  font-size: 5vw;
+  font-size: 450%;
   color: #5555FF;
 }
 .letterRed{
-  font-size: 5vw;
+  font-size: 450%;
   color: #FF5555;
 }
 .letterYellow{
-  font-size: 5vw;
+  font-size: 450%;
   color: #FFAA00;
 }
 
