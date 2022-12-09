@@ -3,7 +3,7 @@
 <div class="phone-main">
     <div class="container mt-5" *ngIf="!hided">
       <!--Options Sign in or Sign up-->
-      <img class="center" src="../../../assets/table-images/UNO-logo.png" alt="UNO logo">
+      <img class="center uno" src="../../../assets/table-images/UNO-logo.png" alt="UNO logo">
       <ul *ngIf="!sign&&!main&&!hourglass&&!hided" class="ul-center">
         <li><button class="button" type="button" id="#button1" (click)="signUp()">Sign Up</button></li>
         <li><button class="button" type="button" id="#button2" (click)="signIn()">Sign In</button></li>
@@ -95,7 +95,7 @@
 
       <ul *ngIf="main">
         <br>
-        <li><button class="button" type="button" id="#button1" (click)="startGame()">Start Game</button></li>
+        <li><button *ngIf="join" class="button" type="button" id="#button1" (click)="startGame()">Join Game</button></li>
       </ul>
 
       <div *ngIf="hourglass">

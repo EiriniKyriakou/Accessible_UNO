@@ -1,39 +1,40 @@
-.passwordCheck{
-  color:red;
+.passwordCheck {
+  color: red;
 }
+
 table {
-    float: right;
-    margin-right: 100px;
+  float: right;
+  margin-right: 100px;
 }
+
 .avatar {
-    vertical-align: middle;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-  }
+  vertical-align: middle;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+}
 
 .input-hidden {
   position: absolute;
   left: -9999px;
 }
 
-input[type=radio]:checked + label>img {
+input[type=radio]:checked+label>img {
   border: 1px solid #fff;
   box-shadow: 0 0 3px 3px #2952A3;
 }
 
 /* Stuff after this is only to make things more pretty */
-input[type=radio] + label>img {
+input[type=radio]+label>img {
   border: 1px dashed #444;
   width: 50px;
   height: 50px;
   transition: 500ms all;
 }
 
-input[type=radio]:checked + label>img {
-  transform: 
-    rotateZ(-10deg) 
-    rotateX(10deg);
+input[type=radio]:checked+label>img {
+  transform:
+    rotateZ(-10deg) rotateX(10deg);
 }
 
 /*
@@ -43,103 +44,87 @@ input[type=radio]:checked + label>img {
 html {
   background-color: #fff;
   background-size: 100% 1.2em;
-  background-image: 
-    linear-gradient(
-      90deg, 
-      transparent 79px, 
-      #abced4 79px, 
-      #abced4 81px, 
-      transparent 81px
-    ),
-    linear-gradient(
-      #eee .1em, 
-      transparent .1em
-    );
-}
-  
-  html {
-    background-color: #fff;
-    background-size: 100% 1.2em;
-    background-image: 
-      linear-gradient(
-        90deg, 
-        transparent 79px, 
-        #abced4 79px, 
-        #abced4 81px, 
-        transparent 81px
-      ),
-      linear-gradient(
-        #eee .1em, 
-        transparent .1em
-      );
-  }
-
-
-
-.phone-main{
-    position: relative;
-    margin-top: 10%;
+  background-image:
+    linear-gradient(90deg,
+      transparent 79px,
+      #abced4 79px,
+      #abced4 81px,
+      transparent 81px),
+    linear-gradient(#eee .1em,
+      transparent .1em);
 }
 
-.center{
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+.phone-main {
+  position: relative;
+  margin-top: 10%;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.uno {
+  width: 100%;
 }
 
 div.container {
-    text-align: center;
+  text-align: center;
 }
 
 label {
-    text-align: left;
-    width:100%
-}
-#button1 , #button2 {
-    display:inline-block;
-    /* additional code */
+  text-align: left;
+  width: 100%
 }
 
+#button1, #button2 {
+  display: inline-block;
+}
 
+ul {
+  list-style: none;
+  
+}
 
-ul{
-    list-style: none;
+.ul-center{
+  padding-left: 0;
+  margin-left: 0;
 }
 
 .ul-center li {
-    margin: 15px;
-  }
+  margin: 15px;
+}
 
 
-.access{
-    //display: inline-block; 
-	text-align: left; 
-    margin:30px;
+.access {
+  //display: inline-block; 
+  text-align: left;
+  margin: 30px;
 }
 
 
 input {
-    position: relative;
-    width:100%;
-    left: 0.25%;
-    right: 0.25%;
-    background: #FFFEFE;
-    border: 1px solid rgba(0, 0, 0, 0.5);
-    border-radius: 10px;
+  position: relative;
+  width: 100%;
+  left: 0.25%;
+  right: 0.25%;
+  background: #FFFEFE;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
 }
 
 input[type="checkbox"] {
-    display: inline-block;
-    width: auto;
-    text-align: left;
-  }
+  display: inline-block;
+  width: auto;
+  text-align: left;
+}
 
-.a{
-  background: none!important;
+.a {
+  background: none !important;
   border: none;
-  padding: 0!important;
+  padding: 0 !important;
   color: #069;
   text-decoration: underline;
   cursor: pointer;
 }
-  

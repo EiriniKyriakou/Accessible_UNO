@@ -15,6 +15,7 @@ export class TableComponent implements OnInit {
     public dysrhythmia : boolean = false;
     public dyslexia : boolean = false;
     public impairedVision : boolean = false;
+    public active : boolean = true;
 
     constructor(private renderer : Renderer2, private router : Router, private gamesService : GamesService, private socketService : SocketsService) {
         this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/background.png)');
@@ -141,6 +142,7 @@ export class TableComponent implements OnInit {
         game.dysrhythmia = false;
         game.dyslexia = false;
         game.impairedVision = false;
+        game.active = true;
 
         this.gamesService.create(game).subscribe((result) => {
             this.played_cards = [
@@ -259,8 +261,9 @@ export class TableComponent implements OnInit {
             this.dysrhythmia = false;
             this.dyslexia = false;
             this.impairedVision = false;
+            this.active = true;
 
-            this.socketService.publish('games_update', game);
+            this.socketService.publish('games_create', game);
         });
     }
 

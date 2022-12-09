@@ -13,6 +13,7 @@ export interface IGame extends Document {
   dysrhythmia: boolean;
   dyslexia: boolean;
   impairedVision: boolean;
+  active: boolean;
 }
 
 // ------------------------------------------
@@ -26,7 +27,8 @@ const gameSchema = new Schema(
     current_player: {type: String, required: true},
     dysrhythmia: {type: Boolean, required: true},
     dyslexia: {type: Boolean, required: true},
-    impairedVision: {type: Boolean, required: true}
+    impairedVision: {type: Boolean, required: true},
+    active: {type: Boolean, required: true}
   },
   { ...DefaultSchemaOptions }
 );

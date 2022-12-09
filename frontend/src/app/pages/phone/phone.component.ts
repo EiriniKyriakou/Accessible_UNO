@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { PlayerModel } from 'src/app/global/models/players/player.model';
 import { SocketsService } from 'src/app/global/services/sockets/sockets.service';
 import { PlayersService } from 'src/app/global/services/players/players.service';
+import { GamesService } from 'src/app/global/services/games/game.service';
+
 import Swal from 'sweetalert2';
 @Component({
   selector: 'app-home',
@@ -16,6 +18,7 @@ export class PhoneComponent implements OnInit {
   hided=false
   signup=false
   isSigned=false
+  join=false;
 
   public player: PlayerModel[] = [];
   public username: string = '';
@@ -36,7 +39,8 @@ export class PhoneComponent implements OnInit {
     private router: Router,
     private playersService: PlayersService,
     private socketService: SocketsService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private gamesService: GamesService
   ) {
     this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/background.png)');
   }
@@ -107,15 +111,31 @@ export class PhoneComponent implements OnInit {
 
   signInB(){
     this.sign=false
-    this.main=true
     this.isSigned=true
+    this.main=true
+
+    this.socketService.subscribe("games_create", (data: any) => {
+      this.joinGame();
+    });
+    this.gamesService.getActive(true).subscribe((result) => {
+      var current_game = result;
+      console.log(JSON.stringify(current_game));
+      if(JSON.stringify(current_game) === "[]"){
+        console.log("empty")
+      }else{
+        this.joinGame();
+      }
+    });
+  }
+
+  joinGame(){
+    this.join=true;
   }
 
  signUpB(){
   Swal.fire('Your account is ready!', 'Sign in to start playing!', 'info')
   this.sign=true
   this.signup=false
-
  }
   startGame(){
     this.main=false

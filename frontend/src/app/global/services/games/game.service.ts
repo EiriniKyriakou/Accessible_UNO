@@ -31,6 +31,12 @@ export class GamesService {
       .pipe(map(result => new GameModel(result)));
   }
 
+  public getActive(active:boolean): Observable<GameModel[]> {
+    return this.http
+      .get<GameModel[]>(`${this.hostURl}/api/games/?active=${active}`)
+      .pipe(map(result => _.map(result, (t) => new GameModel(t))));
+  }
+
   public create(resource: GameModel): Observable<GameModel> {
     return this.http
       .post<GameModel>(`${this.hostURl}/api/games`, resource)
