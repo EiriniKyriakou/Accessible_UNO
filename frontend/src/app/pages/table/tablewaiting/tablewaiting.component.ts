@@ -23,18 +23,17 @@ export class TableWaitingComponent implements OnInit {
   }
 
   ngOnInit() {
-    //setTimeout(() => this.changePage(), 50000);  //60s
+    setTimeout(() => this.changePage(), 60000);  //60s
     this.socketService.subscribe("player_joined", (data: any) => {
-      console.log(data)
       this.players[Object.keys(this.players).length] = data;
-      console.log(this.players)
+      //console.log(this.players)
     });
   }
 
   changePage(){
-    console.log(this.game.players)
-    this.gamesService.update(this.game).subscribe((result) => {
-    });
-    //this.router.navigate(['/tablegame']);
+    console.log(this.players)
+    // this.gamesService.update(this.game).subscribe((result) => {
+    // });
+    this.router.navigate(['/tablegame']);
   }
 }
