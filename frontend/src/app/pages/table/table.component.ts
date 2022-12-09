@@ -10,6 +10,7 @@ export class TableComponent implements OnInit {
     public game : GameModel[] = [];
     public cards_on_deck : string[] = [];
     public played_cards : string[] = [];
+    public players : string[] = [];
     public turn : string = '';
     public last_card : string = '';
     public current_player : string = '';
@@ -137,6 +138,7 @@ export class TableComponent implements OnInit {
             '+4 WildCard4.png',
         ]);
         game.played_cards = [];
+        game.players = [];
         game.turn = '';
         game.last_card = '';
         game.current_player = '';
@@ -257,6 +259,7 @@ export class TableComponent implements OnInit {
                 '+4 WildCard4.png',
             ];
             this.turn = '';
+            this.players = [];
             this.last_card = '';
             this.current_player = '';
             this.dysrhythmia = false;

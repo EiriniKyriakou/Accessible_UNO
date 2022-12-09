@@ -7,6 +7,7 @@ import { DefaultSchemaOptions } from '../../../models/shared';
 export interface IGame extends Document {
   cards_on_deck: string[];
   played_cards: string[];
+  players: string[];
   turn: string;
   last_card: string;
   current_player: string;
@@ -22,6 +23,7 @@ const gameSchema = new Schema(
   {
     cards_on_deck: {type: Array<string>, required: true},
     played_cards: {type: Array<string>, required: true},
+    players: {type: Array<string>, required: true},
     turn: {type: String, required: true},
     last_card: {type: String, required: true},
     current_player: {type: String, required: true},

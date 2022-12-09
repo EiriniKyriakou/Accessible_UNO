@@ -43,11 +43,11 @@ export class GamesService {
       .pipe(map(result => new GameModel(result)));
   }
 
-//   public update(resource: GameModel): Observable<GameModel> {
-//     return this.http
-//       .put<GameModel>(`${this.hostURl}/api/games/${resource.username}`, resource)
-//       .pipe(map(result => new GameModel(result)));
-//   }
+   public update(resource: GameModel): Observable<GameModel> {
+    return this.http
+      .put<GameModel>(`${this.hostURl}/api/games/${resource._id}`, resource)
+      .pipe(map(result => new GameModel(result)));
+  }
 
   public delete(id: string): Observable<void> {
     return this.http.delete<void>(`${this.hostURl}/api/games/${id}`);

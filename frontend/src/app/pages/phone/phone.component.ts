@@ -19,8 +19,10 @@ export class PhoneComponent implements OnInit {
   signup=false
   isSigned=false
   join=false;
+  game_id = "";
+  my_id="";
 
-  public player: PlayerModel[] = [];
+  public player = new PlayerModel();
   public username: string = '';
   public password: string = '';
   public cpassword: string = '';
@@ -49,21 +51,20 @@ export class PhoneComponent implements OnInit {
  
   public postPlayer(): void {
     // Emit event for update tasks
-    const player = new PlayerModel();
-    player.username = this.username;
-    player.password = this.password;
-    player.avatar = this.avatar;
-    player.wins = this.wins;
-    player.games = this.games;
-    player.dysrhythmia = this.dysrhythmia;
-    player.dyslexia = this.dyslexia;
-    player.impairedVision = this.impairedVision;
-    player.unos=this.unos;
-    player.wild_cards=this.wild_cards;
-    player.score=this.score;
-    player.cards_hand=this.cards_hand;
+    this.player.username = this.username;
+    this.player.password = this.password;
+    this.player.avatar = this.avatar;
+    this.player.wins = this.wins;
+    this.player.games = this.games;
+    this.player.dysrhythmia = this.dysrhythmia;
+    this.player.dyslexia = this.dyslexia;
+    this.player.impairedVision = this.impairedVision;
+    this.player.unos=this.unos;
+    this.player.wild_cards=this.wild_cards;
+    this.player.score=this.score;
+    this.player.cards_hand=this.cards_hand;
 
-    this.playersService.create(player).subscribe((result) => {
+    this.playersService.create(this.player).subscribe((result) => {
       this.username = '';
       this.password = '';
       this.avatar = '';
@@ -73,7 +74,7 @@ export class PhoneComponent implements OnInit {
       this.dyslexia = false;
       this.impairedVision = false;
 
-      this.socketService.publish("players_create", player);
+      this.socketService.publish("players_create", this.player);
     });
   }
 
@@ -84,16 +85,17 @@ export class PhoneComponent implements OnInit {
     player.password = this.password;
     this.playersService.getByUsername(this.username, this.password).subscribe((result) => {
       var current_player = result[0];
-      //console.log(result[0].password, typeof(result));
+      this.my_id = current_player._id;
       this.socketService.publish("players_signin", player);
       console.log(current_player.username)
-      if(JSON.stringify(current_player) === "{}"){
+      if(JSON.stringify(current_player) === "[]"){
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
           text: 'Wrong username or password!',
         })
       } else{
+        this.player = current_player;
         this.signInB();
       }
     });
@@ -113,22 +115,28 @@ export class PhoneComponent implements OnInit {
     this.sign=false
     this.isSigned=true
     this.main=true
-
     this.socketService.subscribe("games_create", (data: any) => {
-      this.joinGame();
+      this.gamesService.getActive(true).subscribe((result) => {
+        var current_game = result;
+        this.game_id = result[0]._id;
+        console.log(this.game_id);
+      });
+      this.joinGameOption();
     });
     this.gamesService.getActive(true).subscribe((result) => {
       var current_game = result;
-      console.log(JSON.stringify(current_game));
+      this.game_id = result[0]._id;
+      ///console.log(this.game_id);
+      //console.log(JSON.stringify(current_game));
       if(JSON.stringify(current_game) === "[]"){
         console.log("empty")
       }else{
-        this.joinGame();
+        this.joinGameOption();
       }
     });
   }
 
-  joinGame(){
+  joinGameOption(){
     this.join=true;
   }
 
@@ -138,9 +146,14 @@ export class PhoneComponent implements OnInit {
   this.signup=false
  }
   startGame(){
-    this.main=false
-    this.hourglass=true
-    setTimeout(() => this.changePage(), 5000);  //60s
+    this.gamesService.getById(this.game_id).subscribe((result) => {
+      console.log(this.player)
+      this.socketService.publish("player_joined", this.player._id);
+      console.log(this.my_id)
+    });
+    // this.main=false
+    // this.hourglass=true
+    // setTimeout(() => this.changePage(), 5000);  //60s
   }
 
   changePage(){
