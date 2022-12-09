@@ -11,12 +11,12 @@
 }
 
 .letters{
-  font-size: 250%;
+  font-size: 3vw;
   color: white;
 }
 
 .letter{
-  font-size: 450%;
+  font-size: 5vw;
   color: rgba(0, 170, 0, 1);
 }
 
