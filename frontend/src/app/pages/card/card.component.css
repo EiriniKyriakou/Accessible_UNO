@@ -15,9 +15,21 @@
   color: white;
 }
 
-.letter{
+.letterGreen{
   font-size: 5vw;
-  color: rgba(0, 170, 0, 1);
+  color: #00AA00;
+}
+.letterBlue{
+  font-size: 5vw;
+  color: #5555FF;
+}
+.letterRed{
+  font-size: 5vw;
+  color: #FF5555;
+}
+.letterYellow{
+  font-size: 5vw;
+  color: #FFAA00;
 }
 
 .font{
