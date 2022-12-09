@@ -1,16 +1,10 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
-import { Router } from '@angular/router';
-import { GameModel } from 'src/app/global/models/games/game.model';
-import { GamesService } from 'src/app/global/services/games/game.service';
-import { SocketsService } from 'src/app/global/services/sockets/sockets.service';
-import arrayShuffle from 'array-shuffle';
+import {Component, OnInit, Renderer2} from '@angular/core';
+import {Router} from '@angular/router';
+import {GameModel} from 'src/app/global/models/games/game.model';
+import {GamesService} from 'src/app/global/services/games/game.service';
+import {SocketsService} from 'src/app/global/services/sockets/sockets.service';
 
-
-@Component({
-  selector: 'app-table',
-  templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss'],
-})
+@Component({selector: 'app-table', templateUrl: './table.component.html', styleUrls: ['./table.component.scss']})
 export class TableComponent implements OnInit {
     public game : GameModel[] = [];
     public cards_on_deck : string[] = [];
@@ -282,6 +276,4 @@ export class TableComponent implements OnInit {
         }
         this.router.navigate(navigationDetails);
     }
-    this.router.navigate(navigationDetails);
-  }
 }

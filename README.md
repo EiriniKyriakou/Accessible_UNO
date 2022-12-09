@@ -74,16 +74,3 @@ npm run dev
 ```
 
 **Do not forget**: mongod.exe (if on Windows) must be running for the Database to be used. 
-
-
-
-##Additions
->Npm installs we have added on the fornt end
-
-```
-npm install sweetalert2
-```
-
-```
-npm install array-shuffle
-```
