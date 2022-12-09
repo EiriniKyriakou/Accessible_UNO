@@ -7,14 +7,16 @@ import { FormsModule }   from '@angular/forms';
 import { CardComponent } from '../../card/card.component';
 import { SidebarComponent } from '../../sidebar/sidebar.component';
 import { PhoneModule } from '../phone.module';
+import { CardModule } from '../../card/card.module';
 
 @NgModule({
-  declarations: [PhoneGameComponent,CardComponent],
+  declarations: [PhoneGameComponent],
   imports: [
     CommonModule,
     PhoneGameRoutingModule,
     FormsModule,
-    PhoneModule
+    PhoneModule,
+    CardModule,
   ],
   // exports:[SidebarComponent]
 })
