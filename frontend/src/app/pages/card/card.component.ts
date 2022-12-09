@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CardModel } from 'src/app/global/models/cards/card.model';
 
 @Component({
   selector: 'card',
@@ -6,4 +7,10 @@ import { Component } from '@angular/core';
   styleUrls: [ './card.component.css' ]
 })
 
-export class CardComponent  {}
+export class CardComponent  {
+  protected selectedCard: CardModel = new CardModel({
+    name: "Red.png",
+    number:"5"
+  });
+  
+}
