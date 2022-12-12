@@ -12,16 +12,39 @@ export class CardComponent {
   public game = new GameModel();
 
   public newDeck: string[] = [];
-
+  public plusCard = false;
   @Input() selectedCard: CardModel | undefined;
   test: any;
   constructor(private gamesService: GamesService) {
     setTimeout(() => {
       if (this.selectedCard != undefined) {
-        this.test = new CardModel({
-          name: this.selectedCard?.name,
-          number: this.selectedCard?.number,
-        });
+        if (
+          this.selectedCard?.number === 'reverse' ||
+          this.selectedCard?.number === 'skip' ||
+          this.selectedCard?.number === 'normal'
+          //   this.selectedCard?.number === '+2' ||
+          //   this.selectedCard?.number === '+4'
+        ) {
+          this.test = new CardModel({
+            name: this.selectedCard?.name,
+            number: ' ',
+          });
+        } else {
+          if (
+            this.selectedCard?.number === '+2' ||
+            this.selectedCard?.number === '+4'
+          ) {
+            this.plusCard = true;
+          }
+          this.test = new CardModel({
+            name: this.selectedCard?.name,
+            number: this.selectedCard?.number,
+          });
+        }
+        // this.test = new CardModel({
+        //   name: this.selectedCard?.name,
+        //   number: this.selectedCard?.number,
+        // });
 
         this.gamesService.getActive(true).subscribe((result: any) => {
           var current_game = result[0];
@@ -40,8 +63,8 @@ export class CardComponent {
       }
     }, 1000);
   }
-  ngOnInit() { }
- 
+  ngOnInit() {}
+
   checkColor() {
     var ret = '';
     switch (this.selectedCard?.name) {
@@ -66,7 +89,6 @@ export class CardComponent {
         break;
       }
     }
-
     return ret;
   }
 }
