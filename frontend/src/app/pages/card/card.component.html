@@ -1,8 +1,8 @@
-<div class="marg">
-    <img class="card" src="../../../assets/cards/normal/{{selectedCard.name}}">
-    <div class="top-left letters font">{{selectedCard.number}}</div>
+<div class="marg" *ngIf="test!=undefined">
+    <img class="card" src="../../../assets/cards/normal/{{test.name}}">
+    <div class="top-left letters font">{{test.number}}</div>
     <!--Exists only on blank cards-->
-    <div class="bottom-right letters font">{{selectedCard.number}}</div>
+    <div class="bottom-right letters font">{{test.number}}</div>
 
-    <div class="middle letterRed font"> {{selectedCard.number}} </div>
+    <div class="middle letterRed font"> {{test.number}} </div>
 </div>
