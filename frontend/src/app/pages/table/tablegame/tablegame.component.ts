@@ -38,6 +38,8 @@ export class TableGameComponent implements OnInit {
       }
     });
 
+   
+
   }
 
   setCard(num: any,des: any,){
