@@ -16,11 +16,10 @@
     </div>
     <div class="row margin">
         <div class="col-10 row center">
-            <div class="card cards"
-            *ngFor="let card of cards"
-            #hoverCard
-            (mouseenter)="onMouseEnter(hoverCard)"
-            (mouseleave)="onMouseOut(hoverCard)"><card ></card></div>
+            <div class="card cards" *ngFor="let card of cards" #hoverCard (mouseenter)="onMouseEnter(hoverCard)"
+                (mouseleave)="onMouseOut(hoverCard)">
+                <card [selectedCard]="cardValue[cards.indexOf(card)]"></card>
+            </div>
         </div>
         
         <div class="col-2 right">

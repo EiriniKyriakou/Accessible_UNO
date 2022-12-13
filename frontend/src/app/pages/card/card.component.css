@@ -14,22 +14,29 @@
   font-size: 250%;
   color: white;
 }
-
+.centerletters{
+  font-size: 450%
+}
 .letterGreen{
-  font-size: 450%;
   color: #00AA00;
 }
 .letterBlue{
-  font-size: 450%;
   color: #5555FF;
 }
 .letterRed{
-  font-size: 450%;
   color: #FF5555;
 }
 .letterYellow{
-  font-size: 450%;
   color: #FFAA00;
+}
+@media only screen and (max-width: 1000px) {
+  .letters{
+    font-size: 170%;
+    color: white;
+  }
+  .centerletters{
+    font-size: 350%
+  }
 }
 
 .font{

@@ -2,6 +2,7 @@ import { Component, OnInit, Renderer2} from '@angular/core';
 import { PlayerModel } from 'src/app/global/models/players/player.model';
 import { SocketsService } from 'src/app/global/services/sockets/sockets.service';
 import { PlayersService } from 'src/app/global/services/players/players.service';
+import { CardModel } from 'src/app/global/models/cards/card.model';
 
 @Component({
   selector: 'app-home',
@@ -12,6 +13,8 @@ export class PhoneGameComponent implements OnInit {
   private my_id = "638e1dc6b135fc43cd1ff65a";
   public player = new PlayerModel();
   cards: string[] = [];
+  public cardValue : CardModel[] = [];
+  
   onMouseEnter(hoverCard: HTMLElement) {
     hoverCard.style.marginTop ="-12%";
   }
@@ -41,9 +44,15 @@ export class PhoneGameComponent implements OnInit {
           this.player = result;
           this.cards = result.cards_hand;
           console.log(this.cards)
+          var i = 0;
+          for (var card of this.cards){
+            var splitted = card.split(" ", 2); 
+            this.setCard(splitted[0],splitted[1],i);
+            i++;
+          }
         }
       });
-    },2000);
+    },3000);
   }
 
   getClickAction(_event: any) {
@@ -58,6 +67,12 @@ export class PhoneGameComponent implements OnInit {
     }
   }
 
-
+  setCard(num: any,des: any,index:number){
+    this.cardValue[index]={
+      name:des,
+      number:num
+    }
+    console.log(this.cardValue[index])
+  }
   
 }
