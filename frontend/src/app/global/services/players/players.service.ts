@@ -45,7 +45,7 @@ export class PlayersService {
 
   public update(resource: PlayerModel): Observable<PlayerModel> {
     return this.http
-      .put<PlayerModel>(`${this.hostURl}/api/players/${resource.username}`, resource)
+      .put<PlayerModel>(`${this.hostURl}/api/players/${resource._id}`, resource)
       .pipe(map(result => new PlayerModel(result)));
   }
 

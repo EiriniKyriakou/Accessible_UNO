@@ -9,8 +9,9 @@ import { PlayersService } from 'src/app/global/services/players/players.service'
   styleUrls: ['./phonegame.component.scss']
 })
 export class PhoneGameComponent implements OnInit {
-
-  cards: string[] = ["jane", "mary", "bob", "john", "alex"];
+  private my_id = "638e1dc6b135fc43cd1ff65a";
+  public player = new PlayerModel();
+  cards: string[] = [];
   onMouseEnter(hoverCard: HTMLElement) {
     hoverCard.style.marginTop ="-12%";
   }
@@ -24,13 +25,26 @@ export class PhoneGameComponent implements OnInit {
   hided = false;
   constructor(
     private socketService: SocketsService,
-    private renderer: Renderer2
-  ) {
+    private renderer: Renderer2,
+    private playersService: PlayersService) {
     this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/background.png)');
     this.changeText = false;
   }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    setTimeout(() => {
+      this.playersService.getById(this.my_id).subscribe((result:any) => {
+        console.log(result)
+        if(JSON.stringify(result) === undefined ){
+          console.log("error")
+        }else{
+          this.player = result;
+          this.cards = result.cards_hand;
+          console.log(this.cards)
+        }
+      });
+    },2000);
+  }
 
   getClickAction(_event: any) {
     // console.log(_event);

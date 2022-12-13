@@ -125,12 +125,12 @@ export class PhoneComponent implements OnInit {
     });
     this.gamesService.getActive(true).subscribe((result) => {
       var current_game = result;
-      this.game_id = result[0]._id;
       ///console.log(this.game_id);
       //console.log(JSON.stringify(current_game));
       if(JSON.stringify(current_game) === "[]"){
-        console.log("empty")
+        console.log("no active game")
       }else{
+        this.game_id = result[0]._id;
         this.joinGameOption();
       }
     });
@@ -148,7 +148,7 @@ export class PhoneComponent implements OnInit {
   startGame(){
     this.gamesService.getById(this.game_id).subscribe((result) => {
       console.log(this.player)
-      this.socketService.publish("player_joined", this.player._id);
+      this.socketService.publish("player_joined", this.player);
       console.log(this.my_id)
     });
     this.main=false
