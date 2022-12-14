@@ -15,6 +15,7 @@ export class PhoneGameComponent implements OnInit {
   public player = new PlayerModel();
   cards: string[] = [];
   public cardValue : CardModel[] = [];
+  cardsReady=false;
   
   onMouseEnter(hoverCard: HTMLElement) {
     hoverCard.style.marginTop ="-12%";
@@ -47,16 +48,21 @@ export class PhoneGameComponent implements OnInit {
         }else{
           this.player = result;
           this.cards = result.cards_hand;
-          //console.log(this.cards)
+          console.log(this.cards)
           var i = 0;
+
           for (var card of this.cards){
             var splitted = card.split(" ", 2); 
             this.setCard(splitted[0],splitted[1],i);
             i++;
+            console.count("is it ready ?")
           }
+        
         }
       });
-    },4000);
+
+      this.cardsReady=true;
+    },6000);
   }
 
   getClickAction(_event: any) {

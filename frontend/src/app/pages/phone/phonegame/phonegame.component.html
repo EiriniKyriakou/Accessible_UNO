@@ -1,6 +1,6 @@
 <!--<my-sidebar (onClickAction)="getClickAction($event)" >loading</my-sidebar>-->
 <div class="phonegame-main container">
-    <div class="row">
+    <div class="row" *ngIf="cardsReady">
         <div class="col-4 vertical-center">
             <div class="clock row">
                 <div class="col-4 pad"><img class="clockicon" src="../../../../assets/photos/stopwatch.png"></div>
@@ -22,13 +22,30 @@
             </div>
         </div>
         
-        <div class="col-2 right">
+        <div class="col-2 right" *ngIf="cardsReady">
             <img class="unobutton "  src="../../../../assets/photos/unobutton.png" alt="say uno">
         </div>
     </div>
-    <div class="row marg">
+    <div class="row marg" *ngIf="cardsReady">
         <div  class="col-4"><button  class="gamebutton" type="button"><h5>Draw</h5></button> </div>
         <div  class="col-4"> </div>
         <div  class="col-4"><button  class="gamebutton" type="button"><h5>Throw Card</h5></button></div>
+    </div>
+    <div class="row" *ngIf="!cardsReady">
+        <div class="container">
+            <div class="row">
+              <div id="loader">
+                  <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="loading"></div>
+              </div>
+            </div>
+          </div>
     </div>
 </div>
