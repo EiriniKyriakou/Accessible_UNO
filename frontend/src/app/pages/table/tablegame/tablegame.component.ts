@@ -14,7 +14,8 @@ import { PlayersService } from 'src/app/global/services/players/players.service'
 })
 export class TableGameComponent implements OnInit {
   public game = new GameModel();
-  public players: string[] = [];
+  public players : PlayerModel[] = [];
+  //public players: string[] = [];
   public cardValue:any;
 
   constructor(
@@ -60,11 +61,12 @@ export class TableGameComponent implements OnInit {
     var Players = this.game.players
     for (var player of Players) {
       this.playersService.getById(player).subscribe((result:any) => {
-        this.players.push(player);
+        this.players.push(result);
         result.cards_hand = [];
         this.playersService.update(result).subscribe((result: any) => {});
       });
     }
+    console.log(this.players)
     setTimeout(() => {this.dealCards(current_game)},1000);
   }
   

@@ -3,6 +3,7 @@ import { PlayerModel } from 'src/app/global/models/players/player.model';
 import { SocketsService } from 'src/app/global/services/sockets/sockets.service';
 import { PlayersService } from 'src/app/global/services/players/players.service';
 import { CardModel } from 'src/app/global/models/cards/card.model';
+import * as myGlobals from 'src/app/pages/phone/phone.component'; 
 
 @Component({
   selector: 'app-home',
@@ -10,7 +11,7 @@ import { CardModel } from 'src/app/global/models/cards/card.model';
   styleUrls: ['./phonegame.component.scss']
 })
 export class PhoneGameComponent implements OnInit {
-  private my_id = "638e1dc6b135fc43cd1ff65a";
+  private my_id = myGlobals.id;
   public player = new PlayerModel();
   cards: string[] = [];
   public cardValue : CardModel[] = [];
@@ -32,18 +33,21 @@ export class PhoneGameComponent implements OnInit {
     private playersService: PlayersService) {
     this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/background.png)');
     this.changeText = false;
+    //console.log(this.router.getCurrentNavigation().extras.state.example);
   }
 
   ngOnInit() { 
+    console.log("My id " + this.my_id);
     setTimeout(() => {
       this.playersService.getById(this.my_id).subscribe((result:any) => {
+        console.log("I'm the player:")
         console.log(result)
         if(JSON.stringify(result) === undefined ){
           console.log("error")
         }else{
           this.player = result;
           this.cards = result.cards_hand;
-          console.log(this.cards)
+          //console.log(this.cards)
           var i = 0;
           for (var card of this.cards){
             var splitted = card.split(" ", 2); 
@@ -52,7 +56,7 @@ export class PhoneGameComponent implements OnInit {
           }
         }
       });
-    },3000);
+    },4000);
   }
 
   getClickAction(_event: any) {
@@ -72,7 +76,7 @@ export class PhoneGameComponent implements OnInit {
       name:des,
       number:num
     }
-    console.log(this.cardValue[index])
+    //console.log(this.cardValue[index])
   }
   
 }

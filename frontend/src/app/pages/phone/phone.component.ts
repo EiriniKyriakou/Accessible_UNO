@@ -6,6 +6,8 @@ import { PlayersService } from 'src/app/global/services/players/players.service'
 import { GamesService } from 'src/app/global/services/games/game.service';
 
 import Swal from 'sweetalert2';
+export var id = "0";
+
 @Component({
   selector: 'app-home',
   templateUrl: './phone.component.html',
@@ -160,6 +162,7 @@ export class PhoneComponent implements OnInit {
   }
 
   changePage(){
+    id = this.player._id;
     this.router.navigate(['/phonegame']);
   }
 
