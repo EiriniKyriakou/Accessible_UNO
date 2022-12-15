@@ -87,21 +87,19 @@ export class PhoneComponent implements OnInit {
     player.password = this.password;
   
     this.playersService.getByUsername(this.username, this.password).subscribe((result) => {
-      var current_player = result[0];
-      //this.my_id = current_player._id;
-      this.socketService.publish("players_signin", player);
-      
-      if(JSON.stringify(current_player) === "[]"){
-        console.log("bom")
+      if(JSON.stringify(result) === "[]"){
+        console.log("Wrong username or password!")
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
           text: 'Wrong username or password!',
         })
       } else{
-        this.my_id = current_player._id;
-        console.log(current_player.username)
-        this.player = current_player;
+        this.socketService.publish("players_signin", player);
+        this.player = result[0];
+        this.my_id = result[0]._id;
+        console.log("This player signed in: ")
+        console.log(this.player)
         this.signInB();
       }
     });
@@ -125,6 +123,7 @@ export class PhoneComponent implements OnInit {
       this.gamesService.getActive(true).subscribe((result) => {
         var current_game = result;
         this.game_id = result[0]._id;
+        console.log("Active game with id: ")
         console.log(this.game_id);
       });
       this.joinGameOption();
@@ -153,9 +152,9 @@ export class PhoneComponent implements OnInit {
  }
   startGame(){
     this.gamesService.getById(this.game_id).subscribe((result) => {
-      console.log(this.player)
+      //console.log(this.player)
       this.socketService.publish("player_joined", this.player);
-      console.log(this.my_id)
+      //console.log(this.my_id)
     });
     this.main=false
     this.hourglass=true

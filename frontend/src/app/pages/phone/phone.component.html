@@ -14,9 +14,9 @@
       <!--  <form *ngIf="sign&&!hided&&!signup">  -->
         <br>
         <label for="username">Username:</label><br>
-        <input type="text" id="fname" [(ngModel)]="username" name="username" ><br>
+        <input class="input" type="text" id="fname" [(ngModel)]="username" name="username" ><br>
         <label for="Password">Password:</label><br>
-        <input type="password" id="password" [(ngModel)]="password" name="password" ><br><br>
+        <input class="input" type="password" id="password" [(ngModel)]="password" name="password" ><br><br>
         <button class="button" type="button" id="#button2" (click)="signinPlayer()">Sign In</button>
         <br>
         <br><p>Don't have an account? Sign up <button class="a" (click)="signUp()">here</button>.</p>
@@ -26,13 +26,13 @@
       <form  #playerForm="ngForm" (ngSubmit)="playerForm.form.valid && postPlayer()" *ngIf="sign&&signup&&!hided">
         <br>
         <label  class="left" for="username">Username:</label><br>
-        <input type="text" id="fname" [(ngModel)]="username" name="username" >
+        <input class="input" type="text" id="fname" [(ngModel)]="username" name="username" >
         <br><br>
         <label  class="left" for="Password">Password:</label><br>
-        <input type="password" id="password" [(ngModel)]="password" name="password" >
+        <input class="input" type="password" id="password" [(ngModel)]="password" name="password" >
         <br><br>
-        <label  class="left" for="Confirm Password">Confirm Password:</label><br>
-        <input type="password" id="cpassword" [(ngModel)]="cpassword" name="cpassword" >
+        <label class="left" for="Confirm Password">Confirm Password:</label><br>
+        <input class="input" type="password" id="cpassword" [(ngModel)]="cpassword" name="cpassword" >
         <div  class="passwordCheck" *ngIf="!(cpassword===password)"> Passwords do not match. </div>
         <br><br>
         <label>Select avatar:</label>
@@ -91,6 +91,7 @@
         <button class="button" type="button" id="#button2" [disabled]="!(cpassword===password)" (click)="signUpB(); postPlayer()">Sign Up</button>
         <br>
         <br><br><p>You already have an account? Sign in <button class="a" (click)="signIn()">here</button>.</p>
+        <br>
       </form>
 
       <ul class="ul-center" *ngIf="main">
