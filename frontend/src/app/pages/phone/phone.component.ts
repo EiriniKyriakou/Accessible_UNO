@@ -85,18 +85,22 @@ export class PhoneComponent implements OnInit {
     const player = new PlayerModel();
     player.username = this.username;
     player.password = this.password;
+  
     this.playersService.getByUsername(this.username, this.password).subscribe((result) => {
       var current_player = result[0];
-      this.my_id = current_player._id;
+      //this.my_id = current_player._id;
       this.socketService.publish("players_signin", player);
-      console.log(current_player.username)
+      
       if(JSON.stringify(current_player) === "[]"){
+        console.log("bom")
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
           text: 'Wrong username or password!',
         })
       } else{
+        this.my_id = current_player._id;
+        console.log(current_player.username)
         this.player = current_player;
         this.signInB();
       }
