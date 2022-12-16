@@ -16,9 +16,10 @@
     </div>
     <div class="row margin">
         <div class="col-10 row center">
-            <div class="card cards" *ngFor="let card of cards" #hoverCard (mouseenter)="onMouseEnter(hoverCard)"
-                (mouseleave)="onMouseOut(hoverCard)">
-                <card [selectedCard]="cardValue[cards.indexOf(card)]"></card>
+            <div class="card cards" *ngFor="let card of cards" #hoverCard (mouseenter)="onMouseEnter(hoverCard,cards.indexOf(card))"
+                (mouseleave)="onMouseOut(hoverCard)" >
+                <card [selectedCard]="cardValue[cards.indexOf(card)]" ></card>
+                <!-- {{cards.indexOf(card)}}  na balw kapws na pairnw to index gia to throw card giati twra egkefalos den -->
             </div>
         </div>
         
@@ -29,7 +30,7 @@
     <div class="row marg" *ngIf="cardsReady">
         <div  class="col-4"><button  class="gamebutton" type="button"><h5>Draw</h5></button> </div>
         <div  class="col-4"> </div>
-        <div  class="col-4"><button  class="gamebutton" type="button"><h5>Throw Card</h5></button></div>
+        <div  class="col-4"><button  class="gamebutton" type="button" (click)="throwCard()"><h5>Throw Card</h5></button></div>
     </div>
     <div class="row" *ngIf="!cardsReady">
         <div class="container">

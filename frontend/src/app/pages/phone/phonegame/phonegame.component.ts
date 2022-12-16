@@ -16,15 +16,31 @@ export class PhoneGameComponent implements OnInit {
   cards: string[] = [];
   public cardValue : CardModel[] = [];
   cardsReady=false;
-  
-  onMouseEnter(hoverCard: HTMLElement) {
+  selectedCard:any;
+  throwedCard: CardModel | undefined;
+
+  onMouseEnter(hoverCard: HTMLElement,index:any) {
     hoverCard.style.marginTop ="-12%";
+    this.selectedCard=index;
   }
 
   onMouseOut(hoverCard: HTMLElement) {
     hoverCard.style.marginTop ="0%";
   }
   
+  throwCard(){
+    this.throwedCard=this.cardValue[this.selectedCard];
+    //peta to apo to front
+    this.cardValue.splice(this.selectedCard, 1);
+    console.log(this.cardValue)
+    // this.player.cards_hand=this.cardValue;
+    this.cards.splice(this.selectedCard,1);
+    this.player.cards_hand=this.cards;
+    this.playersService.update(this.player).subscribe((result: any) => {});
+    this.selectedCard=null;
+    console.log(this.selectedCard)
+  }
+
   
   changeText: boolean;
   hided = false;
@@ -55,7 +71,6 @@ export class PhoneGameComponent implements OnInit {
             var splitted = card.split(" ", 2); 
             this.setCard(splitted[0],splitted[1],i);
             i++;
-            console.count("is it ready ?")
           }
         
         }
@@ -66,7 +81,6 @@ export class PhoneGameComponent implements OnInit {
   }
 
   getClickAction(_event: any) {
-    // console.log(_event);
     this.hided = _event;
     if(_event) {
       this.renderer.setStyle(document.body, 'background', 'whitesmoke');
