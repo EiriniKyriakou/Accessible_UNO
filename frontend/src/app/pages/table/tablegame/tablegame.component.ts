@@ -15,8 +15,9 @@ import { PlayersService } from 'src/app/global/services/players/players.service'
 export class TableGameComponent implements OnInit {
   public game = new GameModel();
   public players : PlayerModel[] = [];
-  //public players: string[] = [];
   public cardValue:any;
+  cards: string[] = [];
+  public turn:string = "";
 
   constructor(
     private router: Router, 
@@ -29,25 +30,49 @@ export class TableGameComponent implements OnInit {
 
   ngOnInit() {
     this.gamesService.getActive(true).subscribe((result:any) => {
-      var current_game = result[0];
-      if(JSON.stringify(current_game) === undefined ){
+      if(JSON.stringify(result[0]) === undefined ){
         console.log("No active Game")
       }else{
-        this.game = current_game;
-        var firstCard=current_game.cards_on_deck[0];
-        var splitted = firstCard.split(" ", 2); 
-        this.setCard(splitted[0],splitted[1]);
-        setTimeout(() => {
-          current_game.played_cards.push(firstCard);
-          current_game.last_card = firstCard;
-          current_game.cards_on_deck.shift();
-          let newGame = this.game;
-          this.gamesService.update(newGame).subscribe((result: any) => {});
-        },1000);
+        this.game = result[0];
+        let firstCard=this.game.cards_on_deck[0];
+        this.playedCard(firstCard);
+        this.removeCards(this.game); //old cards of players
+        this.setTurn();
       }
-      this.removeCards(current_game);
+    });
+
+    this.socketService.subscribe("card_played", (data: any) => {
+      this.playedCard(data);
+      this.setTurn();
     });
     
+  }
+
+  setTurn(){
+    if (this.turn === "" || this.turn === this.game.players[this.game.players.length-1]){
+      this.turn = this.game.players[0];
+      this.socketService.publish("turn", this.turn);
+    }else{
+      this.turn = this.game.players[this.game.players.indexOf(this.turn)+1]
+      this.socketService.publish("turn", this.turn);
+    }
+    console.log("Turn: " + this.turn)
+    this.game.turn = this.turn;
+    let newGame = this.game;
+    this.gamesService.update(newGame).subscribe((result: any) => {});
+  }
+
+  playedCard(card:any){
+    this.cards[0] = card;
+    var splitted = card.split(" ", 2); 
+    this.setCard(splitted[0],splitted[1]);
+    setTimeout(() => {
+      this.game.played_cards.push(card);
+      this.game.last_card = card;
+      this.game.cards_on_deck.shift();
+      let newGame = this.game;
+      this.gamesService.update(newGame).subscribe((result: any) => {});
+    },1000);
   }
 
   setCard(num: any,des: any,){

@@ -28,17 +28,16 @@ export class TableWaitingComponent implements OnInit {
     setTimeout(() => this.changePage(), 60000);  //60s
     setTimeout(() => {
       this.gamesService.getActive(true).subscribe((result:any) => {
-        var current_game = result;
-        console.log(result)
-        if(JSON.stringify(current_game) === "[]"){
+        if(JSON.stringify(result) === "[]"){
           console.log("No active game")
         }else{
-          this.game = current_game[0];
-          console.log(this.game._id)
+          this.game = result[0];
         }
       });
 
       this.socketService.subscribe("player_joined", (data: any) => {
+        this.game.players.push(data._id);
+        console.log("Joined player: " + data._id)
         if(data.dysrhythmia===true){
           this.game.dysrhythmia = true;
         }
@@ -48,8 +47,6 @@ export class TableWaitingComponent implements OnInit {
         if (data.impairedVision === true){
           this.game.impairedVision = true;
         }
-        this.game.players.push(data._id);
-        //console.log(this.game)
       });
     },1000);
     

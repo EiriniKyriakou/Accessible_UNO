@@ -98,8 +98,8 @@ export class PhoneComponent implements OnInit {
         this.socketService.publish("players_signin", player);
         this.player = result[0];
         this.my_id = result[0]._id;
-        console.log("This player signed in: ")
-        console.log(this.player)
+        //console.log("This player signed in: ")
+        //console.log(this.player)
         this.signInB();
       }
     });
@@ -133,7 +133,7 @@ export class PhoneComponent implements OnInit {
       ///console.log(this.game_id);
       //console.log(JSON.stringify(current_game));
       if(JSON.stringify(current_game) === "[]"){
-        console.log("no active game")
+        console.log("No Active Game")
       }else{
         this.game_id = result[0]._id;
         this.joinGameOption();

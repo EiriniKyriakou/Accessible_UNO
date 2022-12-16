@@ -45,7 +45,8 @@
   <div class="v-h-center">
     <img class="arrows" src="../../../assets/table-images/arrow-turns.png" alt="arrows for turn">
     <div class="cards-center">
-      <card class="card" *ngIf="cardValue!=undefined" [selectedCard]="cardValue"></card>
+      <div class="card"*ngFor="let card of cards" style="height: fit-content">
+      <card *ngIf="cardValue!=undefined" [selectedCard]="cardValue"></card></div>
       <!-- <img class="image1"  src="../../../assets/table-images/Blank Blue Card (normal).png" alt="uno card"> -->
       <img class="stack" src="../../../assets/table-images/uno-card.png" alt="uno card">
     </div>

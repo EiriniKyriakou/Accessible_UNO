@@ -11,13 +11,16 @@ import * as myGlobals from 'src/app/pages/phone/phone.component';
   styleUrls: ['./phonegame.component.scss']
 })
 export class PhoneGameComponent implements OnInit {
-  private my_id = myGlobals.id;
+  my_id = myGlobals.id;
+  //private my_id = "63932a05a130d8411cd3f399"
   public player = new PlayerModel();
   cards: string[] = [];
   public cardValue : CardModel[] = [];
   cardsReady=false;
   selectedCard:any;
-  throwedCard: CardModel | undefined;
+  //throwedCard: CardModel | undefined;
+  throwedCard: string =""
+  public my_turn = false;
 
   onMouseEnter(hoverCard: HTMLElement,index:any) {
     hoverCard.style.marginTop ="-12%";
@@ -29,7 +32,7 @@ export class PhoneGameComponent implements OnInit {
   }
   
   throwCard(){
-    this.throwedCard=this.cardValue[this.selectedCard];
+    this.throwedCard=this.cards[this.selectedCard];
     //peta to apo to front
     this.cardValue.splice(this.selectedCard, 1);
     console.log(this.cardValue)
@@ -37,6 +40,7 @@ export class PhoneGameComponent implements OnInit {
     this.cards.splice(this.selectedCard,1);
     this.player.cards_hand=this.cards;
     this.playersService.update(this.player).subscribe((result: any) => {});
+    this.socketService.publish("card_played", this.throwedCard);
     this.selectedCard=null;
     console.log(this.selectedCard)
   }
@@ -55,6 +59,13 @@ export class PhoneGameComponent implements OnInit {
 
   ngOnInit() { 
     console.log("My id " + this.my_id);
+    this.socketService.subscribe("turn", (data: any) => {
+      if (data != this.my_id){
+        this.my_turn = false;
+      }else{
+        this.my_turn = true;
+      }
+    });
     setTimeout(() => {
       this.playersService.getById(this.my_id).subscribe((result:any) => {
         console.log("I'm the player:")
@@ -64,18 +75,15 @@ export class PhoneGameComponent implements OnInit {
         }else{
           this.player = result;
           this.cards = result.cards_hand;
-          console.log(this.cards)
+          //console.log(this.cards)
           var i = 0;
-
           for (var card of this.cards){
             var splitted = card.split(" ", 2); 
             this.setCard(splitted[0],splitted[1],i);
             i++;
-          }
-        
+          }        
         }
       });
-
       this.cardsReady=true;
     },6000);
   }

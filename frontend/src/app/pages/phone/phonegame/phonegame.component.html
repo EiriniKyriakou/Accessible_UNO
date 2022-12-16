@@ -8,7 +8,7 @@
             </div>
         </div>
         <div class="col-4 head center">
-            <h3>It's Your Turn</h3>
+            <h3 *ngIf="my_turn">It's Your Turn</h3>
         </div>
         <div class="col-4 right vertical-center">
             <img class="cancelicon" src="../../../../assets/photos/quit.png" alt="quit game">
@@ -28,9 +28,9 @@
         </div>
     </div>
     <div class="row marg" *ngIf="cardsReady">
-        <div  class="col-4"><button  class="gamebutton" type="button"><h5>Draw</h5></button> </div>
+        <div  class="col-4"><button  [disabled]="my_turn===false" class="gamebutton" type="button"><h5>Draw</h5></button> </div>
         <div  class="col-4"> </div>
-        <div  class="col-4"><button  class="gamebutton" type="button" (click)="throwCard()"><h5>Throw Card</h5></button></div>
+        <div  class="col-4"><button  [disabled]="my_turn===false" class="gamebutton" type="button" (click)="throwCard()"><h5>Throw Card</h5></button></div>
     </div>
     <div class="row" *ngIf="!cardsReady">
         <div class="container">
