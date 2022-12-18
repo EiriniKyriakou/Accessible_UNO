@@ -54,8 +54,14 @@ export class TableGameComponent implements OnInit {
     });
 
     this.socketService.subscribe('card_played', (data: any) => {
-      this.playedCard(data);
+      this.playedCard(data.card);
+      this.updatePlayer(data.player);
       this.setTurn();
+    });
+
+    this.socketService.subscribe('draw_card', (data: PlayerModel) => {
+      console.log(data);
+      this.updatePlayer(data);
     });
   }
 
@@ -124,5 +130,17 @@ export class TableGameComponent implements OnInit {
         this.playersService.update(result).subscribe((result: any) => {});
       });
     }
+  }
+
+  updatePlayer(data: PlayerModel) {
+    let i = 0;
+    for (let player of this.players) {
+      if (player._id === data._id) {
+        this.players[i] = data;
+        console.log("Player updated");
+      }
+      i++;
+    }
+    console.log(this.players)
   }
 }

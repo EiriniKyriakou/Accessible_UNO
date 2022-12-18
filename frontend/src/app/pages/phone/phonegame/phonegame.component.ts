@@ -13,17 +13,19 @@ import { GameModel } from 'src/app/global/models/games/game.model';
 })
 export class PhoneGameComponent implements OnInit {
   my_id = myGlobals.id;
-  public player = new PlayerModel();
+  player = new PlayerModel();
   cards: string[] = [];
-  public cardValue : CardModel[] = [];
+  cardValue : CardModel[] = [];
   cardsReady=false;
   selectedCard:any;
   throwedCard: string =""
-  public my_turn = false;
-  public game = new GameModel();
+  my_turn = false;
+  game = new GameModel();
   drawedCard:string=""
+  timer:any;
   changeText: boolean;
   hided = false;
+
   constructor(
     private socketService: SocketsService,
     private renderer: Renderer2,
@@ -31,7 +33,6 @@ export class PhoneGameComponent implements OnInit {
     private gamesService: GamesService,) {
     this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/background.png)');
     this.changeText = false;
-    //console.log(this.router.getCurrentNavigation().extras.state.example);
   }
 
   ngOnInit() { 
@@ -62,6 +63,7 @@ export class PhoneGameComponent implements OnInit {
         }
       });
       this.cardsReady=true;
+      this.startTimer(1);
     },6000);
   }
   
@@ -75,7 +77,6 @@ export class PhoneGameComponent implements OnInit {
   }
   
   drawCard(){
-
     this.gamesService.getActive(true).subscribe((result:any) => {
       if(JSON.stringify(result[0]) === undefined ){
         console.log("No active Game")
@@ -88,7 +89,9 @@ export class PhoneGameComponent implements OnInit {
         this.game.cards_on_deck.shift();
         this.gamesService.update(this.game).subscribe((result: any) => {});
         this.player.cards_hand=this.cards;
-        this.playersService.update(this.player).subscribe((result: any) => {});
+        this.playersService.update(this.player).subscribe((result: any) => {
+          this.socketService.publish("draw_card", this.player);
+        });
       }
     });
     
@@ -102,13 +105,39 @@ export class PhoneGameComponent implements OnInit {
     // this.player.cards_hand=this.cardValue;
     this.cards.splice(this.selectedCard,1);
     this.player.cards_hand=this.cards;
-    this.playersService.update(this.player).subscribe((result: any) => {});
-    this.socketService.publish("card_played", this.throwedCard);
+    this.playersService.update(this.player).subscribe((result: any) => {
+      let tmp={
+        card: this.throwedCard,
+        player: this.player
+      }
+      this.socketService.publish("card_played", tmp);
+    });
     this.selectedCard=null;
     console.log(this.selectedCard)
   }
 
-  
+  startTimer(minute: number) {
+    let seconds: number = minute * 60;
+    let textSec: any = "0";
+    let statSec: number = 60;
+    const prefix = minute < 10 ? "0" : "";
+    const timer = setInterval(() => {
+      seconds--;
+      if (statSec != 0) statSec--;
+      else statSec = 59;
+
+      if (statSec < 10) {
+        textSec = "0" + statSec;
+      } else textSec = statSec;
+
+      this.timer = `${prefix}${Math.floor(seconds / 60)}:${textSec}`;
+
+      if (seconds == 0) {
+        console.log("finished");
+        clearInterval(timer);
+      }
+    }, 1000);
+  }
 
   getClickAction(_event: any) {
     this.hided = _event;

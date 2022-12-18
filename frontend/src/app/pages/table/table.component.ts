@@ -272,12 +272,36 @@ export class TableComponent implements OnInit {
     }
 
     startGame($myParam : string = ''): void {
-        this.postGame();
+        this.inactiveGames();
 
         const navigationDetails: string[] = ['/tablewaiting'];
         if ($myParam.length) {
             navigationDetails.push($myParam);
         }
         this.router.navigate(navigationDetails);
+    }
+
+    inactiveGames(){
+        this.gamesService.getActive(true).subscribe((result:any) => {
+
+            if(JSON.stringify(result) === "[]"){
+              console.log("No Active Games");
+              console.log("Post game");
+              this.postGame();
+            }else{
+                let i=-1;
+                let length = result.length-1;
+                for(let active_game of result){
+                    active_game.active = false;
+                    this.gamesService.update(active_game).subscribe((result:any) => {
+                        i++;
+                        if (i === length){
+                            console.log("Post game");
+                            this.postGame();
+                        }
+                    });
+                }
+            }
+          });
     }
 }

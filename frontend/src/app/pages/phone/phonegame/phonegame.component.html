@@ -2,9 +2,9 @@
 <div class="phonegame-main container">
     <div class="row" *ngIf="cardsReady">
         <div class="col-4 vertical-center">
-            <div class="clock row">
+            <div class="clock row" *ngIf="my_turn">
                 <div class="col-4 pad"><img class="clockicon" src="../../../../assets/photos/stopwatch.png"></div>
-                <div class="col-8 pad center"><h4>00:45</h4></div>
+                <div class="col-8 pad center"><h4>{{timer}}</h4></div>
             </div>
         </div>
         <div class="col-4 head center">
