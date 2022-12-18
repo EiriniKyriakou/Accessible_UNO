@@ -47,6 +47,8 @@ export class TableGameComponent implements OnInit {
       } else {
         this.game = result[0];
         let firstCard = this.game.cards_on_deck[0];
+        console.log(this.game)
+        console.log(firstCard)
         this.playedCard(firstCard);
         this.removeCards(this.game); //old cards of players
         this.setTurn();
@@ -62,6 +64,11 @@ export class TableGameComponent implements OnInit {
     this.socketService.subscribe('draw_card', (data: PlayerModel) => {
       console.log(data);
       this.updatePlayer(data);
+    });
+
+    this.socketService.subscribe('player_passed', (data: PlayerModel) => {
+      console.log("socket pass!")
+      this.setTurn();
     });
   }
 
