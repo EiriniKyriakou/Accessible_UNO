@@ -23,8 +23,11 @@ export class TableGameComponent implements OnInit {
   public game = new GameModel();
   public players: PlayerModel[] = [];
   public cardValue: any;
-  cards: string[] = [];
+  public cards: string[] = [];
   public turn: string = '';
+  public length = 0;
+  public number_of_cards=[0,0,0,0]
+  public turns_of_players=-1;
 
   constructor(
     private router: Router,
@@ -46,6 +49,8 @@ export class TableGameComponent implements OnInit {
         console.log('No active Game');
       } else {
         this.game = result[0];
+        this.length = this.game.players.length;
+        console.log("lenght="+this.length);
         let firstCard = this.game.cards_on_deck[0];
         //console.log(this.game)
         //console.log(firstCard)
@@ -79,12 +84,15 @@ export class TableGameComponent implements OnInit {
       this.turn === this.game.players[this.game.players.length - 1]
     ) {
       this.turn = this.game.players[0];
+      this.turns_of_players=0;
       this.socketService.publish('turn', this.turn);
     } else {
       this.turn = this.game.players[this.game.players.indexOf(this.turn) + 1];
+      this.turns_of_players++;
       this.socketService.publish('turn', this.turn);
     }
     console.log('Turn: ' + this.turn);
+    console.log("turns_of_players="+this.turns_of_players)
     this.game.turn = this.turn;
     let newGame = this.game;
     this.gamesService.update(newGame).subscribe((result: any) => {});
@@ -139,6 +147,7 @@ export class TableGameComponent implements OnInit {
         this.playersService.update(result).subscribe((result: any) => {});
       });
     }
+    this.number_of_cards=[7,7,7,7];
   }
 
   updatePlayer(data: PlayerModel) {
@@ -146,6 +155,7 @@ export class TableGameComponent implements OnInit {
     for (let player of this.players) {
       if (player._id === data._id) {
         this.players[i] = data;
+        this.number_of_cards[i] = data.cards_hand.length;
         console.log("Player updated");
       }
       i++;

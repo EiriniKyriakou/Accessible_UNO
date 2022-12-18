@@ -1,51 +1,41 @@
 <div class="main parent">
-
-  <div class="player upside-down">
-    <div class="player-card">
-      <img class="uno-card" src="../../../assets/table-images/uno-card.png" alt="uno card">
-      <img class="uno-card" src="../../../assets/table-images/uno-card.png" alt="uno card">
-      <img class="uno-card" src="../../../assets/table-images/uno-card.png" alt="uno card">
+  <div class="player right" *ngIf="length>0">
+    <div class="player-card" *ngFor="let _ of [].constructor(number_of_cards[0])">
       <img class="uno-card" src="../../../assets/table-images/uno-card.png" alt="uno card">
     </div>
     <div class="pause"><input type="image" src="../../../assets/table-images/pause-button.png"></div>
   </div>
-  <h5 class="message upside-down">It's Your Turn</h5>
+  <h5 *ngIf="turns_of_players==0" class="message right">It's Your Turn</h5>
 
-  <div class="player right">
-    <div class="player-card">
-      <img class="uno-card" src="../../../assets/table-images/uno-card.png" alt="uno card">
+  <div class="player bottom" *ngIf="length>1">
+    <div class="player-card" *ngFor="let _ of [].constructor(number_of_cards[1])">
       <img class="uno-card" src="../../../assets/table-images/uno-card.png" alt="uno card">
     </div>
     <div class="pause"><input type="image" src="../../../assets/table-images/pause-button.png"></div>
-    <h1></h1>
   </div>
+  <h5 *ngIf="turns_of_players==1" class="message bottom">It's Your Turn</h5>
 
-  <div class="player left">
-    <div class="player-card">
-      <img class="uno-card" src="../../../assets/table-images/uno-card.png" alt="uno card">
-      <img class="uno-card" src="../../../assets/table-images/uno-card.png" alt="uno card">
-      <img class="uno-card" src="../../../assets/table-images/uno-card.png" alt="uno card">
+  <div class="player left" *ngIf="length>2">
+    <div class="player-card" *ngFor="let _ of [].constructor(number_of_cards[2])">
       <img class="uno-card" src="../../../assets/table-images/uno-card.png" alt="uno card">
     </div>
     <div class="pause"><input type="image" src="../../../assets/table-images/pause-button.png"></div>
-    <h1></h1>
   </div>
+  <h5 *ngIf="turns_of_players==2" class="message left">It's Your Turn</h5>
 
-  <div class="player bottom">
-    <div class="player-card">
-      <img class="uno-card" src="../../../assets/table-images/uno-card.png" alt="uno card">
-      <img class="uno-card" src="../../../assets/table-images/uno-card.png" alt="uno card">
-      <img class="uno-card" src="../../../assets/table-images/uno-card.png" alt="uno card">
+  <div class="player upside-down" *ngIf="length>3">
+    <div class="player-card" *ngFor="let _ of [].constructor(number_of_cards[3])">
       <img class="uno-card" src="../../../assets/table-images/uno-card.png" alt="uno card">
     </div>
     <div class="pause"><input type="image" src="../../../assets/table-images/pause-button.png"></div>
-    <h1></h1>
   </div>
+  <h5 *ngIf="turns_of_players==3" class="message upside-down">It's Your Turn</h5>
+
 
   <div class="v-h-center">
     <img class="arrows" src="../../../assets/table-images/arrow-turns.png" alt="arrows for turn">
     <div class="cards-center">
-      <div class="card"*ngFor="let card of cards" style="height: fit-content">
+      <div class="card" *ngFor="let card of cards" style="height: fit-content">
       <card *ngIf="cardValue!=undefined" [selectedCard]="cardValue"></card></div>
       <!-- <img class="image1"  src="../../../assets/table-images/Blank Blue Card (normal).png" alt="uno card"> -->
       <img class="stack" src="../../../assets/table-images/uno-card.png" alt="uno card">
