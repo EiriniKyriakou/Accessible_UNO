@@ -23,9 +23,11 @@ export class PhoneGameComponent implements OnInit {
   game = new GameModel();
   drawedCard: string = '';
   timer: any;
+  theTimer: any;
   changeText: boolean;
   hided = false;
   drawed = false;
+  endOfTimer = false;
 
   constructor(
     private socketService: SocketsService,
@@ -44,11 +46,14 @@ export class PhoneGameComponent implements OnInit {
   ngOnInit() {
     console.log('My id ' + this.my_id);
     this.socketService.subscribe('turn', (data: any) => {
+      this.drawed = false;
+      this.endOfTimer = false;
+      clearInterval(this.theTimer);
       if (data != this.my_id) {
         this.my_turn = false;
       } else {
         this.my_turn = true;
-        //this.startTimer(1);
+        this.startTimer(1);
       }
     });
     setTimeout(() => {
@@ -70,7 +75,8 @@ export class PhoneGameComponent implements OnInit {
         }
       });
       this.cardsReady = true;
-      
+      clearInterval(this.theTimer);
+      this.startTimer(1);
     }, 6000);
   }
 
@@ -98,6 +104,10 @@ export class PhoneGameComponent implements OnInit {
         this.player.cards_hand = this.cards;
         this.playersService.update(this.player).subscribe((result: any) => {
           this.socketService.publish('draw_card', this.player);
+          console.log('I draw');
+          if (this.endOfTimer===true){
+            this.pass();
+          }
         });
         this.drawed = true;
       }
@@ -105,16 +115,16 @@ export class PhoneGameComponent implements OnInit {
   }
 
   pass() {
-    this.socketService.publish('player_passed', this.player);
     this.drawed = false;
-    console.log('pass!');
+    this.socketService.publish('player_passed', "");
+    console.log('I pass');
   }
 
   throwCard() {
+    this.drawed = false;
     this.throwedCard = this.cards[this.selectedCard];
     //peta to apo to front
     this.cardValue.splice(this.selectedCard, 1);
-    console.log(this.cardValue);
     // this.player.cards_hand=this.cardValue;
     this.cards.splice(this.selectedCard, 1);
     this.player.cards_hand = this.cards;
@@ -124,9 +134,10 @@ export class PhoneGameComponent implements OnInit {
         player: this.player,
       };
       this.socketService.publish('card_played', tmp);
+      console.log("I throw a card");
     });
     this.selectedCard = null;
-    console.log(this.selectedCard);
+    //console.log(this.selectedCard);
   }
 
   startTimer(minute: number) {
@@ -134,7 +145,7 @@ export class PhoneGameComponent implements OnInit {
     let textSec: any = '0';
     let statSec: number = 60;
     const prefix = minute < 10 ? '0' : '';
-    const timer = setInterval(() => {
+    this.theTimer = setInterval(() => {
       seconds--;
       if (statSec != 0) statSec--;
       else statSec = 59;
@@ -146,10 +157,14 @@ export class PhoneGameComponent implements OnInit {
       this.timer = `${prefix}${Math.floor(seconds / 60)}:${textSec}`;
 
       if (seconds == 0) {
-        console.log('finished');
-        this.drawCard();
-        this.pass();
-        clearInterval(timer);
+        console.log('End of timer');
+        clearInterval(this.theTimer);
+        this.endOfTimer = true;
+        if ( this.drawed === false ){
+          this.drawCard();
+        }else {
+          this.pass();
+        }
       }
     }, 1000);
   }

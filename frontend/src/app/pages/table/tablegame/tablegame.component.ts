@@ -47,8 +47,8 @@ export class TableGameComponent implements OnInit {
       } else {
         this.game = result[0];
         let firstCard = this.game.cards_on_deck[0];
-        console.log(this.game)
-        console.log(firstCard)
+        //console.log(this.game)
+        //console.log(firstCard)
         this.playedCard(firstCard);
         this.removeCards(this.game); //old cards of players
         this.setTurn();
@@ -56,18 +56,19 @@ export class TableGameComponent implements OnInit {
     });
 
     this.socketService.subscribe('card_played', (data: any) => {
+      console.log("Player Played a Card");
       this.playedCard(data.card);
       this.updatePlayer(data.player);
       this.setTurn();
     });
 
     this.socketService.subscribe('draw_card', (data: PlayerModel) => {
-      console.log(data);
+      console.log("Player Drew a Card");
       this.updatePlayer(data);
     });
 
-    this.socketService.subscribe('player_passed', (data: PlayerModel) => {
-      console.log("socket pass!")
+    this.socketService.subscribe('player_passed', (data: any) => {
+      console.log("Player Passed")
       this.setTurn();
     });
   }
@@ -118,6 +119,7 @@ export class TableGameComponent implements OnInit {
         this.playersService.update(result).subscribe((result: any) => {});
       });
     }
+    console.log("The players of the game:")
     console.log(this.players);
     setTimeout(() => {
       this.dealCards(current_game);
@@ -148,6 +150,6 @@ export class TableGameComponent implements OnInit {
       }
       i++;
     }
-    console.log(this.players)
+    //console.log(this.players)
   }
 }
