@@ -28,7 +28,7 @@
         </div>
     </div>
     <div class="row marg" *ngIf="cardsReady">
-        <div  class="col-4"><button  [disabled]="my_turn===false" class="gamebutton" type="button"><h5>Draw</h5></button> </div>
+        <div  class="col-4"><button  [disabled]="my_turn===false" class="gamebutton" type="button" (click)="drawCard()"><h5>Draw</h5></button> </div>
         <div  class="col-4"> </div>
         <div  class="col-4"><button  [disabled]="my_turn===false" class="gamebutton" type="button" (click)="throwCard()"><h5>Throw Card</h5></button></div>
     </div>
