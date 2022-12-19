@@ -32,7 +32,17 @@
   <h5 *ngIf="turns_of_players==3" class="message upside-down">It's Your Turn</h5>
 
 
-  <div class="v-h-center">
+  <div *ngIf="reverse" class="v-h-center">
+    <img class="arrows" src="../../../assets/table-images/arrow-turns-reverse.png" alt="reverse arrows for turn">
+    <div class="cards-center">
+      <div class="card" *ngFor="let card of cards" style="height: fit-content">
+      <card *ngIf="cardValue!=undefined" [selectedCard]="cardValue"></card></div>
+      <!-- <img class="image1"  src="../../../assets/table-images/Blank Blue Card (normal).png" alt="uno card"> -->
+      <img class="stack" src="../../../assets/table-images/uno-card.png" alt="uno card">
+    </div>
+  </div>
+
+  <div *ngIf="!reverse" class="v-h-center">
     <img class="arrows" src="../../../assets/table-images/arrow-turns.png" alt="arrows for turn">
     <div class="cards-center">
       <div class="card" *ngFor="let card of cards" style="height: fit-content">

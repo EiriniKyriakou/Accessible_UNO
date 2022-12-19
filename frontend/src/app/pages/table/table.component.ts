@@ -295,7 +295,7 @@ export class TableComponent implements OnInit {
                     active_game.active = false;
                     this.gamesService.update(active_game).subscribe((result:any) => {
                         i++;
-                        console.log("i=",i)
+                        //console.log("i=",i)
                         if (i === length){
                             console.log("Post game");
                             this.postGame();

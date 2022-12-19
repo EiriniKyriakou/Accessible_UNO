@@ -114,24 +114,26 @@ export class PhoneGameComponent implements OnInit {
         console.log('No active Game');
       } else {
         this.game = result[0];
-
+        console.log("The game (before i draw a card):")
+        console.log(this.game);
         for(let i=0;i<num;i++){
-        let tokenCard = this.game.cards_on_deck[0];
-        this.cards.push(tokenCard);
-        var splitted = tokenCard.split(' ', 2);
-        this.setCard(splitted[0], splitted[1], this.cardValue.length);
-        this.game.cards_on_deck.shift();
+          let tokenCard = this.game.cards_on_deck[0];
+          this.cards.push(tokenCard);
+          var splitted = tokenCard.split(' ', 2);
+          this.setCard(splitted[0], splitted[1], this.cardValue.length);
+          this.game.cards_on_deck.shift();
         }
 
-        this.gamesService.update(this.game).subscribe((result: any) => {});
-        this.player.cards_hand = this.cards;
-        this.playersService.update(this.player).subscribe((result: any) => {
-          this.socketService.publish('draw_card', this.player);
-          console.log('I draw');
-          if (this.endOfTimer===true){
-            this.pass();
-          }
+        this.gamesService.update(this.game).subscribe((result: any) => {
+          this.playersService.update(this.player).subscribe((result: any) => {
+            this.socketService.publish('draw_card', this.player);
+            console.log('I draw');
+            if (this.endOfTimer===true){
+              this.pass();
+            }
+          });
         });
+        this.player.cards_hand = this.cards;
         this.drawed = true;
       }
     });
