@@ -87,6 +87,9 @@
             <input type="checkbox" class="form-check-input" id="impaired vision" [(ngModel)]="impairedVision" name="impaired vision" value="true">
             <label  class="left" for="impaired vision">Impaired vision</label>
             <br>
+            <input type="checkbox" class="form-check-input" id="colorblindness" [(ngModel)]="colorblindness" name="colorblindness" value="true">
+            <label  class="left" for="colorblindness">Colorblindness</label>
+            <br>
         </div>
         <button class="button" type="button" id="#button2" [disabled]="!(cpassword===password)" (click)="signUpB(); postPlayer()">Sign Up</button>
         <br><br>

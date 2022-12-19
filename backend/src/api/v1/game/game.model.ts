@@ -14,6 +14,7 @@ export interface IGame extends Document {
   dysrhythmia: boolean;
   dyslexia: boolean;
   impairedVision: boolean;
+  colorblindness: boolean;
   active: boolean;
 }
 
@@ -30,6 +31,7 @@ const gameSchema = new Schema(
     dysrhythmia: {type: Boolean, required: true},
     dyslexia: {type: Boolean, required: true},
     impairedVision: {type: Boolean, required: true},
+    colorblindness: {type: Boolean, required: true},
     active: {type: Boolean, required: true}
   },
   { ...DefaultSchemaOptions }

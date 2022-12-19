@@ -30,6 +30,7 @@ export class PhoneGameComponent implements OnInit {
   drawed = false;
   endOfTimer = false;
   choose_color=false;
+  card_type="normal";
 
   constructor(
     private socketService: SocketsService,
@@ -67,6 +68,9 @@ export class PhoneGameComponent implements OnInit {
         } else {
           this.player = result;
           this.cards = result.cards_hand;
+          if (this.player.colorblindness === true){
+            this.card_type="other";
+          }
           //console.log(this.cards)
           var i = 0;
           for (var card of this.cards) {

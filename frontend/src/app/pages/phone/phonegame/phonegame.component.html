@@ -18,7 +18,7 @@
         <div class="col-10 row center">
             <div class="card cards" *ngFor="let card of cards" #hoverCard (mouseenter)="onMouseEnter(hoverCard,cards.indexOf(card))"
                 (mouseleave)="onMouseOut(hoverCard)" >
-                <card [selectedCard]="cardValue[cards.indexOf(card)]" ></card>
+                <card [selectedCard]="cardValue[cards.indexOf(card)]" [type]="card_type"></card>
                 <!-- {{cards.indexOf(card)}}  na balw kapws na pairnw to index gia to throw card giati twra egkefalos den -->
             </div>
         </div>

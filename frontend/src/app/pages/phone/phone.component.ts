@@ -34,6 +34,7 @@ export class PhoneComponent implements OnInit {
   public dysrhythmia: boolean  = false;
   public dyslexia: boolean = false;
   public impairedVision: boolean = false;
+  public colorblindness: boolean = false;
   public unos:number=0;
   public wild_cards:number=0;
   public score: number=0;
@@ -61,6 +62,7 @@ export class PhoneComponent implements OnInit {
     this.player.dysrhythmia = this.dysrhythmia;
     this.player.dyslexia = this.dyslexia;
     this.player.impairedVision = this.impairedVision;
+    this.player.colorblindness = this.colorblindness;
     this.player.unos=this.unos;
     this.player.wild_cards=this.wild_cards;
     this.player.score=this.score;
@@ -75,6 +77,7 @@ export class PhoneComponent implements OnInit {
       this.dysrhythmia = false;
       this.dyslexia = false;
       this.impairedVision = false;
+      this.colorblindness = false;
 
       this.socketService.publish("players_create", this.player);
     });

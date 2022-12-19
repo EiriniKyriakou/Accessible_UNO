@@ -28,6 +28,7 @@ export class TableGameComponent implements OnInit {
   public number_of_cards=[0,0,0,0]
   public turns_of_players=-1;
   public reverse=false;
+  public card_type="normal";
   constructor(
     private router: Router,
     private socketService: SocketsService,
@@ -48,6 +49,10 @@ export class TableGameComponent implements OnInit {
         console.log('No active Game');
       } else {
         this.game = result[0];
+        if (this.game.colorblindness == true){
+          this.card_type = "other"
+        }
+        this.card_type
         this.length = this.game.players.length;
         console.log("lenght="+this.length);
         let firstCard = this.game.cards_on_deck[0];

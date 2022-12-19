@@ -14,6 +14,7 @@ export class CardComponent {
   public newDeck: string[] = [];
   public plusCard = false;
   @Input() selectedCard: CardModel | undefined;
+  @Input() type="normal";
   test: any;
   constructor(private gamesService: GamesService) {
     setTimeout(() => {

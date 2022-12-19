@@ -8,6 +8,7 @@ export class PlayerModel {
   public dysrhythmia!: boolean;
   public dyslexia!: boolean;
   public impairedVision!: boolean;
+  public colorblindness!: boolean;
   public unos!: number;
   public wild_cards !:number;
   public score!: number;

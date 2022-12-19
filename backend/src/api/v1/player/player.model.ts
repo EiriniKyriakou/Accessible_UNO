@@ -13,6 +13,7 @@ export interface IPlayer extends Document {
   dysrhythmia: boolean;
   dyslexia: boolean;
   impairedVision: boolean;
+  colorblindness: boolean;
   unos: number;
   wild_cards:number;
   score:number;
@@ -32,6 +33,7 @@ const playerSchema = new Schema(
     dysrhythmia: {type: Boolean, required: true},
     dyslexia: {type: Boolean, required: true},
     impairedVision: {type: Boolean, required: true},
+    colorblindness: {type: Boolean, required: true},
     unos: {type:Number, required:true},
     wild_cards: {type:Number, required:true},
     score:{type:Number, required:true},

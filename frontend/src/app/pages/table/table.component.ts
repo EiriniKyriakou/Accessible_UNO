@@ -17,6 +17,7 @@ export class TableComponent implements OnInit {
     public dysrhythmia : boolean = false;
     public dyslexia : boolean = false;
     public impairedVision : boolean = false;
+    public colorblindness: boolean = false;
     public active : boolean = true;
 
     constructor(private renderer : Renderer2, private router : Router, private gamesService : GamesService, private socketService : SocketsService) {
@@ -145,6 +146,7 @@ export class TableComponent implements OnInit {
         game.dysrhythmia = false;
         game.dyslexia = false;
         game.impairedVision = false;
+        game.colorblindness =false;
         game.active = true;
 
         this.gamesService.create(game).subscribe((result) => {
@@ -265,6 +267,7 @@ export class TableComponent implements OnInit {
             this.dysrhythmia = false;
             this.dyslexia = false;
             this.impairedVision = false;
+            this.colorblindness = false;
             this.active = true;
 
             this.socketService.publish('games_create', game);

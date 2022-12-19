@@ -11,6 +11,7 @@ export class GameModel {
     public dysrhythmia!: boolean;
     public dyslexia!: boolean;
     public impairedVision!: boolean;
+    public colorblindness!: boolean;
     public active!: boolean;
   
     constructor(model?: any) {

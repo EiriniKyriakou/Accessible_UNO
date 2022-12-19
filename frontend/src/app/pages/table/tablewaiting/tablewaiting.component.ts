@@ -47,6 +47,9 @@ export class TableWaitingComponent implements OnInit {
         if (data.impairedVision === true){
           this.game.impairedVision = true;
         }
+        if (data.colorblindness == true){
+          this.game.colorblindness = true;
+        }
       });
     },1000);
     
