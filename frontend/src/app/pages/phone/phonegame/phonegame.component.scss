@@ -239,3 +239,51 @@ h4{
 .spinner-message {
   text-align: center;
 }
+
+
+.modal {
+  display: block;
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 8%; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-content: space-between;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: auto;
+  padding: 1%;
+  width: 80%;
+  border-radius: 2vw;
+}
+
+.colorbtn{
+  border-radius: 50%;
+  margin: auto;
+  padding:8%
+}
+
+.green{
+  background-color: #00AA00;
+}
+.blue{
+  background-color: #5555FF;
+}
+.red{
+  background-color: #FF5555;
+}
+.yellow{
+  background-color: #FFAA00;
+}

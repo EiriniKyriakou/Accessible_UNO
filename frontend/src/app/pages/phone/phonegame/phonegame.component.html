@@ -37,7 +37,7 @@
         <div class="container">
             <div class="row">
               <div id="loader">
-                  <div class="dot"></div>
+                <div class="dot"></div>
                 <div class="dot"></div>
                 <div class="dot"></div>
                 <div class="dot"></div>
@@ -50,4 +50,15 @@
             </div>
           </div>
     </div>
+</div>
+
+<div *ngIf="choose_color" class="modal">
+  <div class="modal-content">
+    <h4 style="flex-direction: column; width:100%; text-align: center;">Choose Color:</h4>
+    <button class="colorbtn green" (click)="WildCardGreen()"></button>
+    <button class="colorbtn blue" (click)="WildCardBlue()"></button>
+    <button class="colorbtn red" (click)="WildCardRed()"></button>
+    <button class="colorbtn yellow" (click)="WildCardYellow()"></button>
+  </div>
+
 </div>

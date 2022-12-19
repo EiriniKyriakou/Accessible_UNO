@@ -6,6 +6,7 @@ import { CardModel } from 'src/app/global/models/cards/card.model';
 import * as myGlobals from 'src/app/pages/phone/phone.component';
 import { GamesService } from 'src/app/global/services/games/game.service';
 import { GameModel } from 'src/app/global/models/games/game.model';
+
 @Component({
   selector: 'app-home',
   templateUrl: './phonegame.component.html',
@@ -28,6 +29,7 @@ export class PhoneGameComponent implements OnInit {
   hided = false;
   drawed = false;
   endOfTimer = false;
+  choose_color=false;
 
   constructor(
     private socketService: SocketsService,
@@ -148,6 +150,15 @@ export class PhoneGameComponent implements OnInit {
   throwCard() {
     this.drawed = false;
     this.throwedCard = this.cards[this.selectedCard];
+    console.log(this.throwedCard )
+    if(this.throwedCard ==="+4 WildCard4.png" || this.throwedCard ==="normal WildCard.png"){
+      this.choose_color = true;
+    }else{
+      this.throw();
+    }
+  }
+
+  throw(){
     //peta to apo to front
     this.cardValue.splice(this.selectedCard, 1);
     // this.player.cards_hand=this.cardValue;
@@ -214,4 +225,48 @@ export class PhoneGameComponent implements OnInit {
     };
     //console.log(this.cardValue[index])
   }
+
+  WildCardGreen(){
+    this.choose_color=false;
+    console.log(this.throwCard);
+    if(this.throwedCard ==="+4 WildCard4.png"){
+      this.throwedCard = "+4 WildCard4Green.png"
+    }else if(this.throwedCard ==="normal WildCard.png"){
+      this.throwedCard = "normal WildCardGreen.png"
+    }
+    this.throw();
+  }
+
+  WildCardBlue(){
+    this.choose_color=false;
+    console.log(this.throwCard);
+    if(this.throwedCard ==="+4 WildCard4.png"){
+      this.throwedCard = "+4 WildCard4Blue.png"
+    }else if(this.throwedCard ==="normal WildCard.png"){
+      this.throwedCard = "normal WildCardBlue.png"
+    }
+    this.throw();
+  }
+  WildCardRed(){
+    this.choose_color=false;
+    console.log(this.throwCard);
+    if(this.throwedCard ==="+4 WildCard4.png"){
+      this.throwedCard = "+4 WildCard4Red.png"
+    }else if(this.throwedCard ==="normal WildCard.png"){
+      this.throwedCard = "normal WildCardRed.png"
+    }
+    this.throw();
+  }
+  WildCardYellow(){
+    this.choose_color=false;
+    console.log(this.throwCard);
+    if(this.throwedCard ==="+4 WildCard4.png"){
+      this.throwedCard = "+4 WildCard4Yellow.png"
+    }else if(this.throwedCard ==="normal WildCard.png"){
+      this.throwedCard = "normal WildCardYellow.png"
+    }
+    this.throw();
+  }
+
+
 }
