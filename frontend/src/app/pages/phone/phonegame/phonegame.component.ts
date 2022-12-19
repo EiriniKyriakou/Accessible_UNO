@@ -78,6 +78,17 @@ export class PhoneGameComponent implements OnInit {
       clearInterval(this.theTimer);
       this.startTimer(1);
     }, 6000);
+
+
+    this.socketService.subscribe('drawTwo', (data: any) => {
+      console.log("Player Passed +2")
+      console.log(data)
+      if(this.my_id===data){
+      this.drawCard();
+      this.drawCard();
+      }
+    });
+
   }
 
   onMouseEnter(hoverCard: HTMLElement, index: any) {

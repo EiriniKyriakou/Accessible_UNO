@@ -11,7 +11,6 @@ import { GamesService } from 'src/app/global/services/games/game.service';
 import { PlayerModel } from 'src/app/global/models/players/player.model';
 import { GameModel } from 'src/app/global/models/games/game.model';
 import { Router } from '@angular/router';
-import { CardModel } from 'src/app/global/models/cards/card.model';
 import { PlayersService } from 'src/app/global/services/players/players.service';
 
 @Component({
@@ -52,8 +51,6 @@ export class TableGameComponent implements OnInit {
         this.length = this.game.players.length;
         console.log("lenght="+this.length);
         let firstCard = this.game.cards_on_deck[0];
-        //console.log(this.game)
-        //console.log(firstCard)
         this.playedCard(firstCard);
         this.removeCards(this.game); //old cards of players
         this.setTurn();
@@ -102,6 +99,13 @@ export class TableGameComponent implements OnInit {
     this.cards[0] = card;
     var splitted = card.split(' ', 2);
     this.setCard(splitted[0], splitted[1]);
+
+    if(splitted[0]==="+2"){
+      console.log("+2")
+      this.setTurn();
+      this.socketService.publish('drawTwo', this.turn);
+    }
+
     setTimeout(() => {
       this.game.played_cards.push(card);
       this.game.last_card = card;
