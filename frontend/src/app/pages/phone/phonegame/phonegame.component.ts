@@ -84,10 +84,18 @@ export class PhoneGameComponent implements OnInit {
       console.log("Player Passed +2")
       console.log(data)
       if(this.my_id===data){
-      this.drawCard();
-      this.drawCard();
+      this.drawCard(2);
       }
     });
+    
+    this.socketService.subscribe('drawFour', (data: any) => {
+      console.log("Player Passed +4")
+      console.log(data)
+      if(this.my_id===data){
+      this.drawCard(4);
+      }
+    });
+
 
   }
 
@@ -100,17 +108,21 @@ export class PhoneGameComponent implements OnInit {
     hoverCard.style.marginTop = '0%';
   }
 
-  drawCard() {
+  drawCard(num:number) {
     this.gamesService.getActive(true).subscribe((result: any) => {
       if (JSON.stringify(result[0]) === undefined) {
         console.log('No active Game');
       } else {
         this.game = result[0];
+
+        for(let i=0;i<num;i++){
         let tokenCard = this.game.cards_on_deck[0];
         this.cards.push(tokenCard);
         var splitted = tokenCard.split(' ', 2);
         this.setCard(splitted[0], splitted[1], this.cardValue.length);
         this.game.cards_on_deck.shift();
+        }
+
         this.gamesService.update(this.game).subscribe((result: any) => {});
         this.player.cards_hand = this.cards;
         this.playersService.update(this.player).subscribe((result: any) => {
@@ -172,7 +184,7 @@ export class PhoneGameComponent implements OnInit {
         clearInterval(this.theTimer);
         this.endOfTimer = true;
         if ( this.drawed === false ){
-          this.drawCard();
+          this.drawCard(1);
         }else {
           this.pass();
         }

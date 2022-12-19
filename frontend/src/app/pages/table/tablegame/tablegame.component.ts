@@ -27,7 +27,7 @@ export class TableGameComponent implements OnInit {
   public length = 0;
   public number_of_cards=[0,0,0,0]
   public turns_of_players=-1;
-
+  public flow=1;
   constructor(
     private router: Router,
     private socketService: SocketsService,
@@ -84,7 +84,7 @@ export class TableGameComponent implements OnInit {
       this.turns_of_players=0;
       this.socketService.publish('turn', this.turn);
     } else {
-      this.turn = this.game.players[this.game.players.indexOf(this.turn) + 1];
+      this.turn = this.game.players[this.game.players.indexOf(this.turn) + this.flow];
       this.turns_of_players++;
       this.socketService.publish('turn', this.turn);
     }
@@ -105,6 +105,20 @@ export class TableGameComponent implements OnInit {
       this.setTurn();
       this.socketService.publish('drawTwo', this.turn);
     }
+    if(splitted[0]==="+4"){
+      console.log("+4")
+      this.setTurn();
+      this.socketService.publish('drawFour', this.turn);
+    }
+    if(splitted[0]==="skip"){
+      this.setTurn();
+    }
+    // if(splitted[0]==="reverse"){
+    //   if(this.flow==1)
+    //     this.flow=-1
+    //   else
+    //     this.flow=1;
+    // }
 
     setTimeout(() => {
       this.game.played_cards.push(card);
