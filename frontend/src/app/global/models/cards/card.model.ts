@@ -1,6 +1,6 @@
 export class CardModel {
 
-    public name!: string;
+    public color!: string;
     public number!: string;
     public dysrhythmia!: boolean;
     public colorblindness!: boolean;

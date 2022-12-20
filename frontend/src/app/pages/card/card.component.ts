@@ -32,19 +32,19 @@ export class CardComponent {
 
         if (this.selectedCard?.number === 'Reverse' || this.selectedCard?.number === 'Skip' || this.selectedCard?.number === 'WildCard') {
           this.test = new CardModel({
-            name: this.selectedCard?.number + this.selectedCard?.name,
+            name: this.selectedCard?.number + this.selectedCard?.color,
             number: ' ',
           });
         } else if (this.selectedCard?.number === '+2' || this.selectedCard?.number === '+4') {
           this.plusCard = true;
           this.test = new CardModel({
-            name: this.selectedCard?.number + this.selectedCard?.name,
+            name: this.selectedCard?.number + this.selectedCard?.color,
             number: this.selectedCard?.number,
           });
         }
         else {
           this.test = new CardModel({
-            name: this.selectedCard?.name,
+            name: this.selectedCard?.color,
             number: this.selectedCard?.number,
           });
         }
@@ -74,7 +74,7 @@ export class CardComponent {
 
   checkColor() {
     var ret = '';
-    switch (this.selectedCard?.name) {
+    switch (this.selectedCard?.color) {
       case 'Red.png': {
         ret = 'letterRed';
         break;

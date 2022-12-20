@@ -109,7 +109,7 @@ export class PhoneGameComponent implements OnInit {
     this.socketService.subscribe('card_table', (card: CardModel) => {
       //console.log(card);
       this.symbol = card.number;
-      this.color = card.name;
+      this.color = card.color;
       console.log('Card on table: ' + this.symbol + ' ' + this.color)
     });
   }
@@ -175,7 +175,7 @@ export class PhoneGameComponent implements OnInit {
     //peta to apo to front
     //prepei na mpei elegxos gia WildCards
     if (
-      this.color === this.cardValue[this.selectedCard].name ||
+      this.color === this.cardValue[this.selectedCard].color ||
       this.symbol === this.cardValue[this.selectedCard].number ||
       this.cardValue[this.selectedCard].number === '+4' ||
       this.cardValue[this.selectedCard].number === 'WildCard'
@@ -247,7 +247,7 @@ export class PhoneGameComponent implements OnInit {
 
   setCard(num: any, des: any, index: number, dyshr: boolean, clrblind: boolean) {
     this.cardValue[index] = {
-      name: des,
+      color: des,
       number: num,
       dysrhythmia: dyshr,
       colorblindness: clrblind

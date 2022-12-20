@@ -138,7 +138,7 @@ export class TableGameComponent implements OnInit {
 
   setCard(num: any, des: any, dyshr: boolean, clrblind: boolean) {
     this.cardValue = {
-      name: des,
+      color: des,
       number: num,
       dysrhythmia: dyshr,
       colorblindness: clrblind
