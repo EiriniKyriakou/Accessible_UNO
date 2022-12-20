@@ -39,6 +39,11 @@
   }
 }
 
+.open-dyslexic {
+  font-family: 'OpenDyslexicRegular';
+  font-weight: bold;
+}
+
 .font{
   font-family: Verdana,Geneva,sans-serif;
   font-weight: bold;

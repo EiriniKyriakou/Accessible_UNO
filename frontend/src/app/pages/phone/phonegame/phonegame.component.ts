@@ -71,11 +71,12 @@ export class PhoneGameComponent implements OnInit {
           if (this.player.colorblindness === true){
             this.card_type="other";
           }
+          
           //console.log(this.cards)
           var i = 0;
           for (var card of this.cards) {
             var splitted = card.split(' ', 2);
-            this.setCard(splitted[0], splitted[1], i);
+            this.setCard(splitted[0], splitted[1], i,this.player.dysrhythmia);
             i++;
           }
         }
@@ -126,7 +127,7 @@ export class PhoneGameComponent implements OnInit {
           let tokenCard = this.game.cards_on_deck[0];
           this.cards.push(tokenCard);
           var splitted = tokenCard.split(' ', 2);
-          this.setCard(splitted[0], splitted[1], this.cardValue.length);
+          this.setCard(splitted[0], splitted[1], this.cardValue.length,this.player.dysrhythmia);
           this.game.cards_on_deck.shift();
         }
 
@@ -222,10 +223,12 @@ export class PhoneGameComponent implements OnInit {
     }
   }
 
-  setCard(num: any, des: any, index: number) {
+  setCard(num: any, des: any, index: number,dyshr:boolean) {
     this.cardValue[index] = {
       name: des,
       number: num,
+      dysrhythmia:dyshr
+      
     };
     //console.log(this.cardValue[index])
   }

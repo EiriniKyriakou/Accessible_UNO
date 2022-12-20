@@ -25,10 +25,10 @@ export class TableGameComponent implements OnInit {
   public cards: string[] = [];
   public turn: string = '';
   public length = 0;
-  public number_of_cards=[0,0,0,0]
-  public turns_of_players=-1;
-  public reverse=false;
-  public card_type="normal";
+  public number_of_cards = [0, 0, 0, 0];
+  public turns_of_players = -1;
+  public reverse = false;
+  public card_type = 'normal';
   constructor(
     private router: Router,
     private socketService: SocketsService,
@@ -49,12 +49,12 @@ export class TableGameComponent implements OnInit {
         console.log('No active Game');
       } else {
         this.game = result[0];
-        if (this.game.colorblindness == true){
-          this.card_type = "other"
+        if (this.game.colorblindness == true) {
+          this.card_type = 'other';
         }
-        this.card_type
+        this.card_type;
         this.length = this.game.players.length;
-        console.log("lenght="+this.length);
+        console.log('lenght=' + this.length);
         let firstCard = this.game.cards_on_deck[0];
         this.playedCard(firstCard);
         this.removeCards(this.game); //old cards of players
@@ -62,27 +62,30 @@ export class TableGameComponent implements OnInit {
     });
 
     this.socketService.subscribe('card_played', (data: any) => {
-      console.log("Player Played a Card");
+      console.log('Player Played a Card');
       this.playedCard(data.card);
       this.updatePlayer(data.player);
       this.setTurn();
     });
 
     this.socketService.subscribe('draw_card', (data: PlayerModel) => {
-      console.log("Player Drew a Card");
+      console.log('Player Drew a Card');
       this.updatePlayer(data);
       this.updateGame();
     });
 
     this.socketService.subscribe('player_passed', (data: any) => {
-      console.log("Player Passed")
+      console.log('Player Passed');
       this.setTurn();
     });
   }
 
   setTurn() {
     if (!this.reverse) {
-      if (this.turn === '' || this.turn === this.game.players[this.game.players.length - 1]) {
+      if (
+        this.turn === '' ||
+        this.turn === this.game.players[this.game.players.length - 1]
+      ) {
         this.turn = this.game.players[0];
         this.turns_of_players = 0;
       } else {
@@ -100,37 +103,31 @@ export class TableGameComponent implements OnInit {
     }
     this.socketService.publish('turn', this.turn);
     console.log('Turn: ' + this.turn);
-    console.log("turns_of_players="+this.turns_of_players)
+    console.log('turns_of_players=' + this.turns_of_players);
     this.game.turn = this.turn;
     let newGame = this.game;
-    this.gamesService.update(newGame).subscribe((result: any) => {});
+    this.gamesService.update(newGame).subscribe((result: any) => { });
   }
 
   playedCard(card: any) {
     this.cards[0] = card;
     var splitted = card.split(' ', 2);
-    this.setCard(splitted[0], splitted[1]);
+    this.setCard(splitted[0], splitted[1],this.game.dysrhythmia);
 
-    if(splitted[0]==="+2"){
-      console.log("+2")
+    if (splitted[0] === '+2') {
+      console.log('+2');
       this.setTurn();
       this.socketService.publish('drawTwo', this.turn);
-    }
-    else if(splitted[0]==="+4"){
-      console.log("+4")
+    } else if (splitted[0] === '+4') {
+      console.log('+4');
       this.setTurn();
       this.socketService.publish('drawFour', this.turn);
-    }
-    else if(splitted[0]==="skip"){
+    } else if (splitted[0] === 'skip') {
       this.setTurn();
-    }
-    else if(splitted[0]==="reverse"){
-      if(this.length===2)
-        this.setTurn();
-      if(this.reverse==false)
-        this.reverse=true
-      else
-        this.reverse=false;
+    } else if (splitted[0] === 'reverse') {
+      if (this.length === 2) this.setTurn();
+      if (this.reverse == false) this.reverse = true;
+      else this.reverse = false;
     }
 
     setTimeout(() => {
@@ -138,14 +135,15 @@ export class TableGameComponent implements OnInit {
       this.game.last_card = card;
       this.game.cards_on_deck.shift();
       let newGame = this.game;
-      this.gamesService.update(newGame).subscribe((result: any) => {});
+      this.gamesService.update(newGame).subscribe((result: any) => { });
     }, 1000);
   }
 
-  setCard(num: any, des: any) {
+  setCard(num: any, des: any,dyshr:boolean) {
     this.cardValue = {
       name: des,
       number: num,
+      dysrhythmia:dyshr
     };
   }
 
@@ -155,10 +153,10 @@ export class TableGameComponent implements OnInit {
       this.playersService.getById(player).subscribe((result: any) => {
         this.players.push(result);
         result.cards_hand = [];
-        this.playersService.update(result).subscribe((result: any) => {});
+        this.playersService.update(result).subscribe((result: any) => { });
       });
     }
-    console.log("The players of the game:")
+    console.log('The players of the game:');
     console.log(this.players);
     setTimeout(() => {
       this.dealCards(current_game);
@@ -174,11 +172,11 @@ export class TableGameComponent implements OnInit {
           this.game.cards_on_deck.shift();
         }
         //console.log(result)
-        this.gamesService.update(this.game).subscribe((result: any) => {});
-        this.playersService.update(result).subscribe((result: any) => {});
+        this.gamesService.update(this.game).subscribe((result: any) => { });
+        this.playersService.update(result).subscribe((result: any) => { });
       });
     }
-    this.number_of_cards=[7,7,7,7];
+    this.number_of_cards = [7, 7, 7, 7];
     this.setTurn();
   }
 
@@ -188,20 +186,20 @@ export class TableGameComponent implements OnInit {
       if (player._id === data._id) {
         this.players[i] = data;
         this.number_of_cards[i] = data.cards_hand.length;
-        console.log("Player updated");
+        console.log('Player updated');
       }
       i++;
     }
     //console.log(this.players)
   }
 
-  updateGame(){
+  updateGame() {
     this.gamesService.getActive(true).subscribe((result: any) => {
       if (JSON.stringify(result[0]) === undefined) {
         console.log('No active Game');
       } else {
         this.game = result[0];
-        console.log("Game updated");
+        console.log('Game updated');
         console.log(this.game);
       }
     });

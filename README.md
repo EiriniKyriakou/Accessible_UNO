@@ -86,3 +86,9 @@ npm install sweetalert2
 ```
 npm install array-shuffle
 ```
+
+>OpenDyslexic
+```
+npm i open-dyslexic require-style
+npm i yo-yo
+```

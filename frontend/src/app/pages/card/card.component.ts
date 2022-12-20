@@ -8,17 +8,24 @@ import { GamesService } from 'src/app/global/services/games/game.service';
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.css'],
 })
-export class CardComponent {
-  public game = new GameModel();
 
+
+export class CardComponent {
+
+  public game = new GameModel();
   public newDeck: string[] = [];
   public plusCard = false;
+  public fontClass: string = 'font';
   @Input() selectedCard: CardModel | undefined;
   @Input() type="normal";
+ 
   test: any;
   constructor(private gamesService: GamesService) {
     setTimeout(() => {
       if (this.selectedCard != undefined) {
+        if(this.selectedCard?.dysrhythmia===true){
+          this.fontClass = 'open-dyslexic';
+        }
         if (
           this.selectedCard?.number === 'reverse' ||
           this.selectedCard?.number === 'skip' ||
