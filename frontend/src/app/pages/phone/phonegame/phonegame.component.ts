@@ -6,6 +6,7 @@ import { CardModel } from 'src/app/global/models/cards/card.model';
 import * as myGlobals from 'src/app/pages/phone/phone.component';
 import { GamesService } from 'src/app/global/services/games/game.service';
 import { GameModel } from 'src/app/global/models/games/game.model';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-home',
@@ -29,8 +30,10 @@ export class PhoneGameComponent implements OnInit {
   hided = false;
   drawed = false;
   endOfTimer = false;
-  choose_color=false;
-  card_type="normal";
+  choose_color = false;
+  card_type = 'normal';
+  symbol = '';
+  color = '';
 
   constructor(
     private socketService: SocketsService,
@@ -68,15 +71,15 @@ export class PhoneGameComponent implements OnInit {
         } else {
           this.player = result;
           this.cards = result.cards_hand;
-          if (this.player.colorblindness === true){
-            this.card_type="other";
+          if (this.player.colorblindness === true) {
+            this.card_type = 'other';
           }
-          
+
           //console.log(this.cards)
           var i = 0;
           for (var card of this.cards) {
             var splitted = card.split(' ', 2);
-            this.setCard(splitted[0], splitted[1], i,this.player.dysrhythmia);
+            this.setCard(splitted[0], splitted[1], i, this.player.dysrhythmia);
             i++;
           }
         }
@@ -86,24 +89,29 @@ export class PhoneGameComponent implements OnInit {
       this.startTimer(1);
     }, 6000);
 
-
     this.socketService.subscribe('drawTwo', (data: any) => {
-      console.log("Player Passed +2")
-      console.log(data)
-      if(this.my_id===data){
-      this.drawCard(2);
+      console.log('Player Passed +2');
+      console.log(data);
+      if (this.my_id === data) {
+        this.drawCard(2);
       }
     });
-    
+
     this.socketService.subscribe('drawFour', (data: any) => {
-      console.log("Player Passed +4")
-      console.log(data)
-      if(this.my_id===data){
-      this.drawCard(4);
+      console.log('Player Passed +4');
+      console.log(data);
+      if (this.my_id === data) {
+        this.drawCard(4);
       }
     });
 
-
+    this.socketService.subscribe('card_table', (card: CardModel) => {
+      console.log(card);
+      this.symbol = card.number;
+      this.color = card.name;
+      console.log(this.symbol);
+      console.log(this.color);
+    });
   }
 
   onMouseEnter(hoverCard: HTMLElement, index: any) {
@@ -115,19 +123,24 @@ export class PhoneGameComponent implements OnInit {
     hoverCard.style.marginTop = '0%';
   }
 
-  drawCard(num:number) {
+  drawCard(num: number) {
     this.gamesService.getActive(true).subscribe((result: any) => {
       if (JSON.stringify(result[0]) === undefined) {
         console.log('No active Game');
       } else {
         this.game = result[0];
-        console.log("The game (before i draw a card):")
+        console.log('The game (before i draw a card):');
         console.log(this.game);
-        for(let i=0;i<num;i++){
+        for (let i = 0; i < num; i++) {
           let tokenCard = this.game.cards_on_deck[0];
           this.cards.push(tokenCard);
           var splitted = tokenCard.split(' ', 2);
-          this.setCard(splitted[0], splitted[1], this.cardValue.length,this.player.dysrhythmia);
+          this.setCard(
+            splitted[0],
+            splitted[1],
+            this.cardValue.length,
+            this.player.dysrhythmia
+          );
           this.game.cards_on_deck.shift();
         }
 
@@ -135,7 +148,7 @@ export class PhoneGameComponent implements OnInit {
           this.playersService.update(this.player).subscribe((result: any) => {
             this.socketService.publish('draw_card', this.player);
             console.log('I draw');
-            if (this.endOfTimer===true){
+            if (this.endOfTimer === true) {
               this.pass();
             }
           });
@@ -148,36 +161,51 @@ export class PhoneGameComponent implements OnInit {
 
   pass() {
     this.drawed = false;
-    this.socketService.publish('player_passed', "");
+    this.socketService.publish('player_passed', '');
     console.log('I pass');
   }
 
   throwCard() {
     this.drawed = false;
     this.throwedCard = this.cards[this.selectedCard];
-    console.log(this.throwedCard )
-    if(this.throwedCard ==="+4 WildCard4.png" || this.throwedCard ==="normal WildCard.png"){
+    console.log(this.throwedCard);
+    if (
+      this.throwedCard === '+4 WildCard4.png' ||
+      this.throwedCard === 'normal WildCard.png'
+    ) {
       this.choose_color = true;
-    }else{
+    } else {
       this.throw();
     }
   }
 
-  throw(){
+  throw() {
     //peta to apo to front
-    this.cardValue.splice(this.selectedCard, 1);
-    // this.player.cards_hand=this.cardValue;
-    this.cards.splice(this.selectedCard, 1);
-    this.player.cards_hand = this.cards;
-    this.playersService.update(this.player).subscribe((result: any) => {
-      let tmp = {
-        card: this.throwedCard,
-        player: this.player,
-      };
-      this.socketService.publish('card_played', tmp);
-      console.log("I throw a card");
-    });
-    this.selectedCard = null;
+    //prepei na mpei elegxos gia +2, +4 , normals
+    if (
+      this.color === this.cardValue[this.selectedCard].name ||
+      this.symbol === this.cardValue[this.selectedCard].number
+    ) {
+      this.cardValue.splice(this.selectedCard, 1);
+      // this.player.cards_hand=this.cardValue;
+      this.cards.splice(this.selectedCard, 1);
+      this.player.cards_hand = this.cards;
+      this.playersService.update(this.player).subscribe((result: any) => {
+        let tmp = {
+          card: this.throwedCard,
+          player: this.player,
+        };
+        this.socketService.publish('card_played', tmp);
+        console.log('I throw a card');
+      });
+      this.selectedCard = null;
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'You cannot play this card!',
+      });
+    }
     //console.log(this.selectedCard);
   }
 
@@ -201,9 +229,9 @@ export class PhoneGameComponent implements OnInit {
         console.log('End of timer');
         clearInterval(this.theTimer);
         this.endOfTimer = true;
-        if ( this.drawed === false ){
+        if (this.drawed === false) {
           this.drawCard(1);
-        }else {
+        } else {
           this.pass();
         }
       }
@@ -223,57 +251,54 @@ export class PhoneGameComponent implements OnInit {
     }
   }
 
-  setCard(num: any, des: any, index: number,dyshr:boolean) {
+  setCard(num: any, des: any, index: number, dyshr: boolean) {
     this.cardValue[index] = {
       name: des,
       number: num,
-      dysrhythmia:dyshr
-      
+      dysrhythmia: dyshr,
     };
     //console.log(this.cardValue[index])
   }
 
-  WildCardGreen(){
-    this.choose_color=false;
+  WildCardGreen() {
+    this.choose_color = false;
     console.log(this.throwCard);
-    if(this.throwedCard ==="+4 WildCard4.png"){
-      this.throwedCard = "+4 WildCard4Green.png"
-    }else if(this.throwedCard ==="normal WildCard.png"){
-      this.throwedCard = "normal WildCardGreen.png"
+    if (this.throwedCard === '+4 WildCard4.png') {
+      this.throwedCard = '+4 WildCard4Green.png';
+    } else if (this.throwedCard === 'normal WildCard.png') {
+      this.throwedCard = 'normal WildCardGreen.png';
     }
     this.throw();
   }
 
-  WildCardBlue(){
-    this.choose_color=false;
+  WildCardBlue() {
+    this.choose_color = false;
     console.log(this.throwCard);
-    if(this.throwedCard ==="+4 WildCard4.png"){
-      this.throwedCard = "+4 WildCard4Blue.png"
-    }else if(this.throwedCard ==="normal WildCard.png"){
-      this.throwedCard = "normal WildCardBlue.png"
+    if (this.throwedCard === '+4 WildCard4.png') {
+      this.throwedCard = '+4 WildCard4Blue.png';
+    } else if (this.throwedCard === 'normal WildCard.png') {
+      this.throwedCard = 'normal WildCardBlue.png';
     }
     this.throw();
   }
-  WildCardRed(){
-    this.choose_color=false;
+  WildCardRed() {
+    this.choose_color = false;
     console.log(this.throwCard);
-    if(this.throwedCard ==="+4 WildCard4.png"){
-      this.throwedCard = "+4 WildCard4Red.png"
-    }else if(this.throwedCard ==="normal WildCard.png"){
-      this.throwedCard = "normal WildCardRed.png"
+    if (this.throwedCard === '+4 WildCard4.png') {
+      this.throwedCard = '+4 WildCard4Red.png';
+    } else if (this.throwedCard === 'normal WildCard.png') {
+      this.throwedCard = 'normal WildCardRed.png';
     }
     this.throw();
   }
-  WildCardYellow(){
-    this.choose_color=false;
+  WildCardYellow() {
+    this.choose_color = false;
     console.log(this.throwCard);
-    if(this.throwedCard ==="+4 WildCard4.png"){
-      this.throwedCard = "+4 WildCard4Yellow.png"
-    }else if(this.throwedCard ==="normal WildCard.png"){
-      this.throwedCard = "normal WildCardYellow.png"
+    if (this.throwedCard === '+4 WildCard4.png') {
+      this.throwedCard = '+4 WildCard4Yellow.png';
+    } else if (this.throwedCard === 'normal WildCard.png') {
+      this.throwedCard = 'normal WildCardYellow.png';
     }
     this.throw();
   }
-
-
 }

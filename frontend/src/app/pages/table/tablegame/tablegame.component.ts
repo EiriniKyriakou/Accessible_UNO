@@ -78,6 +78,8 @@ export class TableGameComponent implements OnInit {
       console.log('Player Passed');
       this.setTurn();
     });
+
+    
   }
 
   setTurn() {
@@ -145,6 +147,7 @@ export class TableGameComponent implements OnInit {
       number: num,
       dysrhythmia:dyshr
     };
+    this.socketService.publish('card_table', this.cardValue);
   }
 
   removeCards(current_game: { players: any }) {
