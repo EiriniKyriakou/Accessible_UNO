@@ -1,11 +1,4 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  Output,
-  EventEmitter,
-  Renderer2,
-} from '@angular/core';
+import { Component, OnInit, Renderer2, } from '@angular/core';
 import { SocketsService } from 'src/app/global/services/sockets/sockets.service';
 import { GamesService } from 'src/app/global/services/games/game.service';
 import { PlayerModel } from 'src/app/global/models/players/player.model';
@@ -18,6 +11,7 @@ import { PlayersService } from 'src/app/global/services/players/players.service'
   templateUrl: './tablegame.component.html',
   styleUrls: ['./tablegame.component.scss'],
 })
+
 export class TableGameComponent implements OnInit {
   public game = new GameModel();
   public players: PlayerModel[] = [];
@@ -29,6 +23,7 @@ export class TableGameComponent implements OnInit {
   public turns_of_players = -1;
   public reverse = false;
   public card_type = 'normal';
+
   constructor(
     private router: Router,
     private socketService: SocketsService,
@@ -84,10 +79,7 @@ export class TableGameComponent implements OnInit {
 
   setTurn() {
     if (!this.reverse) {
-      if (
-        this.turn === '' ||
-        this.turn === this.game.players[this.game.players.length - 1]
-      ) {
+      if (this.turn === '' || this.turn === this.game.players[this.game.players.length - 1]) {
         this.turn = this.game.players[0];
         this.turns_of_players = 0;
       } else {
@@ -114,7 +106,7 @@ export class TableGameComponent implements OnInit {
   playedCard(card: any) {
     this.cards[0] = card;
     var splitted = card.split(' ', 2);
-    this.setCard(splitted[0], splitted[1],this.game.dysrhythmia);
+    this.setCard(splitted[0], splitted[1], this.game.dysrhythmia, this.game.colorblindness);
 
     if (splitted[0] === '+2') {
       console.log('+2');
@@ -141,11 +133,12 @@ export class TableGameComponent implements OnInit {
     }, 1000);
   }
 
-  setCard(num: any, des: any,dyshr:boolean) {
+  setCard(num: any, des: any, dyshr: boolean, clrblind: boolean) {
     this.cardValue = {
       name: des,
       number: num,
-      dysrhythmia:dyshr
+      dysrhythmia: dyshr,
+      colorblindness: clrblind
     };
     this.socketService.publish('card_table', this.cardValue);
   }

@@ -13,6 +13,7 @@ import Swal from 'sweetalert2';
   templateUrl: './phonegame.component.html',
   styleUrls: ['./phonegame.component.scss'],
 })
+
 export class PhoneGameComponent implements OnInit {
   my_id = myGlobals.id;
   player = new PlayerModel();
@@ -79,7 +80,7 @@ export class PhoneGameComponent implements OnInit {
           var i = 0;
           for (var card of this.cards) {
             var splitted = card.split(' ', 2);
-            this.setCard(splitted[0], splitted[1], i, this.player.dysrhythmia);
+            this.setCard(splitted[0], splitted[1], i, this.player.dysrhythmia, this.player.colorblindness);
             i++;
           }
         }
@@ -91,7 +92,7 @@ export class PhoneGameComponent implements OnInit {
 
     this.socketService.subscribe('drawTwo', (data: any) => {
       console.log('Player Passed +2');
-      console.log(data);
+      //console.log(data);
       if (this.my_id === data) {
         this.drawCard(2);
       }
@@ -99,18 +100,17 @@ export class PhoneGameComponent implements OnInit {
 
     this.socketService.subscribe('drawFour', (data: any) => {
       console.log('Player Passed +4');
-      console.log(data);
+      //console.log(data);
       if (this.my_id === data) {
         this.drawCard(4);
       }
     });
 
     this.socketService.subscribe('card_table', (card: CardModel) => {
-      console.log(card);
+      //console.log(card);
       this.symbol = card.number;
       this.color = card.name;
-      console.log(this.symbol);
-      console.log(this.color);
+      console.log('Card on table: '+ this.symbol + ' ' + this.color)
     });
   }
 
@@ -135,12 +135,7 @@ export class PhoneGameComponent implements OnInit {
           let tokenCard = this.game.cards_on_deck[0];
           this.cards.push(tokenCard);
           var splitted = tokenCard.split(' ', 2);
-          this.setCard(
-            splitted[0],
-            splitted[1],
-            this.cardValue.length,
-            this.player.dysrhythmia
-          );
+          this.setCard(splitted[0], splitted[1], this.cardValue.length, this.player.dysrhythmia, this.player.colorblindness);
           this.game.cards_on_deck.shift();
         }
 
@@ -251,11 +246,12 @@ export class PhoneGameComponent implements OnInit {
     }
   }
 
-  setCard(num: any, des: any, index: number, dyshr: boolean) {
+  setCard(num: any, des: any, index: number, dyshr: boolean, clrblind: boolean) {
     this.cardValue[index] = {
       name: des,
       number: num,
       dysrhythmia: dyshr,
+      colorblindness: clrblind
     };
     //console.log(this.cardValue[index])
   }

@@ -16,15 +16,18 @@ export class CardComponent {
   public newDeck: string[] = [];
   public plusCard = false;
   public fontClass: string = 'font';
+  public type: string = 'normal'
+  public test: any;
   @Input() selectedCard: CardModel | undefined;
-  @Input() type="normal";
  
-  test: any;
   constructor(private gamesService: GamesService) {
     setTimeout(() => {
       if (this.selectedCard != undefined) {
         if(this.selectedCard?.dysrhythmia===true){
           this.fontClass = 'open-dyslexic';
+        }
+        if (this.selectedCard?.colorblindness === true) {
+          this.type = 'other';
         }
         if (
           this.selectedCard?.number === 'reverse' ||
