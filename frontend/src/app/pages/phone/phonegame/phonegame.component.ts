@@ -110,7 +110,7 @@ export class PhoneGameComponent implements OnInit {
       //console.log(card);
       this.symbol = card.number;
       this.color = card.name;
-      console.log('Card on table: '+ this.symbol + ' ' + this.color)
+      console.log('Card on table: ' + this.symbol + ' ' + this.color)
     });
   }
 
@@ -164,10 +164,7 @@ export class PhoneGameComponent implements OnInit {
     this.drawed = false;
     this.throwedCard = this.cards[this.selectedCard];
     console.log(this.throwedCard);
-    if (
-      this.throwedCard === '+4 WildCard4.png' ||
-      this.throwedCard === 'normal WildCard.png'
-    ) {
+    if (this.throwedCard === '+4 All.png' || this.throwedCard === 'WildCard All.png') {
       this.choose_color = true;
     } else {
       this.throw();
@@ -176,10 +173,12 @@ export class PhoneGameComponent implements OnInit {
 
   throw() {
     //peta to apo to front
-    //prepei na mpei elegxos gia +2, +4 , normals
+    //prepei na mpei elegxos gia WildCards
     if (
       this.color === this.cardValue[this.selectedCard].name ||
-      this.symbol === this.cardValue[this.selectedCard].number
+      this.symbol === this.cardValue[this.selectedCard].number ||
+      this.cardValue[this.selectedCard].number === '+4' ||
+      this.cardValue[this.selectedCard].number === 'WildCard'
     ) {
       this.cardValue.splice(this.selectedCard, 1);
       // this.player.cards_hand=this.cardValue;
@@ -259,10 +258,10 @@ export class PhoneGameComponent implements OnInit {
   WildCardGreen() {
     this.choose_color = false;
     console.log(this.throwCard);
-    if (this.throwedCard === '+4 WildCard4.png') {
-      this.throwedCard = '+4 WildCard4Green.png';
-    } else if (this.throwedCard === 'normal WildCard.png') {
-      this.throwedCard = 'normal WildCardGreen.png';
+    if (this.throwedCard === '+4 All.png') {
+      this.throwedCard = '+4 Green.png';
+    } else if (this.throwedCard === 'WildCard All.png') {
+      this.throwedCard = 'WildCard Green.png';
     }
     this.throw();
   }
@@ -270,30 +269,30 @@ export class PhoneGameComponent implements OnInit {
   WildCardBlue() {
     this.choose_color = false;
     console.log(this.throwCard);
-    if (this.throwedCard === '+4 WildCard4.png') {
-      this.throwedCard = '+4 WildCard4Blue.png';
-    } else if (this.throwedCard === 'normal WildCard.png') {
-      this.throwedCard = 'normal WildCardBlue.png';
+    if (this.throwedCard === '+4 All.png') {
+      this.throwedCard = '+4 Blue.png';
+    } else if (this.throwedCard === 'WildCard All.png') {
+      this.throwedCard = 'WildCard Blue.png';
     }
     this.throw();
   }
   WildCardRed() {
     this.choose_color = false;
     console.log(this.throwCard);
-    if (this.throwedCard === '+4 WildCard4.png') {
-      this.throwedCard = '+4 WildCard4Red.png';
-    } else if (this.throwedCard === 'normal WildCard.png') {
-      this.throwedCard = 'normal WildCardRed.png';
+    if (this.throwedCard === '+4 All.png') {
+      this.throwedCard = '+4 Red.png';
+    } else if (this.throwedCard === 'WildCard All.png') {
+      this.throwedCard = 'WildCard Red.png';
     }
     this.throw();
   }
   WildCardYellow() {
     this.choose_color = false;
     console.log(this.throwCard);
-    if (this.throwedCard === '+4 WildCard4.png') {
-      this.throwedCard = '+4 WildCard4Yellow.png';
-    } else if (this.throwedCard === 'normal WildCard.png') {
-      this.throwedCard = 'normal WildCardYellow.png';
+    if (this.throwedCard === '+4 All.png') {
+      this.throwedCard = '+4 Yellow.png';
+    } else if (this.throwedCard === 'WildCard All.png') {
+      this.throwedCard = 'WildCard Yellow.png';
     }
     this.throw();
   }

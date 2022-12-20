@@ -19,34 +19,30 @@ export class CardComponent {
   public type: string = 'normal'
   public test: any;
   @Input() selectedCard: CardModel | undefined;
- 
+
   constructor(private gamesService: GamesService) {
     setTimeout(() => {
       if (this.selectedCard != undefined) {
-        if(this.selectedCard?.dysrhythmia===true){
+        if (this.selectedCard?.dysrhythmia === true) {
           this.fontClass = 'open-dyslexic';
         }
         if (this.selectedCard?.colorblindness === true) {
           this.type = 'other';
         }
-        if (
-          this.selectedCard?.number === 'reverse' ||
-          this.selectedCard?.number === 'skip' ||
-          this.selectedCard?.number === 'normal'
-          //   this.selectedCard?.number === '+2' ||
-          //   this.selectedCard?.number === '+4'
-        ) {
+
+        if (this.selectedCard?.number === 'Reverse' || this.selectedCard?.number === 'Skip' || this.selectedCard?.number === 'WildCard') {
           this.test = new CardModel({
-            name: this.selectedCard?.name,
+            name: this.selectedCard?.number + this.selectedCard?.name,
             number: ' ',
           });
-        } else {
-          if (
-            this.selectedCard?.number === '+2' ||
-            this.selectedCard?.number === '+4'
-          ) {
-            this.plusCard = true;
-          }
+        } else if (this.selectedCard?.number === '+2' || this.selectedCard?.number === '+4') {
+          this.plusCard = true;
+          this.test = new CardModel({
+            name: this.selectedCard?.number + this.selectedCard?.name,
+            number: this.selectedCard?.number,
+          });
+        }
+        else {
           this.test = new CardModel({
             name: this.selectedCard?.name,
             number: this.selectedCard?.number,
@@ -74,7 +70,7 @@ export class CardComponent {
       }
     }, 1000);
   }
-  ngOnInit() {}
+  ngOnInit() { }
 
   checkColor() {
     var ret = '';

@@ -116,12 +116,15 @@ export class TableGameComponent implements OnInit {
       console.log('+4');
       this.setTurn();
       this.socketService.publish('drawFour', this.turn);
-    } else if (splitted[0] === 'skip') {
+    } else if (splitted[0] === 'Skip') {
       this.setTurn();
-    } else if (splitted[0] === 'reverse') {
-      if (this.length === 2) this.setTurn();
-      if (this.reverse == false) this.reverse = true;
-      else this.reverse = false;
+    } else if (splitted[0] === 'Reverse') {
+      if (this.length === 2) 
+        this.setTurn();
+      if (this.reverse == false) 
+        this.reverse = true;
+      else 
+        this.reverse = false;
     }
 
     setTimeout(() => {
