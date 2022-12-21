@@ -215,6 +215,17 @@ export class PhoneGameComponent implements OnInit {
     if (this.cards.length == 1) {
       this.socketService.publish('one_card', this.my_id);
     }
+
+    if (this.cards.length == 0) {
+      Swal.fire({
+        title: 'Congratulations!',
+        text: 'You won this round.',
+        imageUrl: 'https://www.nicepng.com/png/full/6-69332_fireworks-png-images-free-download-clip-art-free.png',
+        imageWidth: 400,
+        imageHeight: 200,
+        imageAlt: 'Custom image',
+      });
+    }
     //console.log(this.selectedCard);
   }
 

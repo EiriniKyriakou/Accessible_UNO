@@ -96,6 +96,8 @@ export class TableGameComponent implements OnInit {
       this.wait_uno = true;
     });
 
+    
+
   }
 
   setTurn() {
