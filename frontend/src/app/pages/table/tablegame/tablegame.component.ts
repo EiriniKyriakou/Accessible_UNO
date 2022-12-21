@@ -23,6 +23,8 @@ export class TableGameComponent implements OnInit {
   public turns_of_players = -1;
   public reverse = false;
   public card_type = 'normal';
+  public uno_player = '';
+  public wait_uno = false;
 
   constructor(
     private router: Router,
@@ -58,6 +60,14 @@ export class TableGameComponent implements OnInit {
 
     this.socketService.subscribe('card_played', (data: any) => {
       console.log('Player Played a Card');
+      //Penalty
+      console.log("data player id" + data.id)
+      console.log("uno_p" + this.uno_player)
+      if ((this.wait_uno === true) && (data.id != this.uno_player)) {
+        this.socketService.publish('penalty', this.uno_player);
+        this.wait_uno = false;
+      }
+      //
       this.playedCard(data.card);
       this.updatePlayer(data.player);
       this.setTurn();
@@ -74,7 +84,18 @@ export class TableGameComponent implements OnInit {
       this.setTurn();
     });
 
-    
+    this.socketService.subscribe('uno_player', (data: any) => {
+      console.log('SAYS UNO' + data);
+      this.uno_player = '';
+      this.wait_uno = false;
+    });
+
+    this.socketService.subscribe('one_card', (data: any) => {
+      console.log('SAYS UNO' + data);
+      this.uno_player = data;
+      this.wait_uno = true;
+    });
+
   }
 
   setTurn() {
@@ -119,11 +140,11 @@ export class TableGameComponent implements OnInit {
     } else if (splitted[0] === 'Skip') {
       this.setTurn();
     } else if (splitted[0] === 'Reverse') {
-      if (this.length === 2) 
+      if (this.length === 2)
         this.setTurn();
-      if (this.reverse == false) 
+      if (this.reverse == false)
         this.reverse = true;
-      else 
+      else
         this.reverse = false;
     }
 

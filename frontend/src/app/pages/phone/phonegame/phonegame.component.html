@@ -19,12 +19,11 @@
             <div class="card cards" *ngFor="let card of cards" #hoverCard (mouseenter)="onMouseEnter(hoverCard,cards.indexOf(card))"
                 (mouseleave)="onMouseOut(hoverCard)" >
                 <card [selectedCard]="cardValue[cards.indexOf(card)]"></card>
-                <!-- {{cards.indexOf(card)}}  na balw kapws na pairnw to index gia to throw card giati twra egkefalos den -->
             </div>
         </div>
         
         <div class="col-2 right" *ngIf="cardsReady">
-            <img class="unobutton "  src="../../../../assets/photos/unobutton.png" alt="say uno">
+            <img (click)="uno()" class="unobutton "  src="../../../../assets/photos/unobutton.png" alt="say uno">
         </div>
     </div>
     <div class="row marg" *ngIf="cardsReady">

@@ -105,6 +105,12 @@ export class PhoneGameComponent implements OnInit {
         this.drawCard(4);
       }
     });
+    this.socketService.subscribe('penalty', (data: any) => {
+      console.log("Penalty")
+      if (this.my_id === data) {
+        this.drawCard(2);
+      }
+    });
 
     this.socketService.subscribe('card_table', (card: CardModel) => {
       //console.log(card);
@@ -112,6 +118,10 @@ export class PhoneGameComponent implements OnInit {
       this.color = card.color;
       console.log('Card on table: ' + this.symbol + ' ' + this.color)
     });
+
+
+
+
   }
 
   onMouseEnter(hoverCard: HTMLElement, index: any) {
@@ -188,6 +198,7 @@ export class PhoneGameComponent implements OnInit {
         let tmp = {
           card: this.throwedCard,
           player: this.player,
+          id: this.my_id
         };
         this.socketService.publish('card_played', tmp);
         console.log('I throw a card');
@@ -199,6 +210,10 @@ export class PhoneGameComponent implements OnInit {
         title: 'Oops...',
         text: 'You cannot play this card!',
       });
+    }
+
+    if (this.cards.length == 1) {
+      this.socketService.publish('one_card', this.my_id);
     }
     //console.log(this.selectedCard);
   }
@@ -232,6 +247,13 @@ export class PhoneGameComponent implements OnInit {
     }, 1000);
   }
 
+  uno() {
+    if (this.cards.length == 1) {
+      console.log("uno")
+      this.socketService.publish('uno_player', this.my_id);
+    }
+
+  }
   getClickAction(_event: any) {
     this.hided = _event;
     if (_event) {
