@@ -123,11 +123,35 @@
     <defs>
       <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
     </defs>
-    <g class="parallax">
-      <use xlink:href="#gentle-wave" x="48" y="0" fill="#df0000" />
-      <use xlink:href="#gentle-wave" x="48" y="3" fill="#df0000" />
-      <use xlink:href="#gentle-wave" x="48" y="5" fill="#df0000" />
-      <use xlink:href="#gentle-wave" x="48" y="7" fill="#df0000" />
+    <g class="parallax" *ngIf="start">
+      <use xlink:href="#gentle-wave" x="48" y="0" fill="#00AA00" />
+      <use xlink:href="#gentle-wave" x="48" y="3" fill="#5555FF" />
+      <use xlink:href="#gentle-wave" x="48" y="5" fill="#FF5555" />
+      <use xlink:href="#gentle-wave" x="48" y="7" fill="#FFAA00" />
+    </g>
+    <g class="parallax" *ngIf="red">
+      <use xlink:href="#gentle-wave" x="48" y="0" fill="#FF5555" />
+      <use xlink:href="#gentle-wave" x="48" y="3" fill="#FF5555" />
+      <use xlink:href="#gentle-wave" x="48" y="5" fill="#FF5555" />
+      <use xlink:href="#gentle-wave" x="48" y="7" fill="#FF5555" />
+    </g>
+    <g class="parallax" *ngIf="blue">
+      <use xlink:href="#gentle-wave" x="48" y="0" fill="#5555FF" />
+      <use xlink:href="#gentle-wave" x="48" y="3" fill="#5555FF" />
+      <use xlink:href="#gentle-wave" x="48" y="5" fill="#5555FF" />
+      <use xlink:href="#gentle-wave" x="48" y="7" fill="#5555FF" />
+    </g>
+    <g class="parallax" *ngIf="green">
+      <use xlink:href="#gentle-wave" x="48" y="0" fill="#00AA00" />
+      <use xlink:href="#gentle-wave" x="48" y="3" fill="#00AA00" />
+      <use xlink:href="#gentle-wave" x="48" y="5" fill="#00AA00" />
+      <use xlink:href="#gentle-wave" x="48" y="7" fill="#00AA00" />
+    </g>
+    <g class="parallax" *ngIf="yellow">
+      <use xlink:href="#gentle-wave" x="48" y="0" fill="#FFAA00" />
+      <use xlink:href="#gentle-wave" x="48" y="3" fill="#FFAA00" />
+      <use xlink:href="#gentle-wave" x="48" y="5" fill="#FFAA00" />
+      <use xlink:href="#gentle-wave" x="48" y="7" fill="#FFAA00" />
     </g>
   </svg>
 </div>
