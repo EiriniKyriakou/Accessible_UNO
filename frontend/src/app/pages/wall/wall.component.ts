@@ -32,7 +32,7 @@ export class WallComponent implements OnInit {
       this.green = false
       switch (card.color) {
         case 'Red.png': {
-          this.red=true;
+          this.red = true;
           break;
         }
         case 'Green.png': {
@@ -40,11 +40,11 @@ export class WallComponent implements OnInit {
           break;
         }
         case 'Blue.png': {
-          this.blue= true;
+          this.blue = true;
           break;
         }
         case 'Yellow.png': {
-          this.yellow= true;
+          this.yellow = true;
           break;
         }
         default: {

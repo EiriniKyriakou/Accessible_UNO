@@ -52,7 +52,21 @@ export class TableGameComponent implements OnInit {
         this.card_type;
         this.length = this.game.players.length;
         console.log('lenght=' + this.length);
-        let firstCard = this.game.cards_on_deck[0];
+        let check;
+        let firstCard;
+        do {
+          firstCard = this.game.cards_on_deck[0];
+          check = ((firstCard === "WildCard All.png") || (firstCard === "+4 All.png") || (firstCard === "+2 Blue.png") || (firstCard === "+2 Red.png") || (firstCard === "+2 Green.png") || (firstCard === "+2 Yellow.png"));
+
+          if (check) {
+            console.log(this.game.cards_on_deck)
+            this.game.cards_on_deck.shift();
+            this.game.cards_on_deck.push(firstCard)
+            console.log(this.game.cards_on_deck)
+            firstCard = this.game.cards_on_deck[0];
+          }
+        } while (check);
+        console.log(firstCard)
         this.playedCard(firstCard);
         this.removeCards(this.game); //old cards of players
       }
@@ -96,7 +110,7 @@ export class TableGameComponent implements OnInit {
       this.wait_uno = true;
     });
 
-    
+
 
   }
 
