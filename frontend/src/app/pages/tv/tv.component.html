@@ -1,5 +1,5 @@
 <div class="container mt-5">
-  <div *ngIf="four">
+  <div *ngIf="number==='+4'">
     <h1>Me: I can handle 4 weeks of self quarantine</h1>
     <h1>The goverment:</h1>
     <div class="cards">
@@ -9,7 +9,7 @@
     </div>
   </div>
 
-  <div *ngIf="!four&&two">
+  <div *ngIf="number==='+2'">
     <h1>Everybody is a gangsta until +2 wild cards start dropping</h1>
     <div class="cards">
       <img class="card" src="../../../assets/cards/normal/+2Blue.png">

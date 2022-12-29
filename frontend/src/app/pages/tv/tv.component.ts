@@ -1,4 +1,5 @@
-import { Component, OnInit ,Renderer2} from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
+import { SocketsService } from 'src/app/global/services/sockets/sockets.service';
 
 @Component({
   selector: 'app-home',
@@ -6,27 +7,29 @@ import { Component, OnInit ,Renderer2} from '@angular/core';
   styleUrls: ['./tv.component.scss']
 })
 export class TVComponent implements OnInit {
-  four=false;
-  two=false;
+  card = "";
+  number: any;
 
-  ngOnInit() {
-    this.four=true;
-    setTimeout(() => this.change(), 3000);  //3s
-   }
-
-  constructor( private renderer: Renderer2 ) {
+  constructor(private renderer: Renderer2, private socketService: SocketsService,) {
     this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/background-tv-wall.png)');
   }
 
-  change(){
-    this.four = false;
-    this.two = true;
-    setTimeout(() => this.change2(), 3000);  //3s
+  ngOnInit() {
+    this.socketService.subscribe('card_played', (data: any) => {
+      this.card = data.card;
+      let splitted = this.card.split(' ', 2);
+      this.number = splitted[0];
+      console.log(this.card)
+    });
+
+    this.socketService.subscribe('won_round', (id: any) => {
+      console.log('Player ' + id + ' won the round');
+      this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/win.png)');
+    });
+
+    this.socketService.subscribe('start_round', (id: any) => {
+      this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/background-tv-wall.png)');
+    });
   }
 
-  change2(){
-    this.four = false;
-    this.two = false;
-    this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/win.png)');
-  }
 }
