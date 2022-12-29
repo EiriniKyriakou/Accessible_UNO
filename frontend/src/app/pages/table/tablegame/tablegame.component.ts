@@ -5,6 +5,7 @@ import { PlayerModel } from 'src/app/global/models/players/player.model';
 import { GameModel } from 'src/app/global/models/games/game.model';
 import { Router } from '@angular/router';
 import { PlayersService } from 'src/app/global/services/players/players.service';
+import arrayShuffle from 'array-shuffle';
 
 @Component({
   selector: 'app-tablegame',
@@ -25,6 +26,7 @@ export class TableGameComponent implements OnInit {
   public card_type = 'normal';
   public uno_player = '';
   public wait_uno = false;
+  public end_of_round = false;
 
   constructor(
     private router: Router,
@@ -51,7 +53,7 @@ export class TableGameComponent implements OnInit {
         }
         this.card_type;
         this.length = this.game.players.length;
-        console.log('lenght=' + this.length);
+        //console.log('lenght=' + this.length);
         let check;
         let firstCard;
         do {
@@ -59,14 +61,14 @@ export class TableGameComponent implements OnInit {
           check = ((firstCard === "WildCard All.png") || (firstCard === "+4 All.png") || (firstCard === "+2 Blue.png") || (firstCard === "+2 Red.png") || (firstCard === "+2 Green.png") || (firstCard === "+2 Yellow.png"));
 
           if (check) {
-            console.log(this.game.cards_on_deck)
+            //console.log(this.game.cards_on_deck)
             this.game.cards_on_deck.shift();
             this.game.cards_on_deck.push(firstCard)
-            console.log(this.game.cards_on_deck)
+            //console.log(this.game.cards_on_deck)
             firstCard = this.game.cards_on_deck[0];
           }
         } while (check);
-        console.log(firstCard)
+        //console.log(firstCard)
         this.playedCard(firstCard);
         this.removeCards(this.game); //old cards of players
       }
@@ -75,13 +77,13 @@ export class TableGameComponent implements OnInit {
     this.socketService.subscribe('card_played', (data: any) => {
       console.log('Player Played a Card');
       //Penalty
-      console.log("data player id" + data.id)
-      console.log("uno_p" + this.uno_player)
+      //console.log("data player id" + data.id)
+      //console.log("uno_p" + this.uno_player)
       if ((this.wait_uno === true) && (data.id != this.uno_player)) {
+        console.log("Player "+ this.uno_player + " got penalty from not saying UNO");
         this.socketService.publish('penalty', this.uno_player);
         this.wait_uno = false;
       }
-      //
       this.playedCard(data.card);
       this.updatePlayer(data.player);
       this.setTurn();
@@ -98,46 +100,58 @@ export class TableGameComponent implements OnInit {
       this.setTurn();
     });
 
-    this.socketService.subscribe('uno_player', (data: any) => {
-      console.log('SAYS UNO' + data);
+    this.socketService.subscribe('uno_player', (id: any) => {
+      console.log("Player "+ id + " says UNO");
       this.uno_player = '';
       this.wait_uno = false;
     });
 
     this.socketService.subscribe('one_card', (data: any) => {
-      console.log('SAYS UNO' + data);
+      console.log('Waiting UNO from player:' + data);
       this.uno_player = data;
       this.wait_uno = true;
     });
 
+    this.socketService.subscribe('won_round', (id: any) => {
+      console.log('Player ' + id + ' won the round');
+      this.endRound();
+      this.turns_of_players = this.game.players.indexOf(id);
+    });
 
+    this.socketService.subscribe('start_round', (id: any) => {
+      console.log('Player with id=' + id + 'clicked start round');
+      if(this.end_of_round === true)
+        this.startRound();
+    });
 
   }
 
   setTurn() {
-    if (!this.reverse) {
-      if (this.turn === '' || this.turn === this.game.players[this.game.players.length - 1]) {
-        this.turn = this.game.players[0];
-        this.turns_of_players = 0;
+    if (this.end_of_round === false) {
+      if (!this.reverse) {
+        if (this.turn === '' || this.turn === this.game.players[this.game.players.length - 1]) {
+          this.turn = this.game.players[0];
+          this.turns_of_players = 0;
+        } else {
+          this.turn = this.game.players[this.game.players.indexOf(this.turn) + 1];
+          this.turns_of_players++;
+        }
       } else {
-        this.turn = this.game.players[this.game.players.indexOf(this.turn) + 1];
-        this.turns_of_players++;
+        if (this.turn === '' || this.turn === this.game.players[0]) {
+          this.turn = this.game.players[this.game.players.length - 1];
+          this.turns_of_players = this.game.players.length - 1;
+        } else {
+          this.turn = this.game.players[this.game.players.indexOf(this.turn) - 1];
+          this.turns_of_players--;
+        }
       }
-    } else {
-      if (this.turn === '' || this.turn === this.game.players[0]) {
-        this.turn = this.game.players[this.game.players.length - 1];
-        this.turns_of_players = this.game.players.length - 1;
-      } else {
-        this.turn = this.game.players[this.game.players.indexOf(this.turn) - 1];
-        this.turns_of_players--;
-      }
+      this.socketService.publish('turn', this.turn);
+      //console.log('Turn: ' + this.turn);
+      //console.log('turns_of_players=' + this.turns_of_players);
+      this.game.turn = this.turn;
+      let newGame = this.game;
+      this.gamesService.update(newGame).subscribe((result: any) => { });
     }
-    this.socketService.publish('turn', this.turn);
-    console.log('Turn: ' + this.turn);
-    console.log('turns_of_players=' + this.turns_of_players);
-    this.game.turn = this.turn;
-    let newGame = this.game;
-    this.gamesService.update(newGame).subscribe((result: any) => { });
   }
 
   playedCard(card: any) {
@@ -184,12 +198,15 @@ export class TableGameComponent implements OnInit {
   }
 
   removeCards(current_game: { players: any }) {
-    var Players = this.game.players;
-    for (var player of Players) {
-      this.playersService.getById(player).subscribe((result: any) => {
-        this.players.push(result);
-        result.cards_hand = [];
-        this.playersService.update(result).subscribe((result: any) => { });
+    let players = this.game.players;
+    for (let player of players) {
+      this.playersService.getById(player).subscribe((plr: PlayerModel) => {
+        plr.cards_hand = [];
+        this.players.push(plr);
+        this.playersService.update(plr).subscribe((result: any) => { 
+          console.log('In remove cards:')
+          console.log(result);
+        });
       });
     }
     console.log('The players of the game:');
@@ -200,16 +217,15 @@ export class TableGameComponent implements OnInit {
   }
 
   dealCards(current_game: { players: any }) {
-    var players = this.game.players;
-    for (var player of players) {
-      this.playersService.getById(player).subscribe((result: any) => {
+    let players = this.game.players;
+    for (let player of players) {
+      this.playersService.getById(player).subscribe((plr: any) => {
         for (let i = 0; i < 7; i++) {
-          result.cards_hand.push(this.game.cards_on_deck[0]);
+          plr.cards_hand.push(this.game.cards_on_deck[0]);
           this.game.cards_on_deck.shift();
         }
-        //console.log(result)
         this.gamesService.update(this.game).subscribe((result: any) => { });
-        this.playersService.update(result).subscribe((result: any) => { });
+        this.playersService.update(plr).subscribe((result: any) => { });
       });
     }
     this.number_of_cards = [7, 7, 7, 7];
@@ -222,7 +238,8 @@ export class TableGameComponent implements OnInit {
       if (player._id === data._id) {
         this.players[i] = data;
         this.number_of_cards[i] = data.cards_hand.length;
-        console.log('Player updated');
+        console.log('Player updated:');
+        console.log(player)
       }
       i++;
     }
@@ -236,8 +253,161 @@ export class TableGameComponent implements OnInit {
       } else {
         this.game = result[0];
         console.log('Game updated');
-        console.log(this.game);
+        //console.log(this.game);
       }
     });
   }
+
+  endRound() {
+    this.end_of_round = true;
+    this.players = [];
+    this.cards = [];
+    this.turn = '';
+    this.turns_of_players = -1;
+    this.reverse = false;
+    this.uno_player = '';
+    this.wait_uno = false;
+  }
+
+  startRound() {
+    this.end_of_round = false;
+    this.initRound();
+  }
+
+  initRound() {
+    this.game.cards_on_deck = arrayShuffle([
+      '0 Red.png',
+      '0 Yellow.png',
+      '0 Green.png',
+      '0 Blue.png',
+      '1 Red.png',
+      '1 Yellow.png',
+      '1 Green.png',
+      '1 Blue.png',
+      '1 Red.png',
+      '1 Yellow.png',
+      '1 Green.png',
+      '1 Blue.png',
+      '2 Red.png',
+      '2 Yellow.png',
+      '2 Green.png',
+      '2 Blue.png',
+      '2 Red.png',
+      '2 Yellow.png',
+      '2 Green.png',
+      '2 Blue.png',
+      '3 Red.png',
+      '3 Yellow.png',
+      '3 Green.png',
+      '3 Blue.png',
+      '3 Red.png',
+      '3 Yellow.png',
+      '3 Green.png',
+      '3 Blue.png',
+      '4 Red.png',
+      '4 Yellow.png',
+      '4 Green.png',
+      '4 Blue.png',
+      '4 Red.png',
+      '4 Yellow.png',
+      '4 Green.png',
+      '4 Blue.png',
+      '5 Red.png',
+      '5 Yellow.png',
+      '5 Green.png',
+      '5 Blue.png',
+      '5 Red.png',
+      '5 Yellow.png',
+      '5 Green.png',
+      '5 Blue.png',
+      '6 Red.png',
+      '6 Yellow.png',
+      '6 Green.png',
+      '6 Blue.png',
+      '6 Red.png',
+      '6 Yellow.png',
+      '6 Green.png',
+      '6 Blue.png',
+      '7 Red.png',
+      '7 Yellow.png',
+      '7 Green.png',
+      '7 Blue.png',
+      '7 Red.png',
+      '7 Yellow.png',
+      '7 Green.png',
+      '7 Blue.png',
+      '8 Red.png',
+      '8 Yellow.png',
+      '8 Green.png',
+      '8 Blue.png',
+      '8 Red.png',
+      '8 Yellow.png',
+      '8 Green.png',
+      '8 Blue.png',
+      '9 Red.png',
+      '9 Yellow.png',
+      '9 Green.png',
+      '9 Blue.png',
+      '9 Red.png',
+      '9 Yellow.png',
+      '9 Green.png',
+      '9 Blue.png',
+      'Reverse Red.png',
+      'Reverse Yellow.png',
+      'Reverse Green.png',
+      'Reverse Blue.png',
+      'Reverse Red.png',
+      'Reverse Yellow.png',
+      'Reverse Green.png',
+      'Reverse Blue.png',
+      'Skip Red.png',
+      'Skip Yellow.png',
+      'Skip Green.png',
+      'Skip Blue.png',
+      'Skip Red.png',
+      'Skip Yellow.png',
+      'Skip Green.png',
+      'Skip Blue.png',
+      '+2 Red.png',
+      '+2 Yellow.png',
+      '+2 Green.png',
+      '+2 Blue.png',
+      '+2 Red.png',
+      '+2 Yellow.png',
+      '+2 Green.png',
+      '+2 Blue.png',
+      'WildCard All.png',
+      'WildCard All.png',
+      'WildCard All.png',
+      'WildCard All.png',
+      '+4 All.png',
+      '+4 All.png',
+      '+4 All.png',
+      '+4 All.png',
+    ]);
+    this.game.played_cards = [];
+    this.game.turn = '';
+    this.game.last_card = '';
+    this.game.current_player = '';
+    this.gamesService.update(this.game).subscribe((result: any) => {
+      let check;
+      let firstCard;
+      do {
+        firstCard = this.game.cards_on_deck[0];
+        check = ((firstCard === "WildCard All.png") || (firstCard === "+4 All.png") || (firstCard === "+2 Blue.png") || (firstCard === "+2 Red.png") || (firstCard === "+2 Green.png") || (firstCard === "+2 Yellow.png"));
+
+        if (check) {
+          console.log(this.game.cards_on_deck)
+          this.game.cards_on_deck.shift();
+          this.game.cards_on_deck.push(firstCard)
+          console.log(this.game.cards_on_deck)
+          firstCard = this.game.cards_on_deck[0];
+        }
+      } while (check);
+      console.log('First card on table: ' + firstCard)
+      this.playedCard(firstCard);
+      this.removeCards(this.game); //old cards of players
+    });
+  }
+
 }

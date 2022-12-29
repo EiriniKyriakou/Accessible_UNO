@@ -7,7 +7,7 @@ export class GameModel {
     public players!: string[];
     public turn!: string;
     public last_card!: string;
-    public current_player!: string;
+    public current_player!: string; //We don't use it
     public dysrhythmia!: boolean;
     public dyslexia!: boolean;
     public impairedVision!: boolean;

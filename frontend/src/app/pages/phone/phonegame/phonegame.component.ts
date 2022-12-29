@@ -35,6 +35,7 @@ export class PhoneGameComponent implements OnInit {
   card_type = 'normal';
   symbol = '';
   color = '';
+  end_of_round = false;
 
   constructor(
     private socketService: SocketsService,
@@ -42,44 +43,27 @@ export class PhoneGameComponent implements OnInit {
     private playersService: PlayersService,
     private gamesService: GamesService
   ) {
-    this.renderer.setStyle(
-      document.body,
-      'background-image',
-      'url(../../../assets/backgrounds/background.png)'
-    );
+    this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/background.png)');
     this.changeText = false;
   }
 
   ngOnInit() {
-    console.log('My id ' + this.my_id);
-    this.socketService.subscribe('turn', (data: any) => {
-      this.drawed = false;
-      this.endOfTimer = false;
-      clearInterval(this.theTimer);
-      if (data != this.my_id) {
-        this.my_turn = false;
-      } else {
-        this.my_turn = true;
-        this.startTimer(1);
-      }
-    });
+    //console.log('My id ' + this.my_id);
     setTimeout(() => {
       this.playersService.getById(this.my_id).subscribe((result: any) => {
-        console.log("I'm the player:");
-        console.log(result);
         if (JSON.stringify(result) === undefined) {
           console.log('error');
         } else {
           this.player = result;
-          this.cards = result.cards_hand;
+          this.cards = this.player.cards_hand;
+          console.log("I'm the player:");
+          console.log(this.player);
           if (this.player.colorblindness === true) {
             this.card_type = 'other';
           }
-
-          //console.log(this.cards)
           var i = 0;
-          for (var card of this.cards) {
-            var splitted = card.split(' ', 2);
+          for (let card of this.cards) {
+            let splitted = card.split(' ', 2);
             this.setCard(splitted[0], splitted[1], i, this.player.dysrhythmia, this.player.colorblindness);
             i++;
           }
@@ -90,38 +74,98 @@ export class PhoneGameComponent implements OnInit {
       this.startTimer(1);
     }, 6000);
 
-    this.socketService.subscribe('drawTwo', (data: any) => {
+    this.socketService.subscribe('turn', (data: any) => {
+      this.drawed = false;
+      this.endOfTimer = false;
+      clearInterval(this.theTimer);
+      if (data != this.my_id) {
+        this.my_turn = false;
+      } else {
+        this.my_turn = true;
+        // console.log("On my turn:")
+        // console.log(this.player.cards_hand);
+        // console.log(this.cards);
+        // console.log(this.cardValue);
+        this.startTimer(1);
+      }
+    });
+
+    this.socketService.subscribe('drawTwo', (id: any) => {
       console.log('Player Passed +2');
       //console.log(data);
-      if (this.my_id === data) {
+      if (this.my_id === id) {
         this.drawCard(2);
       }
     });
 
-    this.socketService.subscribe('drawFour', (data: any) => {
+    this.socketService.subscribe('drawFour', (id: any) => {
       console.log('Player Passed +4');
-      //console.log(data);
-      if (this.my_id === data) {
+      if (this.my_id === id) {
         this.drawCard(4);
       }
     });
-    this.socketService.subscribe('penalty', (data: any) => {
+
+    this.socketService.subscribe('penalty', (id: any) => {
       console.log("Penalty")
-      if (this.my_id === data) {
+      if (this.my_id === id) {
         this.drawCard(2);
       }
     });
 
     this.socketService.subscribe('card_table', (card: CardModel) => {
-      //console.log(card);
       this.symbol = card.number;
       this.color = card.color;
       console.log('Card on table: ' + this.symbol + ' ' + this.color)
     });
 
+    this.socketService.subscribe('won_round', (id: any) => {
+      console.log('Player with id = ' + id + 'won the round');
+      this.end_of_round = true;
+      this.my_turn = false;
+      if (id != this.my_id) {
+        Swal.fire({
+          title: 'Better Luck Next Time',
+          text: 'You lost this round.',
+          imageUrl: 'https://www.nicepng.com/png/full/6-69332_fireworks-png-images-free-download-clip-art-free.png',
+          imageWidth: 400,
+          imageHeight: 200,
+          imageAlt: 'Custom image',
+          confirmButtonText: 'Start New Round',
+        }).then((result: { isConfirmed: any; }) => {
+          if (result.isConfirmed) {
+            this.socketService.publish('start_round', this.my_id);
+          }
+        });
+      }
+    });
 
-
-
+    this.socketService.subscribe('start_round', (id: any) => {
+      console.log('Start round');
+      this.cards = [];
+      this.cardValue = [];
+      this.cardsReady = false;
+      setTimeout(() => {
+        this.playersService.getById(this.my_id).subscribe((result: any) => {
+          if (JSON.stringify(result) === undefined) {
+            console.log('error');
+          } else {
+            this.player = result;
+            this.cards = this.player.cards_hand;
+            //console.log("I'm the player:");
+            //console.log(this.player);
+            var i = 0;
+            for (let card of this.cards) {
+              let splitted = card.split(' ', 2);
+              this.setCard(splitted[0], splitted[1], i, this.player.dysrhythmia, this.player.colorblindness);
+              i++;
+            }
+          }
+        });
+        this.cardsReady = true;
+        clearInterval(this.theTimer);
+        this.startTimer(1);
+      }, 6000);
+    });
   }
 
   onMouseEnter(hoverCard: HTMLElement, index: any) {
@@ -139,11 +183,12 @@ export class PhoneGameComponent implements OnInit {
         console.log('No active Game');
       } else {
         this.game = result[0];
-        console.log('The game (before i draw a card):');
-        console.log(this.game);
+        //console.log('The game (before i draw a card):');
+        //console.log(this.game);
         for (let i = 0; i < num; i++) {
           let tokenCard = this.game.cards_on_deck[0];
           this.cards.push(tokenCard);
+          this.player.cards_hand = this.cards;
           var splitted = tokenCard.split(' ', 2);
           this.setCard(splitted[0], splitted[1], this.cardValue.length, this.player.dysrhythmia, this.player.colorblindness);
           this.game.cards_on_deck.shift();
@@ -152,13 +197,12 @@ export class PhoneGameComponent implements OnInit {
         this.gamesService.update(this.game).subscribe((result: any) => {
           this.playersService.update(this.player).subscribe((result: any) => {
             this.socketService.publish('draw_card', this.player);
-            console.log('I draw');
+            //console.log('I draw');
             if (this.endOfTimer === true) {
               this.pass();
             }
           });
         });
-        this.player.cards_hand = this.cards;
         this.drawed = true;
       }
     });
@@ -167,13 +211,13 @@ export class PhoneGameComponent implements OnInit {
   pass() {
     this.drawed = false;
     this.socketService.publish('player_passed', '');
-    console.log('I pass');
+    //console.log('I pass');
   }
 
   throwCard() {
     this.drawed = false;
     this.throwedCard = this.cards[this.selectedCard];
-    console.log(this.throwedCard);
+    console.log("Card I'm about to throw: " + this.throwedCard);
     if (this.throwedCard === '+4 All.png' || this.throwedCard === 'WildCard All.png') {
       this.choose_color = true;
     } else {
@@ -182,7 +226,7 @@ export class PhoneGameComponent implements OnInit {
   }
 
   throw() {
-    //peta to apo to front
+    //peta to apo to table
     //prepei na mpei elegxos gia WildCards
     if (
       this.color === this.cardValue[this.selectedCard].color ||
@@ -191,7 +235,6 @@ export class PhoneGameComponent implements OnInit {
       this.cardValue[this.selectedCard].number === 'WildCard'
     ) {
       this.cardValue.splice(this.selectedCard, 1);
-      // this.player.cards_hand=this.cardValue;
       this.cards.splice(this.selectedCard, 1);
       this.player.cards_hand = this.cards;
       this.playersService.update(this.player).subscribe((result: any) => {
@@ -201,7 +244,7 @@ export class PhoneGameComponent implements OnInit {
           id: this.my_id
         };
         this.socketService.publish('card_played', tmp);
-        console.log('I throw a card');
+        //console.log('I throw a card');
       });
       this.selectedCard = null;
     } else {
@@ -217,6 +260,7 @@ export class PhoneGameComponent implements OnInit {
     }
 
     if (this.cards.length == 0) {
+      clearInterval(this.theTimer);
       Swal.fire({
         title: 'Congratulations!',
         text: 'You won this round.',
@@ -224,7 +268,13 @@ export class PhoneGameComponent implements OnInit {
         imageWidth: 400,
         imageHeight: 200,
         imageAlt: 'Custom image',
+        confirmButtonText: 'Start New Round',
+      }).then((result: { isConfirmed: any; }) => {
+        if (result.isConfirmed) {
+          this.socketService.publish('start_round', this.my_id);
+        }
       });
+      this.socketService.publish('won_round', this.my_id);
     }
     //console.log(this.selectedCard);
   }
@@ -246,7 +296,7 @@ export class PhoneGameComponent implements OnInit {
       this.timer = `${prefix}${Math.floor(seconds / 60)}:${textSec}`;
 
       if (seconds == 0) {
-        console.log('End of timer');
+        //console.log('End of timer');
         clearInterval(this.theTimer);
         this.endOfTimer = true;
         if (this.drawed === false) {
@@ -260,7 +310,7 @@ export class PhoneGameComponent implements OnInit {
 
   uno() {
     if (this.cards.length == 1) {
-      console.log("uno")
+      //console.log("I say uno")
       this.socketService.publish('uno_player', this.my_id);
     }
 
@@ -290,7 +340,7 @@ export class PhoneGameComponent implements OnInit {
 
   WildCardGreen() {
     this.choose_color = false;
-    console.log(this.throwCard);
+    //console.log(this.throwCard);
     if (this.throwedCard === '+4 All.png') {
       this.throwedCard = '+4 Green.png';
     } else if (this.throwedCard === 'WildCard All.png') {
@@ -301,7 +351,7 @@ export class PhoneGameComponent implements OnInit {
 
   WildCardBlue() {
     this.choose_color = false;
-    console.log(this.throwCard);
+    //console.log(this.throwCard);
     if (this.throwedCard === '+4 All.png') {
       this.throwedCard = '+4 Blue.png';
     } else if (this.throwedCard === 'WildCard All.png') {
@@ -311,7 +361,7 @@ export class PhoneGameComponent implements OnInit {
   }
   WildCardRed() {
     this.choose_color = false;
-    console.log(this.throwCard);
+    //console.log(this.throwCard);
     if (this.throwedCard === '+4 All.png') {
       this.throwedCard = '+4 Red.png';
     } else if (this.throwedCard === 'WildCard All.png') {
@@ -321,7 +371,7 @@ export class PhoneGameComponent implements OnInit {
   }
   WildCardYellow() {
     this.choose_color = false;
-    console.log(this.throwCard);
+    //console.log(this.throwCard);
     if (this.throwedCard === '+4 All.png') {
       this.throwedCard = '+4 Yellow.png';
     } else if (this.throwedCard === 'WildCard All.png') {
