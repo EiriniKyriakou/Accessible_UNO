@@ -203,6 +203,7 @@ export class TableGameComponent implements OnInit {
       this.playersService.getById(player).subscribe((plr: PlayerModel) => {
         plr.cards_hand = [];
         this.players.push(plr);
+        this.socketService.publish('start_game', plr);
         this.playersService.update(plr).subscribe((result: any) => { 
           console.log('In remove cards:')
           console.log(result);

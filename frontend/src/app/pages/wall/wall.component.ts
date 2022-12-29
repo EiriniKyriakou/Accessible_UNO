@@ -1,5 +1,6 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { CardModel } from 'src/app/global/models/cards/card.model';
+import { PlayerModel } from 'src/app/global/models/players/player.model';
 import { SocketsService } from 'src/app/global/services/sockets/sockets.service';
 
 @Component({
@@ -14,6 +15,8 @@ export class WallComponent implements OnInit {
   blue = false
   yellow = false
   green = false
+  p1 = false;
+  players: PlayerModel[] = [];
   constructor(private renderer: Renderer2,
     private socketService: SocketsService) {
     this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/background-tv-wall.png)');
@@ -53,10 +56,17 @@ export class WallComponent implements OnInit {
         }
       }
     });
-
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.socketService.subscribe('start_game', (plr: PlayerModel) => {
+      this.p1=true;
+      this.players.push(plr);
+      console.log(this.players);
+    });
+
+
+  }
 
 
 
