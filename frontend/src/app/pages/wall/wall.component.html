@@ -1,103 +1,28 @@
 <div class="container mt-5" *ngIf="!condition">
   <ul>
     <h1>Scores:</h1>
-    <li class="left" *ngIf="players[0]!=undefined">
+    <li class="left" *ngFor="let player of players">
       <td>
         <div class='parent'>
           <div class='child flex-child'>
-            <img class="avatar" src="../../../assets/avatars/{{players[0].avatar}}.jpg" alt="avatar">
+            <img class="avatar" src="../../../assets/avatars/{{player.avatar}}.jpg" alt="avatar">
           </div>
-          <h5 class='child flex-child'>{{players[0].username}}</h5>
+          <h5 class='child flex-child'>{{player.username}}</h5>
         </div>
       </td>
       <td>
-        <h5>{{players[0].score}}/500</h5>
-      </td>
-      <td>
-        <div class='parent'>
-          <div class='child flex-child'>
-            <img class="" src="../../../assets/photos/wild-uno.png" alt="wild cards">
-          </div>
-          <h5 class='child flex-child'>{{players[0].unos}}</h5>
-        </div>
-      </td>
-      <td>
-        <h5>{{players[0].wild_cards}} wild cards</h5>
-      </td>
-    </li>
-
-    <li class="left" *ngIf="players[1]!=undefined">
-      <td>
-        <div class='parent'>
-          <div class='child flex-child'>
-            <img class="avatar" src="../../../assets/avatars/{{players[1].avatar}}.jpg" alt="avatar">
-          </div>
-          <h5 class='child flex-child'>{{players[1].username}}</h5>
-        </div>
-      </td>
-      <td>
-        <h5>{{players[1].score}}/500</h5>
+        <h5>{{player.score}}/500</h5>
       </td>
       <td>
         <div class='parent'>
           <div class='child flex-child'>
             <img class="" src="../../../assets/photos/wild-uno.png" alt="wild cards">
           </div>
-          <h5 class='child flex-child'>{{players[1].unos}}</h5>
+          <h5 class='child flex-child'>{{player.unos}}</h5>
         </div>
       </td>
       <td>
-        <h5>{{players[1].wild_cards}} wild cards</h5>
-      </td>
-    </li>
-
-    <li class="left" *ngIf="players[2]!=undefined">
-      <td>
-        <div class='parent'>
-          <div class='child flex-child'>
-            <img class="avatar" src="../../../assets/avatars/{{players[2].avatar}}.jpg" alt="avatar">
-          </div>
-          <h5 class='child flex-child'>{{players[2].username}}</h5>
-        </div>
-      </td>
-      <td>
-        <h5>{{players[2].score}}/500</h5>
-      </td>
-      <td>
-        <div class='parent'>
-          <div class='child flex-child'>
-            <img class="" src="../../../assets/photos/wild-uno.png" alt="wild cards">
-          </div>
-          <h5 class='child flex-child'>{{players[2].unos}}</h5>
-        </div>
-      </td>
-      <td>
-        <h5>{{players[2].wild_cards}} wild cards</h5>
-      </td>
-    </li>
-
-    <li class="left" *ngIf="players[3]!=undefined">
-      <td>
-        <div class='parent'>
-          <div class='child flex-child'>
-            <img class="avatar" src="../../../assets/avatars/{{players[3].avatar}}.jpg" alt="avatar">
-          </div>
-          <h5 class='child flex-child'>{{players[3].username}}</h5>
-        </div>
-      </td>
-      <td>
-        <h5>{{players[3].score}}/500</h5>
-      </td>
-      <td>
-        <div class='parent'>
-          <div class='child flex-child'>
-            <img class="" src="../../../assets/photos/wild-uno.png" alt="wild cards">
-          </div>
-          <h5 class='child flex-child'>{{players[3].unos}}</h5>
-        </div>
-      </td>
-      <td>
-        <h5>{{players[3].wild_cards}} wild cards</h5>
+        <h5>{{player.wild_cards}} wild cards</h5>
       </td>
     </li>
   </ul>

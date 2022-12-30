@@ -80,7 +80,7 @@ export class TableGameComponent implements OnInit {
       //console.log("data player id" + data.id)
       //console.log("uno_p" + this.uno_player)
       if ((this.wait_uno === true) && (data.id != this.uno_player)) {
-        console.log("Player "+ this.uno_player + " got penalty from not saying UNO");
+        console.log("Player " + this.uno_player + " got penalty from not saying UNO");
         this.socketService.publish('penalty', this.uno_player);
         this.wait_uno = false;
       }
@@ -101,7 +101,7 @@ export class TableGameComponent implements OnInit {
     });
 
     this.socketService.subscribe('uno_player', (id: any) => {
-      console.log("Player "+ id + " says UNO");
+      console.log("Player " + id + " says UNO");
       this.uno_player = '';
       this.wait_uno = false;
     });
@@ -120,7 +120,7 @@ export class TableGameComponent implements OnInit {
 
     this.socketService.subscribe('start_round', (id: any) => {
       console.log('Player with id=' + id + 'clicked start round');
-      if(this.end_of_round === true)
+      if (this.end_of_round === true)
         this.startRound();
     });
 
@@ -198,13 +198,14 @@ export class TableGameComponent implements OnInit {
   }
 
   removeCards(current_game: { players: any }) {
+    this.socketService.publish('new_start', this.game.players);
     let players = this.game.players;
     for (let player of players) {
       this.playersService.getById(player).subscribe((plr: PlayerModel) => {
         plr.cards_hand = [];
         this.players.push(plr);
         this.socketService.publish('start_game', plr);
-        this.playersService.update(plr).subscribe((result: any) => { 
+        this.playersService.update(plr).subscribe((result: any) => {
           console.log('In remove cards:')
           console.log(result);
         });

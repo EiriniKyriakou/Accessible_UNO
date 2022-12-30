@@ -126,7 +126,7 @@ export class PhoneGameComponent implements OnInit {
         Swal.fire({
           title: 'Better Luck Next Time',
           text: 'You lost this round.',
-          imageUrl: 'https://www.nicepng.com/png/full/6-69332_fireworks-png-images-free-download-clip-art-free.png',
+          imageUrl: 'https://cdn-icons-png.flaticon.com/512/4372/4372342.png',
           imageWidth: 400,
           imageHeight: 200,
           imageAlt: 'Custom image',

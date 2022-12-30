@@ -59,8 +59,11 @@ export class WallComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.socketService.subscribe('new_start', (plr: any) => {
+      this.players = []
+    });
     this.socketService.subscribe('start_game', (plr: PlayerModel) => {
-      this.p1=true;
+      this.p1 = true;
       this.players.push(plr);
       console.log(this.players);
     });
