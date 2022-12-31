@@ -353,19 +353,22 @@ export class TableGameComponent implements OnInit {
         //kai sto wall 
         // episis logika prepei na mpei elegxos oti einai 0 to score tou prin ? 
         //i na ta midenizoume sto wall eksarxis
-        console.log("before for")
         for (let player of players) {
           this.playersService.getById(player).subscribe((plr: PlayerModel) => {
             let p = plr;
             if (p._id === this.winner_id) {
-              console.log("after if")
               p.score = p.score + this.points_round;
-              console.log("before update")
               this.playersService.update(p).subscribe((result: any) => { });
-
+              this.socketService.publish('new_game', plr);
             }
           })
         }
+        for (let player of players) {
+          this.playersService.getById(player).subscribe((plr: PlayerModel) => {
+            this.socketService.publish('start_game', plr);
+          })
+        }
+
       });
     }
 
