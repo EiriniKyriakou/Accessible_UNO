@@ -271,6 +271,21 @@ export class TableGameComponent implements OnInit {
     this.wait_uno = false;
   }
 
+  calculatePoints(current_game: { players: any }) {
+    let players = this.game.players;
+    for (let player of players) {
+      this.playersService.getById(player).subscribe((plr: PlayerModel) => {
+        let p_cards = plr.cards_hand;
+        for (let i = 0; i < p_cards.length; i++) {
+          var splitted = p_cards[i].split(' ', 2);
+          let pcard = this.setCard(splitted[0], splitted[1], this.game.dysrhythmia, this.game.colorblindness);
+          console.log(pcard)
+
+        }
+      });
+    }
+  }
+
   startRound() {
     this.end_of_round = false;
     this.initRound();
