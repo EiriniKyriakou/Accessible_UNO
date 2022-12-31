@@ -70,7 +70,7 @@ export class TableGameComponent implements OnInit {
         } while (check);
         //console.log(firstCard)
         this.playedCard(firstCard);
-        this.removeStartCards(this.game); //old cards of players
+        this.removeCards(this.game); //old cards of players
       }
     });
 
@@ -195,22 +195,6 @@ export class TableGameComponent implements OnInit {
       colorblindness: clrblind
     };
     this.socketService.publish('card_table', this.cardValue);
-  }
-  removeStartCards(current_game: { players: any }) {
-    this.socketService.publish('new_start', this.game.players);
-    let players = this.game.players;
-    for (let player of players) {
-      this.playersService.getById(player).subscribe((plr: PlayerModel) => {
-        plr.cards_hand = [];
-        this.players.push(plr);
-        this.socketService.publish('start_game', plr);
-        this.playersService.update(plr).subscribe((result: any) => {
-        });
-      });
-    }
-    setTimeout(() => {
-      this.dealCards(current_game);
-    }, 1000);
   }
 
   removeCards(current_game: { players: any }) {
