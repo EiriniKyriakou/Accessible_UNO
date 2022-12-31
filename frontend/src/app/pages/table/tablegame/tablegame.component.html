@@ -1,44 +1,44 @@
 <div class="main parent">
   <div class="player right" id="container" *ngIf="length>0">
+    <img class="avatar" src="../../../assets/avatars/{{players[0].avatar}}.jpg" alt="avatar">
+    <h2 class=''>{{players[0].username}}</h2>
     <h1 class="cent">{{[].constructor(number_of_cards[0]).length}}x</h1>
     <div class="player-card" id="right">
-
       <img class="uno-card" src="../../../assets/table-images/uno-card.png" alt="uno card">
     </div>
-    <div class="pause" id="center"><input type="image" src="../../../assets/table-images/pause-button.png"></div>
   </div>
   <!-- <h5 *ngIf="turns_of_players==0 && !end_of_round" class="message right">It's Your Turn</h5>
   <h5 *ngIf="turns_of_players==0 && end_of_round" class="message right">You Won The Round!</h5> -->
 
   <div class="player bottom" *ngIf="length>1">
+    <img class="avatar" src="../../../assets/avatars/{{players[1].avatar}}.jpg" alt="avatar">
+    <h2 class=''>{{players[1].username}}</h2>
     <h1 class="cent">{{[].constructor(number_of_cards[1]).length}}x</h1>
     <div class="player-card">
-
       <img class="uno-card" src="../../../assets/table-images/uno-card.png" alt="uno card">
     </div>
-    <div class="pause"><input type="image" src="../../../assets/table-images/pause-button.png"></div>
   </div>
   <!-- <h5 *ngIf="turns_of_players==1 && !end_of_round" class="message bottom">It's Your Turn</h5>
   <h5 *ngIf="turns_of_players==1 && end_of_round" class="message bottom">You Won The Round!</h5> -->
 
   <div class="player left" *ngIf="length>2">
+    <img class="avatar" src="../../../assets/avatars/{{players[2].avatar}}.jpg" alt="avatar">
+    <h2 class=''>{{players[2].username}}</h2>
     <h1 class="cent">{{[].constructor(number_of_cards[2]).length}}x</h1>
     <div class="player-card">
-
       <img class="uno-card" src="../../../assets/table-images/uno-card.png" alt="uno card">
     </div>
-    <div class="pause"><input type="image" src="../../../assets/table-images/pause-button.png"></div>
   </div>
   <!-- <h5 *ngIf="turns_of_players==2 && !end_of_round" class="message left">It's Your Turn</h5>
   <h5 *ngIf="turns_of_players==2 && end_of_round" class="message left">You Won The Round!</h5> -->
 
   <div class="player upside-down" *ngIf="length>3">
+    <img class="avatar" src="../../../assets/avatars/{{players[3].avatar}}.jpg" alt="avatar">
+    <h2 class=''>{{players[3].username}}</h2>
     <h1 class="cent">{{[].constructor(number_of_cards[3]).length}}x</h1>
     <div class="player-card">
-
       <img class="uno-card" src="../../../assets/table-images/uno-card.png" alt="uno card">
     </div>
-    <div class="pause"><input type="image" src="../../../assets/table-images/pause-button.png"></div>
   </div>
   <!-- <h5 *ngIf="turns_of_players==3 && !end_of_round" class="message upside-down">It's Your Turn</h5>
   <h5 *ngIf="turns_of_players==3 && end_of_round" class="message upside-down">You Won The Round!</h5> -->
