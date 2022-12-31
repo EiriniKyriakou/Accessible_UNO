@@ -27,6 +27,7 @@ export class TableGameComponent implements OnInit {
   public uno_player = '';
   public wait_uno = false;
   public end_of_round = false;
+  public points_round = 0;
 
   constructor(
     private router: Router,
@@ -261,6 +262,7 @@ export class TableGameComponent implements OnInit {
   }
 
   endRound() {
+
     this.end_of_round = true;
     this.players = [];
     this.cards = [];
@@ -269,6 +271,7 @@ export class TableGameComponent implements OnInit {
     this.reverse = false;
     this.uno_player = '';
     this.wait_uno = false;
+
   }
 
   calculatePoints(current_game: { players: any }) {
@@ -278,10 +281,75 @@ export class TableGameComponent implements OnInit {
         let p_cards = plr.cards_hand;
         for (let i = 0; i < p_cards.length; i++) {
           var splitted = p_cards[i].split(' ', 2);
-          let pcard = this.setCard(splitted[0], splitted[1], this.game.dysrhythmia, this.game.colorblindness);
-          console.log(pcard)
-
+          switch (splitted[0]) {
+            case "0": {
+              this.points_round = this.points_round + parseInt(splitted[0])
+              break;
+            }
+            case "1": {
+              this.points_round = this.points_round + parseInt(splitted[0])
+              break;
+            }
+            case "2": {
+              this.points_round = this.points_round + parseInt(splitted[0])
+              break;
+            }
+            case "3": {
+              this.points_round = this.points_round + parseInt(splitted[0])
+              break;
+            }
+            case "4": {
+              this.points_round = this.points_round + parseInt(splitted[0])
+              break;
+            }
+            case "5": {
+              this.points_round = this.points_round + parseInt(splitted[0])
+              break;
+            }
+            case "6": {
+              this.points_round = this.points_round + parseInt(splitted[0])
+              break;
+            }
+            case "7": {
+              this.points_round = this.points_round + parseInt(splitted[0])
+              break;
+            }
+            case "8": {
+              this.points_round = this.points_round + parseInt(splitted[0])
+              break;
+            }
+            case "9": {
+              this.points_round = this.points_round + parseInt(splitted[0])
+              break;
+            }
+            case "+2": {
+              this.points_round = this.points_round + 20
+              break;
+            }
+            case "Skip": {
+              this.points_round = this.points_round + 20
+              break;
+            }
+            case "Reverse": {
+              this.points_round = this.points_round + 20
+              break;
+            }
+            case "WildCard": {
+              this.points_round = this.points_round + 50
+              break;
+            }
+            case "+4": {
+              this.points_round = this.points_round + 50
+              break;
+            }
+            default: {
+              //statements; 
+              break;
+            }
+          }
         }
+        console.log("Mortissa edw einai")
+        console.log(this.points_round)
       });
     }
   }
@@ -416,12 +484,13 @@ export class TableGameComponent implements OnInit {
         if (check) {
           console.log(this.game.cards_on_deck)
           this.game.cards_on_deck.shift();
-          this.game.cards_on_deck.push(firstCard)
+          // this.game.cards_on_deck.push(firstCard)
           console.log(this.game.cards_on_deck)
           firstCard = this.game.cards_on_deck[0];
         }
       } while (check);
       console.log('First card on table: ' + firstCard)
+      this.calculatePoints(this.game)
       this.playedCard(firstCard);
       this.removeCards(this.game); //old cards of players
     });
