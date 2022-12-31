@@ -28,7 +28,7 @@ export class TableGameComponent implements OnInit {
   public wait_uno = false;
   public end_of_round = false;
   public points_round = 0;
-
+  public winner_id = '';
   constructor(
     private router: Router,
     private socketService: SocketsService,
@@ -115,6 +115,7 @@ export class TableGameComponent implements OnInit {
 
     this.socketService.subscribe('won_round', (id: any) => {
       console.log('Player ' + id + ' won the round');
+      this.winner_id = id;
       this.endRound();
       this.turns_of_players = this.game.players.indexOf(id);
     });
@@ -262,7 +263,7 @@ export class TableGameComponent implements OnInit {
   }
 
   endRound() {
-
+    this.calculatePoints(this.game)
     this.end_of_round = true;
     this.players = [];
     this.cards = [];
@@ -348,10 +349,27 @@ export class TableGameComponent implements OnInit {
             }
           }
         }
-        console.log("Mortissa edw einai")
-        console.log(this.points_round)
+        //afou exw to id tou winner prepei na steilw stin basi to score tou 
+        //kai sto wall 
+        // episis logika prepei na mpei elegxos oti einai 0 to score tou prin ? 
+        //i na ta midenizoume sto wall eksarxis
+        console.log("before for")
+        for (let player of players) {
+          this.playersService.getById(player).subscribe((plr: PlayerModel) => {
+            let p = plr;
+            if (p._id === this.winner_id) {
+              console.log("after if")
+              p.score = p.score + this.points_round;
+              console.log("before update")
+              this.playersService.update(p).subscribe((result: any) => { });
+
+            }
+          })
+        }
       });
     }
+
+
   }
 
   startRound() {
@@ -490,7 +508,7 @@ export class TableGameComponent implements OnInit {
         }
       } while (check);
       console.log('First card on table: ' + firstCard)
-      this.calculatePoints(this.game)
+
       this.playedCard(firstCard);
       this.removeCards(this.game); //old cards of players
     });
