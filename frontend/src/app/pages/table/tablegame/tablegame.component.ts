@@ -49,20 +49,13 @@ export class TableGameComponent implements OnInit {
         console.log('No active Game');
       } else {
         this.game = result[0];
+        this.zeroPoints(this.game)
         if (this.game.colorblindness == true) {
           this.card_type = 'other';
         }
         this.card_type;
         this.length = this.game.players.length;
-        //zero Scores of players
-        let players = this.game.players;
-        for (let player of players) {
-          this.playersService.getById(player).subscribe((plr: PlayerModel) => {
-            let p = plr;
-            p.score = 0;
-            this.playersService.update(p).subscribe((result: any) => { });
-          })
-        }
+
         let check;
         let firstCard;
         do {
@@ -80,6 +73,7 @@ export class TableGameComponent implements OnInit {
         //console.log(firstCard)
         this.playedCard(firstCard);
         this.removeCards(this.game); //old cards of players
+        // 
 
       }
     });
@@ -285,7 +279,17 @@ export class TableGameComponent implements OnInit {
     this.wait_uno = false;
 
   }
-
+  zeroPoints(current_game: { players: any }) {
+    //zero Scores of players
+    let players = this.game.players;
+    for (let player of players) {
+      this.playersService.getById(player).subscribe((plr: PlayerModel) => {
+        let p = plr;
+        p.score = 0;
+        this.playersService.update(p).subscribe((result: any) => { });
+      })
+    }
+  }
   calculatePoints(current_game: { players: any }) {
     let players = this.game.players;
     for (let player of players) {
