@@ -374,7 +374,7 @@ export class TableGameComponent implements OnInit {
             if (p._id === this.winner_id) {
               p.score = p.score + this.points_round;
               this.playersService.update(p).subscribe((result: any) => { });
-              this.socketService.publish('new_game', plr);
+              this.socketService.publish('new_start', plr);
             }
           })
         }
