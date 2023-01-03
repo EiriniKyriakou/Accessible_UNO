@@ -54,7 +54,15 @@ export class TableGameComponent implements OnInit {
         }
         this.card_type;
         this.length = this.game.players.length;
-        //console.log('lenght=' + this.length);
+        //zero Scores of players
+        let players = this.game.players;
+        for (let player of players) {
+          this.playersService.getById(player).subscribe((plr: PlayerModel) => {
+            let p = plr;
+            p.score = 0;
+            this.playersService.update(p).subscribe((result: any) => { });
+          })
+        }
         let check;
         let firstCard;
         do {
@@ -72,6 +80,7 @@ export class TableGameComponent implements OnInit {
         //console.log(firstCard)
         this.playedCard(firstCard);
         this.removeCards(this.game); //old cards of players
+
       }
     });
 
@@ -127,6 +136,8 @@ export class TableGameComponent implements OnInit {
     });
 
   }
+
+
 
   setTurn() {
     if (this.end_of_round === false) {
