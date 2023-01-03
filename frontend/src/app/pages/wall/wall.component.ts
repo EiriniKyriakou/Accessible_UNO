@@ -17,6 +17,8 @@ export class WallComponent implements OnInit {
   green = false
   p1 = false;
   players: PlayerModel[] = [];
+  winnerPlayer: PlayerModel | undefined;
+
   constructor(private renderer: Renderer2,
     private socketService: SocketsService) {
     this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/background-tv-wall.png)');
@@ -59,18 +61,31 @@ export class WallComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.socketService.subscribe('new_start', (plr: any) => {
       this.players = []
     });
     this.socketService.subscribe('start_game', (plr: PlayerModel) => {
       this.p1 = true;
       this.players.push(plr);
-      console.log(this.players);
+      this.checkWinner(this.players);
     });
 
 
   }
 
-
+  checkWinner(players: PlayerModel[]) {
+    for (let i = 0; i < players.length; i++) {
+      if (players[i].score >= 500) {
+        this.condition = true
+        this.start = true
+        this.red = false
+        this.blue = false
+        this.yellow = false
+        this.green = false
+        this.winnerPlayer = players[i];
+      }
+    }
+  }
 
 }

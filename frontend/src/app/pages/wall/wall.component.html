@@ -29,18 +29,18 @@
 
 </div>
 
-<div class="container mt-5" *ngIf="condition">
+<div class="container mt-5" *ngIf="condition && (winnerPlayer!= undefined)">
   <br>
   <div class="rectangle">
     <h1 class="blue">And the winner is ...</h1>
     <div class='parent'>
       <div class='child flex-child'>
-        <img class="avatarWinner" src="../../../assets/avatars/avatar1.jpg" alt="avatar">
+        <img class="avatarWinner" src="../../../assets/avatars/{{winnerPlayer.avatar}}.jpg" alt="avatar">
       </div>
-      <h1 class='child flex-child blue'>Sonia</h1>
+      <h1 class='child flex-child blue'>{{winnerPlayer.username}}</h1>
     </div>
     <h2 class="blue">Winner winner ...CHICKEN DINNER!</h2>
-    <h3>300 points</h3>
+    <h3>{{winnerPlayer.score}}</h3>
     <img class="Winner" src="../../../assets/photos/winner.svg" alt="wild cards">
   </div>
 
