@@ -55,17 +55,43 @@ export class WallComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.socketService.subscribe('new_game', (game: any) => {
+      this.players = [];
+      this.condition = false
+      this.start = true
+      this.red = false
+      this.blue = false
+      this.yellow = false
+      this.green = false
+      this.p1 = false;
+    });
 
     this.socketService.subscribe('new_start', (plr: any) => {
       this.players = []
     });
+
     this.socketService.subscribe('start_game', (plr: PlayerModel) => {
       this.p1 = true;
       this.players.push(plr);
       this.checkWinner(this.players);
     });
 
+    this.socketService.subscribe("wall_update", (plr: PlayerModel) => {
+      for (let i = 0; i < this.players.length; i++) {
+        if (this.players[i]._id === plr._id) {
+          if (this.players[i].score != plr.score) {
+            this.players[i] = plr;
+            this.checkWinner(this.players);
+          } else {
+            this.players[i] = plr;
+          }
+        }
+      }
+    });
 
+    this.socketService.subscribe("wall_poits", (data: any) => {
+      this.checkWinner(this.players);
+    })
   }
 
   checkWinner(players: PlayerModel[]) {
@@ -78,7 +104,8 @@ export class WallComponent implements OnInit {
         this.yellow = false
         this.green = false
         this.winnerPlayer = players[i];
-        this.socketService.publish("win",this.winnerPlayer)
+        this.winnerPlayer.wins++;
+        this.socketService.publish("win", this.winnerPlayer)
       }
     }
   }

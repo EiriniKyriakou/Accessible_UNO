@@ -29,6 +29,7 @@ export class TableGameComponent implements OnInit {
   public end_of_round = false;
   public points_round = 0;
   public winner_id = '';
+  public player_throw_card = '';
   constructor(
     private router: Router,
     private socketService: SocketsService,
@@ -37,10 +38,7 @@ export class TableGameComponent implements OnInit {
     private playersService: PlayersService
   ) {
     this.renderer.setStyle(
-      document.body,
-      'background-image',
-      'url(../../../assets/backgrounds/background.png)'
-    );
+      document.body, 'background-image', 'url(../../../assets/backgrounds/background.png)');
   }
 
   ngOnInit() {
@@ -49,37 +47,41 @@ export class TableGameComponent implements OnInit {
         console.log('No active Game');
       } else {
         this.game = result[0];
-        this.zeroPoints(this.game)
-        if (this.game.colorblindness == true) {
-          this.card_type = 'other';
-        }
-        this.card_type;
-        this.length = this.game.players.length;
-
-        let check;
-        let firstCard;
-        do {
-          firstCard = this.game.cards_on_deck[0];
-          check = ((firstCard === "WildCard All.png") || (firstCard === "+4 All.png") || (firstCard === "+2 Blue.png") || (firstCard === "+2 Red.png") || (firstCard === "+2 Green.png") || (firstCard === "+2 Yellow.png"));
-
-          if (check) {
-            //console.log(this.game.cards_on_deck)
-            this.game.cards_on_deck.shift();
-            this.game.cards_on_deck.push(firstCard)
-            //console.log(this.game.cards_on_deck)
-            firstCard = this.game.cards_on_deck[0];
+        this.socketService.publish('new_game', this.game);
+        this.zeroPoints(this.game);
+        setTimeout(() => {
+          if (this.game.colorblindness == true) {
+            this.card_type = 'other';
           }
-        } while (check);
-        //console.log(firstCard)
-        this.playedCard(firstCard);
-        this.removeCards(this.game); //old cards of players
-        // 
+          this.card_type;
+          this.length = this.game.players.length;
+
+          let check;
+          let firstCard;
+          do {
+            firstCard = this.game.cards_on_deck[0];
+            check = ((firstCard === "WildCard All.png") || (firstCard === "+4 All.png") || (firstCard === "+2 Blue.png") || (firstCard === "+2 Red.png") || (firstCard === "+2 Green.png") || (firstCard === "+2 Yellow.png"));
+
+            if (check) {
+              //console.log(this.game.cards_on_deck)
+              this.game.cards_on_deck.shift();
+              this.game.cards_on_deck.push(firstCard)
+              //console.log(this.game.cards_on_deck)
+              firstCard = this.game.cards_on_deck[0];
+            }
+          } while (check);
+          //console.log(firstCard)
+          this.playedCard(firstCard);
+          this.removeCards(this.game); //old cards of players
+          // 
+        }, 1000);
 
       }
     });
 
     this.socketService.subscribe('card_played', (data: any) => {
       console.log('Player Played a Card');
+      this.player_throw_card = data.player._id;
       //Penalty
       //console.log("data player id" + data.id)
       //console.log("uno_p" + this.uno_player)
@@ -136,8 +138,6 @@ export class TableGameComponent implements OnInit {
 
   }
 
-
-
   setTurn() {
     if (this.end_of_round === false) {
       if (!this.reverse) {
@@ -177,6 +177,7 @@ export class TableGameComponent implements OnInit {
       this.socketService.publish('drawTwo', this.turn);
     } else if (splitted[0] === '+4') {
       console.log('+4');
+      this.played_wild_card(this.player_throw_card);
       this.setTurn();
       this.socketService.publish('drawFour', this.turn);
     } else if (splitted[0] === 'Skip') {
@@ -188,6 +189,8 @@ export class TableGameComponent implements OnInit {
         this.reverse = true;
       else
         this.reverse = false;
+    } else if (splitted[0] === "WildCard" ){
+      this.played_wild_card(this.player_throw_card);
     }
 
     setTimeout(() => {
@@ -210,13 +213,13 @@ export class TableGameComponent implements OnInit {
   }
 
   removeCards(current_game: { players: any }) {
-    this.socketService.publish('new_start', this.game.players);
+    //this.socketService.publish('new_start', this.game.players);
     let players = this.game.players;
     for (let player of players) {
       this.playersService.getById(player).subscribe((plr: PlayerModel) => {
         plr.cards_hand = [];
         this.players.push(plr);
-        this.socketService.publish('start_game', plr);
+        //this.socketService.publish('start_game', plr);
         this.playersService.update(plr).subscribe((result: any) => {
           console.log('In remove cards:')
           console.log(result);
@@ -275,15 +278,16 @@ export class TableGameComponent implements OnInit {
   endRound() {
     this.calculatePoints(this.game)
     this.end_of_round = true;
-    this.players = [];
+    //this.players = [];
     this.cards = [];
     this.turn = '';
     this.turns_of_players = -1;
     this.reverse = false;
     this.uno_player = '';
     this.wait_uno = false;
-
+    this.player_throw_card = '';
   }
+
   zeroPoints(current_game: { players: any }) {
     //zero Scores of players
     let players = this.game.players;
@@ -291,10 +295,15 @@ export class TableGameComponent implements OnInit {
       this.playersService.getById(player).subscribe((plr: PlayerModel) => {
         let p = plr;
         p.score = 0;
+        p.unos = 0;
+        p.wild_cards = 0;
+        p.games++;
+        this.socketService.publish('start_game', p);
         this.playersService.update(p).subscribe((result: any) => { });
       })
     }
   }
+
   calculatePoints(current_game: { players: any }) {
     let players = this.game.players;
     for (let player of players) {
@@ -379,15 +388,16 @@ export class TableGameComponent implements OnInit {
             if (p._id === this.winner_id) {
               p.score = p.score + this.points_round;
               this.playersService.update(p).subscribe((result: any) => { });
-              this.socketService.publish('new_start', plr);
+              //this.socketService.publish('new_start', plr);
+              this.socketService.publish('wall_update', plr);
             }
           })
         }
-        for (let player of players) {
-          this.playersService.getById(player).subscribe((plr: PlayerModel) => {
-            this.socketService.publish('start_game', plr);
-          })
-        }
+        // for (let player of players) {
+        //   this.playersService.getById(player).subscribe((plr: PlayerModel) => {
+        //     //this.socketService.publish('start_game', plr);
+        //   })
+        // }
 
       });
     }
@@ -516,6 +526,7 @@ export class TableGameComponent implements OnInit {
     this.game.last_card = '';
     this.game.current_player = '';
     this.gamesService.update(this.game).subscribe((result: any) => {
+      this.players = [];
       let check;
       let firstCard;
       do {
@@ -535,6 +546,18 @@ export class TableGameComponent implements OnInit {
       this.playedCard(firstCard);
       this.removeCards(this.game); //old cards of players
     });
+  }
+
+  played_wild_card(plr_id: string) {
+    if (plr_id!= '') {
+      this.playersService.getById(plr_id).subscribe((plr: PlayerModel) => {
+        plr.wild_cards++;
+        this.playersService.update(plr).subscribe((result: any) => {
+          this.socketService.publish('wall_update', plr);
+          this.socketService.publish('phone_player_update', plr)
+        });
+      });
+    }
   }
 
 }

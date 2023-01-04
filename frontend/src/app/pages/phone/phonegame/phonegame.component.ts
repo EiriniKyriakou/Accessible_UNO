@@ -170,7 +170,19 @@ export class PhoneGameComponent implements OnInit {
     });
 
     this.socketService.subscribe('win', (data: any) => {
-      setTimeout(() => { this.router.navigate(['/table']); }, 1000);
+      this.playersService.update(this.player).subscribe((result: any) => {
+        setTimeout(() => { this.router.navigate(['/phone']); }, 1000);
+      });
+    });
+
+    this.socketService.subscribe('phone_player_update', (data: any) => {
+      this.playersService.getById(this.my_id).subscribe((result: any) => {
+        if (JSON.stringify(result) === undefined) {
+          console.log('error');
+        } else {
+          this.player = result;
+        }
+      });
     });
   }
 
@@ -317,7 +329,11 @@ export class PhoneGameComponent implements OnInit {
   uno() {
     if (this.cards.length == 1) {
       //console.log("I say uno")
-      this.socketService.publish('uno_player', this.my_id);
+      this.player.unos++;
+      this.playersService.update(this.player).subscribe((result: any) => {
+        this.socketService.publish('uno_player', this.my_id);
+        this.socketService.publish('wall_update', this.player);
+      });
     }
 
   }
