@@ -129,6 +129,11 @@ export class TableGameComponent implements OnInit {
         this.startRound();
     });
 
+    this.socketService.subscribe('win', (data: any) => {
+      setTimeout(() => { this.router.navigate(['/table']); }, 1000);
+    });
+
+
   }
 
 

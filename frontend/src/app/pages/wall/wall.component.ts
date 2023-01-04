@@ -23,12 +23,6 @@ export class WallComponent implements OnInit {
     private socketService: SocketsService) {
     this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/background-tv-wall.png)');
 
-    // setTimeout(()=>{ 
-    //                 this.condition=true
-    //                 //this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/winbackground.png)');
-    //                }
-    // ,10000);
-
     this.socketService.subscribe('card_table', (card: CardModel) => {
       this.start = false
       this.red = false
@@ -84,6 +78,7 @@ export class WallComponent implements OnInit {
         this.yellow = false
         this.green = false
         this.winnerPlayer = players[i];
+        this.socketService.publish("win",this.winnerPlayer)
       }
     }
   }

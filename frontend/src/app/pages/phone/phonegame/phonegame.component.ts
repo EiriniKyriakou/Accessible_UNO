@@ -6,6 +6,7 @@ import { CardModel } from 'src/app/global/models/cards/card.model';
 import * as myGlobals from 'src/app/pages/phone/phone.component';
 import { GamesService } from 'src/app/global/services/games/game.service';
 import { GameModel } from 'src/app/global/models/games/game.model';
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -41,7 +42,8 @@ export class PhoneGameComponent implements OnInit {
     private socketService: SocketsService,
     private renderer: Renderer2,
     private playersService: PlayersService,
-    private gamesService: GamesService
+    private gamesService: GamesService,
+    private router: Router
   ) {
     this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/background.png)');
     this.changeText = false;
@@ -165,6 +167,10 @@ export class PhoneGameComponent implements OnInit {
         clearInterval(this.theTimer);
         this.startTimer(1);
       }, 6000);
+    });
+
+    this.socketService.subscribe('win', (data: any) => {
+      setTimeout(() => { this.router.navigate(['/table']); }, 1000);
     });
   }
 
