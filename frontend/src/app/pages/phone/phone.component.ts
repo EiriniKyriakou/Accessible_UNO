@@ -156,7 +156,11 @@ export class PhoneComponent implements OnInit {
   startGame(){
     this.gamesService.getById(this.game_id).subscribe((result) => {
       //console.log(this.player)
-      this.socketService.publish("player_joined", this.player);
+      this.playersService.getById(this.my_id).subscribe((result) => {
+        this.player = result;
+        console.log(this.player.username)
+        this.socketService.publish("player_joined", this.player);
+      });
       //console.log(this.my_id)
     });
     this.main=false

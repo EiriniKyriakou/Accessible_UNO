@@ -1,4 +1,4 @@
-<my-sidebar (onClickAction)="getClickAction($event)" *ngIf="isSigned">loading</my-sidebar>
+<my-sidebar (onClickAction)="getClickAction($event)" *ngIf="isSigned" [player]="player">loading</my-sidebar>
 
 <div class="phone-main">
     <div class="container mt-5" *ngIf="!hided">

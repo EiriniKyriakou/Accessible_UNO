@@ -1,75 +1,111 @@
-
 <div class="body">
-    <input type="checkbox"  class="openSidebarMenu" id="openSidebarMenu" (click)="hideOnAction()">
-    <label for="openSidebarMenu" class="sidebarIconToggle">
-        <div class="spinner diagonal part-1"></div>
-        <div class="spinner horizontal"></div>
-        <div class="spinner diagonal part-2"></div>
-    </label>
-    <div id="sidebarMenu" *ngIf="!inProfile&&!editUsername&&!editPassword&&!editAccessibility"><div class="center">Menu</div>
-          <div class="main-content-wrapper">
-              <a (click)="profile()" ><img class="center" src="../../../assets/sidebar/user.png" alt="user logo">Profile</a>
-              <a href="#statistics"><img class="center" src="../../../assets/sidebar/pie-chart.png" alt="statistics logo">Statistics</a>
-              <a href="#logout"><img class="center" src="../../../assets/sidebar/log-out.png" alt="log out">Log Out</a>
-          </div>
-      </div>
-      <div id="sidebarMenu" *ngIf="inProfile"><div class="center">Profile</div>
-      <div class="main-content-wrapper">
-        <a (click)="username()" ><img class="center" src="../../../assets/sidebar/user.png" alt="user logo"> Username</a>
-        <a (click)="password()"><img class="center" src="../../../assets/sidebar/padlock.png" alt="password logo"> Password</a>
-        <a (click)="accessibility()"><img class="center" src="../../../assets/sidebar/accessibility.png" alt="accessibility"> Accessibility</a>
-        </div>
-    </div>
+  <input type="checkbox" class="openSidebarMenu" id="openSidebarMenu" (click)="hideOnAction()">
+  <label for="openSidebarMenu" class="sidebarIconToggle">
+    <div class="spinner diagonal part-1"></div>
+    <div class="spinner horizontal"></div>
+    <div class="spinner diagonal part-2"></div>
+  </label>
 
-    <div id="sidebarMenu" *ngIf="editUsername"><div class="center">Edit Username</div>
-      <div class="main-content-wrapper">
-        <form class="center">
-            <br>
-            <label class="left" for="username">Username:</label><br>
-            <input type="text" id="fname" name="username" ><br><br><br>
-            <button class="button" type="button" id="#button2" (click)="editUsernameFunction()">Sign In</button>
-            <br>
-          </form>
-        </div>
+  <div id="sidebarMenu" *ngIf="!inProfile&&!editUsername&&!editPassword&&!editAccessibility">
+    <div class="center">
+      <h4>Menu</h4>
     </div>
-
-    <div id="sidebarMenu" *ngIf="editPassword"><div class="center">Edit Password</div>
-      <div class="main-content-wrapper">
-        <form class="center">
-            <br>
-            <label  class="left" for="New Password">New Password:</label><br>
-            <input type="password" id="password" name="password" >
-            <br><br>
-            <label  class="left" for="Confirm Password">Confirm Password:</label><br>
-            <input type="password" id="cpassword" name="confirm_password" >
-            <br>
-            <br>
-            <button class="button" type="button" id="#button2" (click)="editPasswordFunction()">Change password</button>
-            <br>
-          </form>
-        </div>
+    <table>
+      <tr (click)="profile()">
+        <td class="right"><img class="center" src="../../../assets/sidebar/user.png" alt="user logo"></td>
+        <td>Profile</td>
+      </tr>
+      <tr (click)="statistics()">
+        <td class="right"><img class="center" src="../../../assets/sidebar/pie-chart.png" alt="statistics logo"></td>
+        <td>Statistics</td>
+      </tr>
+      <tr (click)="logout()">
+        <td class="right"><img class="center" src="../../../assets/sidebar/log-out.png" alt="log out"></td>
+        <td>Log Out</td>
+      </tr>
+    </table>
+  </div>
+  <div id="sidebarMenu" *ngIf="inProfile">
+    <div class="center">
+      <h4>Profile</h4>
     </div>
+    <table>
+      <tr (click)="username()">
+        <td class="right"><img class=" icon" src="../../../assets/avatars/{{player.avatar}}.jpg" alt="user logo"></td>
+        <td>{{player.username}}</td>
+      </tr>
+      <tr (click)="password()">
+        <td class="right"><img class="" src="../../../assets/sidebar/padlock.png" alt="password logo"></td>
+        <td>Password</td>
+      </tr>
+      <tr (click)="accessibility()">
+        <td class="right"><img class="" src="../../../assets/sidebar/accessibility.png" alt="accessibility"></td>
+        <td>Accessibility</td>
+      </tr>
+    </table>
+  </div>
 
-    <div id="sidebarMenu" *ngIf="editAccessibility"><div class="center">Edit Password</div>
-      <div class="main-content-wrapper">
-        <form class="center">
-            <div class="access"> 
-                <br><br>
-                  <input type="checkbox" class="form-check-input" id="dysrhythmia"name="dysrhythmia" value="true">
-                  <label  class="left" for="dysrhythmia">Dysrhythmia</label>
-                  <br>
-                  <input type="checkbox" class="form-check-input" id="dyslexia" name="dyslexia" value="true">
-                  <label  class="left" for="dyslexia">Dyslexia</label>
-                  <br>
-                  <input type="checkbox" class="form-check-input" id="impaired vision" name="impaired vision" value="true">
-                  <label  class="left" for="impaired vision">Impaired vision</label>
-                  <br>
-              </div>
-            <br>
-            <button class="button" type="button" id="#button2" (click)="editAccessibilityFunction()">Change password</button>
-            <br>
-          </form>
-        </div>
+  <div id="sidebarMenu" *ngIf="editUsername">
+    <div class="center">
+      <h4>Edit Username</h4>
+    </div>
+    <div class="main-content-wrapper">
+      <form class="center">
+        <br>
+        <label class="left" for="username">Username:</label><br>
+        <input class="input" type="text" id="fname" name="username" value="{{player.username}}" [(ngModel)]="name">
+        <br><br>
+        <button class="button" type="button" id="#button2" (click)="editUsernameFunction()">Change Username</button>
+        <br>
+      </form>
     </div>
   </div>
-  
+
+  <div id="sidebarMenu" *ngIf="editPassword">
+    <div class="center">
+      <h4>Edit Password</h4>
+    </div>
+    <form class="center">
+      <br>
+      <label class="left" for="New Password">New Password:</label><br>
+      <input class="input" type="password" id="password" name="password" [(ngModel)]="pass">
+      <br><br>
+      <label class="left" for="Confirm Password">Confirm Password:</label><br>
+      <input class="input" type="password" id="cpassword" name="confirm_password" [(ngModel)]="cpass">
+      <div class="passwordCheck" *ngIf="!(cpass===pass)"> Passwords do not match. </div>
+      <br>
+      <br>
+      <button class="button" type="button" id="#button2" [disabled]="!(cpass===pass)"
+        (click)="editPasswordFunction()">Change password</button>
+      <br>
+    </form>
+  </div>
+
+  <div id="sidebarMenu" *ngIf="editAccessibility">
+    <div class="center">
+      <h4>Edit Accessibility</h4>
+    </div>
+    <form class="access">
+      <br>
+      <input type="checkbox" class="form-check-input" id="dysrhythmia" name="dysrhythmia" [(ngModel)]="dysrhythmia"
+        value="true">
+      <label class="left" for="dysrhythmia">Dysrhythmia</label>
+      <br>
+      <input type="checkbox" class="form-check-input" id="dyslexia" name="dyslexia" [(ngModel)]="dyslexia" value="true">
+      <label class="left" for="dyslexia">Dyslexia</label>
+      <br>
+      <input type="checkbox" class="form-check-input" id="impaired vision" name="impaired vision"
+        [(ngModel)]="impairedVision" value="true">
+      <label class="left" for="impaired vision">Impaired vision</label>
+      <br>
+      <input type="checkbox" class="form-check-input" id="colorblindness" name="colorblindness"
+        [(ngModel)]="colorblindness" value="true">
+      <label class="left" for="colorblindness">Colorblindness</label>
+      <br>
+      <br>
+      <div class="center">
+      <button class="button" type="button" id="#button2" (click)="editAccessibilityFunction()">Change
+        accessibility</button></div>
+      <br>
+    </form>
+  </div>
