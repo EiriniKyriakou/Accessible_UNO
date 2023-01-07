@@ -38,6 +38,7 @@ export class PhoneGameComponent implements OnInit {
   color = '';
   end_of_round = false;
   unoClicked = false;
+  fontClass: string = 'font';
 
   constructor(
     private socketService: SocketsService,
@@ -48,9 +49,11 @@ export class PhoneGameComponent implements OnInit {
   ) {
     this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/background.png)');
     this.changeText = false;
+
   }
 
   ngOnInit() {
+
     //console.log('My id ' + this.my_id);
     setTimeout(() => {
       this.playersService.getById(this.my_id).subscribe((result: any) => {
@@ -64,10 +67,14 @@ export class PhoneGameComponent implements OnInit {
           if (this.player.colorblindness === true) {
             this.card_type = 'other';
           }
+
+          if (this.player.dyslexia === true) {
+            this.fontClass = 'open-dyslexic';
+          }
           var i = 0;
           for (let card of this.cards) {
             let splitted = card.split(' ', 2);
-            this.setCard(splitted[0], splitted[1], i, this.player.dysrhythmia, this.player.colorblindness);
+            this.setCard(splitted[0], splitted[1], i, this.player.dysrhythmia, this.player.colorblindness, this.player.dyslexia);
             i++;
           }
         }
@@ -158,7 +165,7 @@ export class PhoneGameComponent implements OnInit {
             var i = 0;
             for (let card of this.cards) {
               let splitted = card.split(' ', 2);
-              this.setCard(splitted[0], splitted[1], i, this.player.dysrhythmia, this.player.colorblindness);
+              this.setCard(splitted[0], splitted[1], i, this.player.dysrhythmia, this.player.colorblindness, this.player.dyslexia);
               i++;
             }
           }
@@ -209,7 +216,7 @@ export class PhoneGameComponent implements OnInit {
           this.cards.push(tokenCard);
           this.player.cards_hand = this.cards;
           var splitted = tokenCard.split(' ', 2);
-          this.setCard(splitted[0], splitted[1], this.cardValue.length, this.player.dysrhythmia, this.player.colorblindness);
+          this.setCard(splitted[0], splitted[1], this.cardValue.length, this.player.dysrhythmia, this.player.colorblindness, this.player.dyslexia);
           this.game.cards_on_deck.shift();
         }
 
@@ -356,12 +363,13 @@ export class PhoneGameComponent implements OnInit {
     }
   }
 
-  setCard(num: any, des: any, index: number, dyshr: boolean, clrblind: boolean) {
+  setCard(num: any, des: any, index: number, dyshr: boolean, clrblind: boolean, dys: boolean) {
     this.cardValue[index] = {
       color: des,
       number: num,
       dysrhythmia: dyshr,
-      colorblindness: clrblind
+      colorblindness: clrblind,
+      dyslexia: dys
     };
     //console.log(this.cardValue[index])
   }

@@ -26,6 +26,9 @@ export class CardComponent {
         if (this.selectedCard?.dysrhythmia === true) {
           this.fontClass = 'open-dyslexic';
         }
+        if (this.selectedCard?.dyslexia === true) {
+          this.fontClass = 'open-dyslexic';
+        }
         if (this.selectedCard?.colorblindness === true) {
           this.type = 'other';
         }

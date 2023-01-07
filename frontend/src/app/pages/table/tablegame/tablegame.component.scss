@@ -1,3 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@200&display=swap');
+
+.open-dyslexic {
+    font-family: 'Lexend'; //'OpenDyslexicRegular';
+}
+
+.font {
+    font-family: Verdana, Geneva, sans-serif;
+}
+
 html,
 body {
     height: 100%;
@@ -115,7 +125,7 @@ body {
 }
 
 .cent {
-   margin-top: 20%;
+    margin-top: 20%;
 }
 
 //avatar
@@ -124,4 +134,4 @@ body {
     width: 60%;
     height: 60%;
     border-radius: 50%;
-  }
+}

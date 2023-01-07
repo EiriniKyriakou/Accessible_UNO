@@ -31,6 +31,8 @@ export class TableGameComponent implements OnInit {
   public points_round = 0;
   public winner_id = '';
   public player_throw_card = '';
+  public fontClass: string = 'font';
+
   constructor(
     private router: Router,
     private socketService: SocketsService,
@@ -58,6 +60,9 @@ export class TableGameComponent implements OnInit {
         setTimeout(() => {
           if (this.game.colorblindness == true) {
             this.card_type = 'other';
+          }
+          if (this.game.dyslexia == true) {
+            this.fontClass = 'open-dyslexic';
           }
           this.card_type;
           this.length = this.game.players.length;
@@ -104,9 +109,9 @@ export class TableGameComponent implements OnInit {
 
     this.socketService.subscribe('draw_card', (data: any) => {
       console.log('Player Drew a Card');
-      if(data.number_of_cards == 1){
+      if (data.number_of_cards == 1) {
         this.smartSpeaker.speak(data.player.username + " a drew a card");
-      }else{
+      } else {
         this.smartSpeaker.speak(data.player.username + " took " + data.number_of_cards + " cards");
       }
       this.updatePlayer(data.player);
@@ -154,8 +159,8 @@ export class TableGameComponent implements OnInit {
 
   }
 
-  setTurn(bool:boolean) {
-    let username="";
+  setTurn(bool: boolean) {
+    let username = "";
     if (this.end_of_round === false) {
       if (!this.reverse) {
         if (this.turn === '' || this.turn === this.game.players[this.game.players.length - 1]) {
@@ -175,7 +180,7 @@ export class TableGameComponent implements OnInit {
         }
       }
       this.socketService.publish('turn', this.turn);
-      if(bool === true){
+      if (bool === true) {
         username = this.players[this.turns_of_players].username;
         this.smartSpeaker.speak("It's " + username + "'s turn to play.");
       }
@@ -190,7 +195,7 @@ export class TableGameComponent implements OnInit {
   playedCard(card: any) {
     this.cards[0] = card;
     var splitted = card.split(' ', 2);
-    this.setCard(splitted[0], splitted[1], this.game.dysrhythmia, this.game.colorblindness);
+    this.setCard(splitted[0], splitted[1], this.game.dysrhythmia, this.game.colorblindness, this.game.dyslexia);
 
     if (splitted[0] === '+2') {
       console.log('+2');
@@ -210,7 +215,7 @@ export class TableGameComponent implements OnInit {
         this.reverse = true;
       else
         this.reverse = false;
-    } else if (splitted[0] === "WildCard" ){
+    } else if (splitted[0] === "WildCard") {
       this.played_wild_card(this.player_throw_card);
     }
 
@@ -223,15 +228,16 @@ export class TableGameComponent implements OnInit {
     }, 1000);
   }
 
-  setCard(num: any, des: any, dyshr: boolean, clrblind: boolean) {
+  setCard(num: any, des: any, dyshr: boolean, clrblind: boolean, dys: boolean) {
     this.cardValue = {
       color: des,
       number: num,
       dysrhythmia: dyshr,
-      colorblindness: clrblind
+      colorblindness: clrblind,
+      dyslexia: dys
     };
     this.socketService.publish('card_table', this.cardValue);
-    this.smartSpeaker.speak('The card on the table is'+ this.cardValue.number + ' ' + this.cardValue.color.slice(0, -4) );
+    this.smartSpeaker.speak('The card on the table is' + this.cardValue.number + ' ' + this.cardValue.color.slice(0, -4));
   }
 
   removeCards(current_game: { players: any }) {
@@ -572,7 +578,7 @@ export class TableGameComponent implements OnInit {
   }
 
   played_wild_card(plr_id: string) {
-    if (plr_id!= '') {
+    if (plr_id != '') {
       this.playersService.getById(plr_id).subscribe((plr: PlayerModel) => {
         plr.wild_cards++;
         this.playersService.update(plr).subscribe((result: any) => {

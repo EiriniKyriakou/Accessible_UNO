@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@200&display=swap');
+
 .passwordCheck {
   color: red;
 }
@@ -77,16 +79,17 @@ label {
   width: 100%
 }
 
-#button1, #button2 {
+#button1,
+#button2 {
   display: inline-block;
 }
 
 ul {
   list-style: none;
-  
+
 }
 
-.ul-center{
+.ul-center {
   padding-left: 0;
   margin-left: 0;
 }
@@ -133,6 +136,15 @@ input[type="checkbox"] {
 
 
 table.center {
-  margin-left:auto; 
-  margin-right:auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+.open-dyslexic {
+  font-family: 'Lexend'; //'OpenDyslexicRegular';
+}
+
+.font {
+  font-family: Verdana, Geneva, sans-serif;
 }

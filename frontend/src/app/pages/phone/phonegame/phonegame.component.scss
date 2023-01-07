@@ -1,3 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@200&display=swap');
+
+.open-dyslexic {
+  font-family: 'Lexend'; //'OpenDyslexicRegular';
+}
+
+.font {
+  font-family: Verdana, Geneva, sans-serif;
+}
+
 .phonegame-main {
   margin-top: 1%;
 }
@@ -301,7 +311,6 @@ h4 {
 
 //uno
 .shadow {
-  // box-shadow: 0 4px 8px 0 rgba(43, 2, 2, 0.2);
   border-radius: 20% 50%;
   box-shadow: inset 0 0 12px 4px rgba(0, 0, 0, 0.8);
   box-shadow: 2px 2px 0 2px #FF5555, 4px 6px 0 8px #5555FF, 8px 10px 0 12px #00AA00, 10px 12px 0 14px #FFAA00;

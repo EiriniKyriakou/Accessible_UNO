@@ -1,16 +1,16 @@
 <!--<my-sidebar (onClickAction)="getClickAction($event)" >loading</my-sidebar>-->
 <div class="phonegame-main container">
-    <div class="row" *ngIf="cardsReady">
+    <div class=" row" *ngIf="cardsReady">
         <div class="col-4 vertical-center">
             <div class="clock row" *ngIf="my_turn">
                 <div class="col-4 pad"><img class="clockicon" src="../../../../assets/photos/stopwatch.png"></div>
                 <div class="col-8 pad center">
-                    <h4>{{timer}}</h4>
+                    <h4 [ngClass]="fontClass">{{timer}}</h4>
                 </div>
             </div>
         </div>
         <div class="col-4 head center">
-            <h3 *ngIf="my_turn">It's Your Turn</h3>
+            <h3 *ngIf="my_turn" [ngClass]="fontClass">It's Your Turn</h3>
         </div>
         <div class="col-4 right vertical-center">
             <img class="cancelicon" src="../../../../assets/photos/quit.png" alt="quit game">
@@ -32,14 +32,14 @@
     <div class="row marg" *ngIf="cardsReady">
         <div class="col-4" *ngIf="!drawed"><button [disabled]="my_turn===false" class="gamebutton" type="button"
                 (click)="drawCard(1)">
-                <h5>Draw</h5>
+                <h5 [ngClass]="fontClass">Draw</h5>
             </button> </div>
         <div class="col-4" *ngIf="drawed"><button class="gamebutton" type="button" (click)="pass()">
-                <h5>Pass</h5>
+                <h5 [ngClass]="fontClass">Pass</h5>
             </button> </div>
         <div class="col-4"> </div>
         <div class="col-4"><button [disabled]="my_turn===false" class="gamebutton" type="button" (click)="throwCard()">
-                <h5>Throw Card</h5>
+                <h5 [ngClass]="fontClass">Throw Card</h5>
             </button></div>
     </div>
     <div class="row" *ngIf="!cardsReady">
@@ -63,7 +63,7 @@
 
 <div *ngIf="choose_color" class="modal">
     <div class="modal-content">
-        <h4 style="flex-direction: column; width:100%; text-align: center;">Choose Color:</h4>
+        <h4 style="flex-direction: column; width:100%; text-align: center;" [ngClass]="fontClass">Choose Color:</h4>
         <button class="colorbtn green" (click)="WildCardGreen()"></button>
         <button class="colorbtn blue" (click)="WildCardBlue()"></button>
         <button class="colorbtn red" (click)="WildCardRed()"></button>

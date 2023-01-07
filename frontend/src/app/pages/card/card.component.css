@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@200&display=swap');
+
 .marg{
   margin: 0;
   border: 0;
@@ -40,7 +42,7 @@
 }
 
 .open-dyslexic {
-  font-family: 'OpenDyslexicRegular';
+  font-family: 'Lexend';
   font-weight: bold;
 }
 
