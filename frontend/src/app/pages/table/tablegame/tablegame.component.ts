@@ -5,6 +5,7 @@ import { PlayerModel } from 'src/app/global/models/players/player.model';
 import { GameModel } from 'src/app/global/models/games/game.model';
 import { Router } from '@angular/router';
 import { PlayersService } from 'src/app/global/services/players/players.service';
+import { SmartSpeakerService } from 'src/app/global/services/smart-speaker/smart-speaker.service';
 import arrayShuffle from 'array-shuffle';
 
 @Component({
@@ -35,13 +36,17 @@ export class TableGameComponent implements OnInit {
     private socketService: SocketsService,
     private renderer: Renderer2,
     private gamesService: GamesService,
-    private playersService: PlayersService
+    private playersService: PlayersService,
+    private smartSpeaker: SmartSpeakerService,
   ) {
     this.renderer.setStyle(
       document.body, 'background-image', 'url(../../../assets/backgrounds/background.png)');
   }
 
   ngOnInit() {
+    this.smartSpeaker.initialize();
+    this.smartSpeaker.start();
+    
     this.gamesService.getActive(true).subscribe((result: any) => {
       if (JSON.stringify(result[0]) === undefined) {
         console.log('No active Game');
