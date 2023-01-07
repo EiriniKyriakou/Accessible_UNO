@@ -37,6 +37,7 @@ export class PhoneGameComponent implements OnInit {
   symbol = '';
   color = '';
   end_of_round = false;
+  unoClicked = false;
 
   constructor(
     private socketService: SocketsService,
@@ -134,6 +135,7 @@ export class PhoneGameComponent implements OnInit {
           timer: 30000,
           showConfirmButton: false,
         }).then(() => {
+          this.unoClicked = false;
           this.socketService.publish('start_round', this.my_id);
         });
       }
@@ -194,6 +196,7 @@ export class PhoneGameComponent implements OnInit {
   }
 
   drawCard(num: number) {
+    this.unoClicked = false;
     this.gamesService.getActive(true).subscribe((result: any) => {
       if (JSON.stringify(result[0]) === undefined) {
         console.log('No active Game');
@@ -212,7 +215,7 @@ export class PhoneGameComponent implements OnInit {
 
         this.gamesService.update(this.game).subscribe((result: any) => {
           this.playersService.update(this.player).subscribe((result: any) => {
-            let tmp ={
+            let tmp = {
               player: this.player,
               number_of_cards: num
             }
@@ -291,6 +294,7 @@ export class PhoneGameComponent implements OnInit {
         timer: 30000,
         showConfirmButton: false,
       }).then(() => {
+        this.unoClicked = false;
         this.socketService.publish('start_round', this.my_id);
       });
       this.socketService.publish('won_round', this.player);
@@ -329,7 +333,8 @@ export class PhoneGameComponent implements OnInit {
 
   uno() {
     if (this.cards.length == 1) {
-      //console.log("I say uno")
+      console.log("I say uno")
+      this.unoClicked = true
       this.player.unos++;
       this.playersService.update(this.player).subscribe((result: any) => {
         this.socketService.publish('uno_player', this.player);
