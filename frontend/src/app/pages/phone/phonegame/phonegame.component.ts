@@ -127,16 +127,14 @@ export class PhoneGameComponent implements OnInit {
       if (id != this.my_id) {
         Swal.fire({
           title: 'Better Luck Next Time',
-          text: 'You lost this round.',
+          html: 'You won this round. <br>Next Round will start in a few seconds!',
           imageUrl: 'https://cdn-icons-png.flaticon.com/512/4372/4372342.png',
-          imageWidth: 400,
-          imageHeight: 200,
-          imageAlt: 'Custom image',
-          confirmButtonText: 'Start New Round',
-        }).then((result: { isConfirmed: any; }) => {
-          if (result.isConfirmed) {
-            this.socketService.publish('start_round', this.my_id);
-          }
+          imageWidth: 200,
+          imageHeight: 100,
+          timer: 30000,
+          showConfirmButton: false,
+        }).then(() => {
+          this.socketService.publish('start_round', this.my_id);
         });
       }
     });
@@ -281,16 +279,15 @@ export class PhoneGameComponent implements OnInit {
       clearInterval(this.theTimer);
       Swal.fire({
         title: 'Congratulations!',
-        text: 'You won this round.',
+        html: 'You won this round. <br>Next Round will start in a few seconds!',
         imageUrl: 'https://www.nicepng.com/png/full/6-69332_fireworks-png-images-free-download-clip-art-free.png',
-        imageWidth: 400,
-        imageHeight: 200,
+        imageWidth: 200,
+        imageHeight: 100,
         imageAlt: 'Custom image',
-        confirmButtonText: 'Start New Round',
-      }).then((result: { isConfirmed: any; }) => {
-        if (result.isConfirmed) {
-          this.socketService.publish('start_round', this.my_id);
-        }
+        timer: 30000,
+        showConfirmButton: false,
+      }).then(() => {
+        this.socketService.publish('start_round', this.my_id);
       });
       this.socketService.publish('won_round', this.my_id);
     }
