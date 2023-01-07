@@ -120,11 +120,11 @@ export class PhoneGameComponent implements OnInit {
       console.log('Card on table: ' + this.symbol + ' ' + this.color)
     });
 
-    this.socketService.subscribe('won_round', (id: any) => {
-      console.log('Player with id = ' + id + 'won the round');
+    this.socketService.subscribe('won_round', (data: any) => {
+      console.log('Player with id = ' + data._id + 'won the round');
       this.end_of_round = true;
       this.my_turn = false;
-      if (id != this.my_id) {
+      if (data._id != this.my_id) {
         Swal.fire({
           title: 'Better Luck Next Time',
           html: 'You won this round. <br>Next Round will start in a few seconds!',
@@ -212,7 +212,11 @@ export class PhoneGameComponent implements OnInit {
 
         this.gamesService.update(this.game).subscribe((result: any) => {
           this.playersService.update(this.player).subscribe((result: any) => {
-            this.socketService.publish('draw_card', this.player);
+            let tmp ={
+              player: this.player,
+              number_of_cards: num
+            }
+            this.socketService.publish('draw_card', tmp);
             //console.log('I draw');
             if (this.endOfTimer === true) {
               this.pass();
@@ -226,7 +230,7 @@ export class PhoneGameComponent implements OnInit {
 
   pass() {
     this.drawed = false;
-    this.socketService.publish('player_passed', '');
+    this.socketService.publish('player_passed', this.player);
     //console.log('I pass');
   }
 
@@ -289,7 +293,7 @@ export class PhoneGameComponent implements OnInit {
       }).then(() => {
         this.socketService.publish('start_round', this.my_id);
       });
-      this.socketService.publish('won_round', this.my_id);
+      this.socketService.publish('won_round', this.player);
     }
     //console.log(this.selectedCard);
   }
@@ -328,7 +332,7 @@ export class PhoneGameComponent implements OnInit {
       //console.log("I say uno")
       this.player.unos++;
       this.playersService.update(this.player).subscribe((result: any) => {
-        this.socketService.publish('uno_player', this.my_id);
+        this.socketService.publish('uno_player', this.player);
         this.socketService.publish('wall_update', this.player);
       });
     }

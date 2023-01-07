@@ -46,13 +46,14 @@ export class TableGameComponent implements OnInit {
   ngOnInit() {
     this.smartSpeaker.initialize();
     this.smartSpeaker.start();
-    
+
     this.gamesService.getActive(true).subscribe((result: any) => {
       if (JSON.stringify(result[0]) === undefined) {
         console.log('No active Game');
       } else {
         this.game = result[0];
         this.socketService.publish('new_game', this.game);
+        this.smartSpeaker.speak('The game is about to start.');
         this.zeroPoints(this.game);
         setTimeout(() => {
           if (this.game.colorblindness == true) {
@@ -92,27 +93,35 @@ export class TableGameComponent implements OnInit {
       //console.log("uno_p" + this.uno_player)
       if ((this.wait_uno === true) && (data.id != this.uno_player)) {
         console.log("Player " + this.uno_player + " got penalty from not saying UNO");
+        this.smartSpeaker.speak(data.username + " got a penalty from not saying UNO");
         this.socketService.publish('penalty', this.uno_player);
         this.wait_uno = false;
       }
       this.playedCard(data.card);
       this.updatePlayer(data.player);
-      this.setTurn();
+      this.setTurn(true);
     });
 
-    this.socketService.subscribe('draw_card', (data: PlayerModel) => {
+    this.socketService.subscribe('draw_card', (data: any) => {
       console.log('Player Drew a Card');
-      this.updatePlayer(data);
+      if(data.number_of_cards == 1){
+        this.smartSpeaker.speak(data.player.username + " a drew a card");
+      }else{
+        this.smartSpeaker.speak(data.player.username + " took " + data.number_of_cards + " cards");
+      }
+      this.updatePlayer(data.player);
       this.updateGame();
     });
 
-    this.socketService.subscribe('player_passed', (data: any) => {
+    this.socketService.subscribe('player_passed', (data: PlayerModel) => {
       console.log('Player Passed');
-      this.setTurn();
+      this.smartSpeaker.speak(data.username + " passed");
+      this.setTurn(true);
     });
 
-    this.socketService.subscribe('uno_player', (id: any) => {
-      console.log("Player " + id + " says UNO");
+    this.socketService.subscribe('uno_player', (data: PlayerModel) => {
+      console.log("Player " + data.username + " says UNO");
+      this.smartSpeaker.speak(data.username + " said UNO");
       this.uno_player = '';
       this.wait_uno = false;
     });
@@ -123,11 +132,12 @@ export class TableGameComponent implements OnInit {
       this.wait_uno = true;
     });
 
-    this.socketService.subscribe('won_round', (id: any) => {
-      console.log('Player ' + id + ' won the round');
-      this.winner_id = id;
+    this.socketService.subscribe('won_round', (data: PlayerModel) => {
+      console.log('Player ' + data._id + ' won the round');
+      this.winner_id = data._id;
       this.endRound();
-      this.turns_of_players = this.game.players.indexOf(id);
+      this.turns_of_players = this.game.players.indexOf(data._id);
+      this.smartSpeaker.speak(data.username + " won the round");
     });
 
     this.socketService.subscribe('start_round', (id: any) => {
@@ -137,13 +147,15 @@ export class TableGameComponent implements OnInit {
     });
 
     this.socketService.subscribe('win', (data: any) => {
+      this.smartSpeaker.speak(data.username + " won the game");
       setTimeout(() => { this.router.navigate(['/table']); }, 1000);
     });
 
 
   }
 
-  setTurn() {
+  setTurn(bool:boolean) {
+    let username="";
     if (this.end_of_round === false) {
       if (!this.reverse) {
         if (this.turn === '' || this.turn === this.game.players[this.game.players.length - 1]) {
@@ -163,6 +175,10 @@ export class TableGameComponent implements OnInit {
         }
       }
       this.socketService.publish('turn', this.turn);
+      if(bool === true){
+        username = this.players[this.turns_of_players].username;
+        this.smartSpeaker.speak("It's " + username + "'s turn to play.");
+      }
       //console.log('Turn: ' + this.turn);
       //console.log('turns_of_players=' + this.turns_of_players);
       this.game.turn = this.turn;
@@ -178,18 +194,18 @@ export class TableGameComponent implements OnInit {
 
     if (splitted[0] === '+2') {
       console.log('+2');
-      this.setTurn();
+      this.setTurn(false);
       this.socketService.publish('drawTwo', this.turn);
     } else if (splitted[0] === '+4') {
       console.log('+4');
       this.played_wild_card(this.player_throw_card);
-      this.setTurn();
+      this.setTurn(false);
       this.socketService.publish('drawFour', this.turn);
     } else if (splitted[0] === 'Skip') {
-      this.setTurn();
+      this.setTurn(false);
     } else if (splitted[0] === 'Reverse') {
       if (this.length === 2)
-        this.setTurn();
+        this.setTurn(false);
       if (this.reverse == false)
         this.reverse = true;
       else
@@ -215,6 +231,7 @@ export class TableGameComponent implements OnInit {
       colorblindness: clrblind
     };
     this.socketService.publish('card_table', this.cardValue);
+    this.smartSpeaker.speak('The card on the table is'+ this.cardValue.number + ' ' + this.cardValue.color.slice(0, -4) );
   }
 
   removeCards(current_game: { players: any }) {
@@ -251,7 +268,7 @@ export class TableGameComponent implements OnInit {
       });
     }
     this.number_of_cards = [7, 7, 7, 7];
-    this.setTurn();
+    this.setTurn(true);
   }
 
   updatePlayer(data: PlayerModel) {
@@ -412,6 +429,7 @@ export class TableGameComponent implements OnInit {
 
   startRound() {
     this.end_of_round = false;
+    this.smartSpeaker.speak('The round is about to start.');
     this.initRound();
   }
 
