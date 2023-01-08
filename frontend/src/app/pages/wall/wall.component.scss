@@ -1,24 +1,27 @@
-  h1{
-    color:whitesmoke;
+  h1 {
+    color: whitesmoke;
   }
+
   ul {
-    background:  #2952A3;
+    background: #2952A3;
     padding: 15px;
-    text-align: center 
+    text-align: center
   }
-  
+
   ul li {
     background: #cce5ff;
     color: darkblue;
     margin: 5px;
-    display:block;
+    display: block;
   }
+
   .avatar {
     vertical-align: middle;
     width: 50px;
     height: 50px;
     border-radius: 50%;
   }
+
   .avatarWinner {
     vertical-align: middle;
     width: 200px;
@@ -32,7 +35,7 @@
     height: 200px;
   }
 
-  .left{
+  .left {
     text-align: left;
     padding-top: 5px;
     padding-right: 20px;
@@ -40,102 +43,142 @@
     padding-left: 20px;
   }
 
-td{
-  width: 350px;
-  text-align: center;
-  // padding: 5px;
-}
 
-td:nth-child(2) {
-  border-right: -5px;
-}
+  table,
+  td {
+    // border: 1px solid;
+    background-color: #8daded;
+    text-align: left;
+  }
 
-// .parent {
-//   padding: 1px;
-// }
-
-.parent{
-  display: inline-flex;
-  padding: 10px;
-}
-.flex-parent {
-  width: 80%; 
-}
-.flex-child{
-  flex-grow: 1; 
-  margin-top: auto;
-  margin-bottom: auto;
-}
-
-.blue{
-  color: #2952A3;
-}
-.rectangle {
-  height: 500px;
-  width: 1000px;
- // background-color: whitesmoke;
-  text-align: center;
-}
+  th {
+    background-color: #2952A3;
+    text-align: left;
+    color: white
+  }
 
 
-//wave thing 
 
-.waves {
-position:relative;
-width: 100%;
-height:60%;
-margin-bottom:-7px; /*Fix for safari gap*/
-min-height:200px;
-max-height:250px;
-}
-.content {
-position:relative;
-height:50vh;
-text-align:center;
-background-color: red;
-}
-/* Animation */
-.parallax > use {
-animation: move-forever 25s cubic-bezier(.95,.5,.65,.15) infinite;
-}
-.parallax > use:nth-child(1) {
-animation-delay: -2s;
-animation-duration: 7s;
-}
-.parallax > use:nth-child(2) {
-animation-delay: -3s;
-animation-duration: 10s;
-}
-.parallax > use:nth-child(3) {
-animation-delay: -4s;
-animation-duration: 13s;
-}
-.parallax > use:nth-child(4) {
-animation-delay: -5s;
-animation-duration: 20s;
-}
-@keyframes move-forever {
-0% {
-transform: translate3d(-90px,0,0);
-}
-100% {
-transform: translate3d(85px,0,0);
-}
-}
-/*Shrinking for mobile*/
-@media (max-width: 768px) {
-.waves {
-height: 140px;
-min-height:140px;
-}}
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  th,
+  td {
+    padding: 15px;
+  }
+
+  // td{
+  //   width: 350px;
+  //   text-align: center;
+  //   // padding: 5px;
+  // }
+
+  // td:nth-child(2) {
+  //   border-right: -5px;
+  // }
+
+  // .parent {
+  //   padding: 1px;
+  // }
+
+  .parent {
+    display: inline-flex;
+    padding: 10px;
+  }
+
+  .flex-parent {
+    width: 80%;
+  }
+
+  .flex-child {
+    flex-grow: 1;
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+
+  .blue {
+    color: #2952A3;
+  }
+
+  .rectangle {
+    height: 500px;
+    width: 1000px;
+    // background-color: whitesmoke;
+    text-align: center;
+  }
 
 
-.color-waves{
+  //wave thing 
+
+  .waves {
+    position: relative;
+    width: 100%;
+    height: 60%;
+    margin-bottom: -7px;
+    /*Fix for safari gap*/
+    min-height: 200px;
+    max-height: 250px;
+  }
+
+  .content {
+    position: relative;
+    height: 50vh;
+    text-align: center;
+    background-color: red;
+  }
+
+  /* Animation */
+  .parallax>use {
+    animation: move-forever 25s cubic-bezier(.95, .5, .65, .15) infinite;
+  }
+
+  .parallax>use:nth-child(1) {
+    animation-delay: -2s;
+    animation-duration: 7s;
+  }
+
+  .parallax>use:nth-child(2) {
+    animation-delay: -3s;
+    animation-duration: 10s;
+  }
+
+  .parallax>use:nth-child(3) {
+    animation-delay: -4s;
+    animation-duration: 13s;
+  }
+
+  .parallax>use:nth-child(4) {
+    animation-delay: -5s;
+    animation-duration: 20s;
+  }
+
+  @keyframes move-forever {
+    0% {
+      transform: translate3d(-90px, 0, 0);
+    }
+
+    100% {
+      transform: translate3d(85px, 0, 0);
+    }
+  }
+
+  /*Shrinking for mobile*/
+  @media (max-width: 768px) {
+    .waves {
+      height: 140px;
+      min-height: 140px;
+    }
+  }
+
+
+  .color-waves {
     position: fixed;
     bottom: 12%;
     width: 100%;
-}
+  }
 
 
 
-///
+  ///

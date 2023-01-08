@@ -1,4 +1,53 @@
 <div class="container mt-5" *ngIf="!condition">
+  <table>
+    <tr>
+      <th>
+        <h3>User</h3>
+      </th>
+      <th>
+        <h3>Points</h3>
+      </th>
+      <th><img class="" src="../../../assets/photos/wild-uno.png" alt="wild cards">
+      </th>
+      <th>
+        <h3>Wild Cards</h3>
+      </th>
+    </tr>
+    <tr *ngFor="let player of players">
+      <td>
+        <img class="avatar" src="../../../assets/avatars/{{player.avatar}}.jpg" alt="avatar">
+        <br>
+        <h3 class='child flex-child'>{{player.username}}</h3>
+      </td>
+      <td>
+        <h3>{{player.score}}/500</h3>
+      </td>
+      <td>
+        <h3 class='child flex-child'>{{player.unos}}</h3>
+      </td>
+      <td>
+        <h3>{{player.wild_cards}} wild cards</h3>
+      </td>
+    </tr>
+
+    <!-- <tr>
+      <td>Lois</td>
+      <td>Griffin</td>
+      <td>$150</td>
+    </tr>
+    <tr>
+      <td>Joe</td>
+      <td>Swanxcvbndxfcbgnvhbmj,ngfvxcvbnson</td>
+      <td>$300</td>
+    </tr>
+    <tr>
+      <td>Cleveland</td>
+      <td>Brown</td>
+      <td>$250</td>
+    </tr> -->
+  </table>
+</div>
+<!-- <div class="container mt-5" *ngIf="!condition">
   <ul>
     <h1>Scores:</h1>
     <li class="left" *ngFor="let player of players">
@@ -27,7 +76,7 @@
     </li>
   </ul>
 
-</div>
+</div>-->
 
 <div class="container mt-5" *ngIf="condition && (winnerPlayer!= undefined)">
   <br>
