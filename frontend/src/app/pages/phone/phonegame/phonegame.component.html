@@ -18,7 +18,7 @@
     </div>
     <div class="row margin">
         <div class="col-10 row center">
-            <div class="card cards" *ngFor="let card of cards" #hoverCard
+            <div class="card" [ngClass]="cardsClass" *ngFor="let card of cards" #hoverCard
                 (mouseenter)="onMouseEnter(hoverCard,cards.indexOf(card))" (mouseleave)="onMouseOut(hoverCard)">
                 <card [selectedCard]="cardValue[cards.indexOf(card)]"></card>
             </div>
@@ -29,7 +29,7 @@
                 src="../../../../assets/photos/unobutton.png" alt="say uno">
         </div>
     </div>
-    <div class="row marg" *ngIf="cardsReady">
+    <div class="row marg but" *ngIf="cardsReady">
         <div class="col-4" *ngIf="!drawed"><button [disabled]="my_turn===false" class="gamebutton" type="button"
                 (click)="drawCard(1)">
                 <h5 [ngClass]="fontClass">Draw</h5>

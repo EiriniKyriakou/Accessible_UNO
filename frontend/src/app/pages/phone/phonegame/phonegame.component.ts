@@ -39,6 +39,7 @@ export class PhoneGameComponent implements OnInit {
   end_of_round = false;
   unoClicked = false;
   fontClass: string = 'font';
+  cardsClass: string = 'cards';
 
   constructor(
     private socketService: SocketsService,
@@ -194,7 +195,13 @@ export class PhoneGameComponent implements OnInit {
   }
 
   onMouseEnter(hoverCard: HTMLElement, index: any) {
-    hoverCard.style.marginTop = '-12%';
+    if (this.cards.length == 1) {
+      hoverCard.style.marginTop = '-1%';
+    }
+    else {
+      hoverCard.style.marginTop = '-12%';
+    }
+
     this.selectedCard = index;
   }
 
@@ -236,6 +243,18 @@ export class PhoneGameComponent implements OnInit {
         this.drawed = true;
       }
     });
+
+
+    if (this.cards.length < 7) {
+      this.cardsClass = 'cards'
+    }
+    if (this.cards.length > 7) {
+      this.cardsClass = 'cardsmoreseven'
+    }
+    if (this.cards.length > 12) {
+      this.cardsClass = 'cardsmorenine'
+    }
+
   }
 
   pass() {
