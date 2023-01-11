@@ -40,6 +40,7 @@ export class PhoneGameComponent implements OnInit {
   unoClicked = false;
   fontClass: string = 'font';
   cardsClass: string = 'cards';
+  cb = false;
 
   constructor(
     private socketService: SocketsService,
@@ -67,6 +68,7 @@ export class PhoneGameComponent implements OnInit {
           console.log(this.player);
           if (this.player.colorblindness === true) {
             this.card_type = 'other';
+            this.cb = true;
           }
 
           if (this.player.dyslexia === true) {
@@ -272,6 +274,16 @@ export class PhoneGameComponent implements OnInit {
     } else {
       this.throw();
     }
+    if (this.cards.length < 7) {
+      this.cardsClass = 'cards'
+    }
+    if (this.cards.length > 7) {
+      this.cardsClass = 'cardsmoreseven'
+    }
+    if (this.cards.length > 12) {
+      this.cardsClass = 'cardsmorenine'
+    }
+
   }
 
   throw() {

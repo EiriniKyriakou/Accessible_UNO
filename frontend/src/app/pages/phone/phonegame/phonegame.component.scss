@@ -114,6 +114,7 @@ h4 {
   text-align: center;
   display: block;
   margin: auto;
+  border-style: none;
 }
 
 
@@ -282,9 +283,9 @@ h4 {
   /* Full height */
   overflow: auto;
   /* Enable scroll if needed */
-  background-color: rgb(0, 0, 0);
+  // background-color: rgb(0, 0, 0);
   /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.4);
+  // background-color: rgba(0, 0, 0, 0.4);
   /* Black w/ opacity */
 }
 
@@ -305,7 +306,8 @@ h4 {
 .colorbtn {
   border-radius: 50%;
   margin: auto;
-  padding: 8%
+  padding: 8%;
+  border-style: none;
 }
 
 .green {
@@ -322,6 +324,12 @@ h4 {
 
 .yellow {
   background-color: #FFAA00;
+}
+
+.ac {
+  width: 15%;
+  height: 15%;
+
 }
 
 //uno

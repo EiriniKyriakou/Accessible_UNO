@@ -61,13 +61,24 @@
     </div>
 </div>
 
-<div *ngIf="choose_color" class="modal">
+<div *ngIf="choose_color&&!cb" class="modal">
     <div class="modal-content">
         <h4 style="flex-direction: column; width:100%; text-align: center;" [ngClass]="fontClass">Choose Color:</h4>
         <button class="colorbtn green" (click)="WildCardGreen()"></button>
         <button class="colorbtn blue" (click)="WildCardBlue()"></button>
         <button class="colorbtn red" (click)="WildCardRed()"></button>
         <button class="colorbtn yellow" (click)="WildCardYellow()"></button>
+    </div>
+
+</div>
+
+<div *ngIf="choose_color&&cb" class="modal">
+    <div class="modal-content">
+        <h4 style="flex-direction: column; width:100%; text-align: center;" [ngClass]="fontClass">Choose Color:</h4>
+        <img (click)="WildCardGreen()" class="ac" src="../../../../assets/colorblind/Green.png" alt="green">
+        <img (click)="WildCardBlue()" class="ac" src="../../../../assets/colorblind/Blue.png" alt="blue">
+        <img (click)="WildCardRed()" class="ac" src="../../../../assets/colorblind/Red.png" alt="red">
+        <img (click)="WildCardYellow()" class="ac" src="../../../../assets/colorblind/Yellow.png" alt="yellow">
     </div>
 
 </div>
