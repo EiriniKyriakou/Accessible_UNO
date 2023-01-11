@@ -32,7 +32,7 @@ export class TableGameComponent implements OnInit {
   public winner_id = '';
   public player_throw_card = '';
   public fontClass: string = 'font';
-
+  public impVision: boolean = false;
   constructor(
     private router: Router,
     private socketService: SocketsService,
@@ -46,8 +46,7 @@ export class TableGameComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.smartSpeaker.initialize();
-    this.smartSpeaker.start();
+
 
     this.gamesService.getActive(true).subscribe((result: any) => {
       if (JSON.stringify(result[0]) === undefined) {
@@ -55,7 +54,7 @@ export class TableGameComponent implements OnInit {
       } else {
         this.game = result[0];
         this.socketService.publish('new_game', this.game);
-        this.smartSpeaker.speak('The game is about to start.');
+
         this.zeroPoints(this.game);
         setTimeout(() => {
           if (this.game.colorblindness == true) {
@@ -63,6 +62,13 @@ export class TableGameComponent implements OnInit {
           }
           if (this.game.dyslexia == true) {
             this.fontClass = 'open-dyslexic';
+          }
+          if (this.game.impairedVision == true) {
+            this.smartSpeaker.initialize();
+            this.smartSpeaker.start();
+            this.smartSpeaker.speak('The game is about to start.');
+            this.impVision = true;
+
           }
           this.card_type;
           this.length = this.game.players.length;
@@ -98,7 +104,10 @@ export class TableGameComponent implements OnInit {
       //console.log("uno_p" + this.uno_player)
       if ((this.wait_uno === true) && (data.id != this.uno_player)) {
         console.log("Player " + this.uno_player + " got penalty from not saying UNO");
-        this.smartSpeaker.speak(data.username + " got a penalty from not saying UNO");
+        if (this.impVision) {
+          this.smartSpeaker.speak(data.username + " got a penalty from not saying UNO");
+        }
+
         this.socketService.publish('penalty', this.uno_player);
         this.wait_uno = false;
       }
@@ -110,9 +119,13 @@ export class TableGameComponent implements OnInit {
     this.socketService.subscribe('draw_card', (data: any) => {
       console.log('Player Drew a Card');
       if (data.number_of_cards == 1) {
-        this.smartSpeaker.speak(data.player.username + " a drew a card");
+        if (this.impVision) {
+          this.smartSpeaker.speak(data.player.username + " a drew a card");
+        }
       } else {
-        this.smartSpeaker.speak(data.player.username + " took " + data.number_of_cards + " cards");
+        if (this.impVision) {
+          this.smartSpeaker.speak(data.player.username + " took " + data.number_of_cards + " cards");
+        }
       }
       this.updatePlayer(data.player);
       this.updateGame();
@@ -120,13 +133,17 @@ export class TableGameComponent implements OnInit {
 
     this.socketService.subscribe('player_passed', (data: PlayerModel) => {
       console.log('Player Passed');
-      this.smartSpeaker.speak(data.username + " passed");
+      if (this.impVision) {
+        this.smartSpeaker.speak(data.username + " passed");
+      }
       this.setTurn(true);
     });
 
     this.socketService.subscribe('uno_player', (data: PlayerModel) => {
       console.log("Player " + data.username + " says UNO");
-      this.smartSpeaker.speak(data.username + " said UNO");
+      if (this.impVision) {
+        this.smartSpeaker.speak(data.username + " said UNO");
+      }
       this.uno_player = '';
       this.wait_uno = false;
     });
@@ -142,7 +159,9 @@ export class TableGameComponent implements OnInit {
       this.winner_id = data._id;
       this.endRound();
       this.turns_of_players = this.game.players.indexOf(data._id);
-      this.smartSpeaker.speak(data.username + " won the round");
+      if (this.impVision) {
+        this.smartSpeaker.speak(data.username + " won the round");
+      }
     });
 
     this.socketService.subscribe('start_round', (id: any) => {
@@ -152,7 +171,9 @@ export class TableGameComponent implements OnInit {
     });
 
     this.socketService.subscribe('win', (data: any) => {
-      this.smartSpeaker.speak(data.username + " won the game");
+      if (this.impVision) {
+        this.smartSpeaker.speak(data.username + " won the game");
+      }
       setTimeout(() => { this.router.navigate(['/table']); }, 1000);
     });
 
@@ -182,7 +203,9 @@ export class TableGameComponent implements OnInit {
       this.socketService.publish('turn', this.turn);
       if (bool === true) {
         username = this.players[this.turns_of_players].username;
-        this.smartSpeaker.speak("It's " + username + "'s turn to play.");
+        if (this.impVision) {
+          this.smartSpeaker.speak("It's " + username + "'s turn to play.");
+        }
       }
       //console.log('Turn: ' + this.turn);
       //console.log('turns_of_players=' + this.turns_of_players);
@@ -237,7 +260,9 @@ export class TableGameComponent implements OnInit {
       dyslexia: dys
     };
     this.socketService.publish('card_table', this.cardValue);
-    this.smartSpeaker.speak('The card on the table is' + this.cardValue.number + ' ' + this.cardValue.color.slice(0, -4));
+    if (this.impVision) {
+      this.smartSpeaker.speak('The card on the table is' + this.cardValue.number + ' ' + this.cardValue.color.slice(0, -4));
+    }
   }
 
   removeCards(current_game: { players: any }) {
@@ -435,7 +460,9 @@ export class TableGameComponent implements OnInit {
 
   startRound() {
     this.end_of_round = false;
-    this.smartSpeaker.speak('The round is about to start.');
+    if (this.impVision) {
+      this.smartSpeaker.speak('The round is about to start.');
+    }
     this.initRound();
   }
 
