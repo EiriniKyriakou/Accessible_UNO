@@ -7,6 +7,7 @@ import * as myGlobals from 'src/app/pages/phone/phone.component';
 import { GamesService } from 'src/app/global/services/games/game.service';
 import { GameModel } from 'src/app/global/models/games/game.model';
 import { Router } from '@angular/router';
+import { SmartSpeakerService } from 'src/app/global/services/smart-speaker/smart-speaker.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -47,7 +48,8 @@ export class PhoneGameComponent implements OnInit {
     private renderer: Renderer2,
     private playersService: PlayersService,
     private gamesService: GamesService,
-    private router: Router
+    private router: Router,
+    private smartSpeaker: SmartSpeakerService
   ) {
     this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/background.png)');
     this.changeText = false;
@@ -55,6 +57,9 @@ export class PhoneGameComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.smartSpeaker.initialize();
+    this.smartSpeaker.start();
+
 
     //console.log('My id ' + this.my_id);
     setTimeout(() => {
@@ -194,6 +199,13 @@ export class PhoneGameComponent implements OnInit {
         }
       });
     });
+
+    //bro why you do not work!?!?
+    // this.smartSpeaker.addCommand('hi', () => {
+    //   console.log("eisai mortisa")
+    //   //this.uno();
+    // });
+
   }
 
   onMouseEnter(hoverCard: HTMLElement, index: any) {
@@ -203,7 +215,9 @@ export class PhoneGameComponent implements OnInit {
     else {
       hoverCard.style.marginTop = '-12%';
     }
-
+    if (this.player.impairedVision == true) {
+      this.smartSpeaker.speak('Card is' + this.cardValue[index].number + "and" + this.cardValue[index].color.replace(".png", ""));
+    }
     this.selectedCard = index;
   }
 

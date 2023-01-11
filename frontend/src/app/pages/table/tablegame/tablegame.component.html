@@ -1,48 +1,70 @@
 <div class="main parent">
+
   <div class="player right" id="container" *ngIf="length>0">
-    <img class="avatar" src="../../../assets/avatars/{{players[0].avatar}}.jpg" alt="avatar">
-    <h2 [ngClass]="fontClass">{{players[0].username}}</h2>
-    <h1 class="cent" [ngClass]="fontClass">{{[].constructor(number_of_cards[0]).length}}x</h1>
-    <div class="player-card" id="right">
+    <div id="leftbox">
+      <img class="avatar" src="../../../assets/avatars/{{players[0].avatar}}.jpg" alt="avatar">
+      <h2 [ngClass]="fontClass">{{players[0].username}}</h2>
+    </div>
+    <div id="middlebox">
+      <h1 class="cent" [ngClass]="fontClass">{{[].constructor(number_of_cards[0]).length}}x</h1>
+    </div>
+    <div class="player-card" id="rightbox">
       <img class="uno-card" src="../../../assets/table-images/uno-card.png" alt="uno card">
     </div>
   </div>
-  <h5 *ngIf="turns_of_players==0 && !end_of_round" class="message right" [ngClass]="fontClass">It's Your Turn</h5>
-  <h5 *ngIf="turns_of_players==0 && end_of_round" class="message right" [ngClass]="fontClass">You Won The Round!</h5>
+  <h1 *ngIf="turns_of_players==0 && !end_of_round" class="message-top right" [ngClass]="fontClass">It's Your Turn</h1>
+  <h1 *ngIf="turns_of_players==0 && end_of_round" class="message-top right" [ngClass]="fontClass">You Won The Round!
+  </h1>
 
   <div class="player bottom" *ngIf="length>1">
-    <img class="avatar" src="../../../assets/avatars/{{players[1].avatar}}.jpg" alt="avatar">
-    <h2 [ngClass]="fontClass">{{players[1].username}}</h2>
-    <h1 class="cent" [ngClass]="fontClass">{{[].constructor(number_of_cards[1]).length}}x</h1>
-    <div class="player-card">
+    <div id="leftbox">
+      <img class="avatar" src="../../../assets/avatars/{{players[1].avatar}}.jpg" alt="avatar">
+      <h2 [ngClass]="fontClass">{{players[1].username}}</h2>
+    </div>
+    <div id="middlebox">
+      <h1 class="cent" [ngClass]="fontClass">{{[].constructor(number_of_cards[1]).length}}x</h1>
+    </div>
+    <div class="player-card" id="rightbox">
       <img class="uno-card" src="../../../assets/table-images/uno-card.png" alt="uno card">
     </div>
   </div>
-  <h5 *ngIf="turns_of_players==1 && !end_of_round" class="message bottom" [ngClass]="fontClass">It's Your Turn</h5>
-  <h5 *ngIf="turns_of_players==1 && end_of_round" class="message bottom" [ngClass]="fontClass">You Won The Round!</h5>
+  <h1 *ngIf="turns_of_players==1 && !end_of_round" class="message-top bottom" [ngClass]="fontClass">It's Your Turn</h1>
+  <h1 *ngIf="turns_of_players==1 && end_of_round" class="message-top bottom" [ngClass]="fontClass">You Won The Round!
+  </h1>
 
   <div class="player left" *ngIf="length>2">
-    <img class="avatar" src="../../../assets/avatars/{{players[2].avatar}}.jpg" alt="avatar">
-    <h2 [ngClass]="fontClass">{{players[2].username}}</h2>
-    <h1 class="cent" [ngClass]="fontClass">{{[].constructor(number_of_cards[2]).length}}x</h1>
-    <div class="player-card">
+    <div id="leftbox">
+      <img class="avatar" src="../../../assets/avatars/{{players[2].avatar}}.jpg" alt="avatar">
+      <h2 [ngClass]="fontClass">{{players[2].username}}</h2>
+    </div>
+    <div id="middlebox">
+      <h1 class="cent" [ngClass]="fontClass">{{[].constructor(number_of_cards[2]).length}}x</h1>
+    </div>
+    <div class="player-card" id="rightbox">
       <img class="uno-card" src="../../../assets/table-images/uno-card.png" alt="uno card">
     </div>
   </div>
-  <h5 *ngIf="turns_of_players==2 && !end_of_round" class="message left" [ngClass]="fontClass">It's Your Turn</h5>
-  <h5 *ngIf="turns_of_players==2 && end_of_round" class="message left" [ngClass]="fontClass">You Won The Round!</h5>
+  <h1 *ngIf="turns_of_players==2 && !end_of_round" class="message-left left" [ngClass]="fontClass">It's Your Turn</h1>
+  <h1 *ngIf="turns_of_players==2 && end_of_round" class="message-left left" [ngClass]="fontClass">You Won The Round!
+  </h1>
 
   <div class="player upside-down" *ngIf="length>3">
-    <img class="avatar" src="../../../assets/avatars/{{players[3].avatar}}.jpg" alt="avatar">
-    <h2 [ngClass]="fontClass" class=''>{{players[3].username}}</h2>
-    <h1 class="cent" [ngClass]="fontClass">{{[].constructor(number_of_cards[3]).length}}x</h1>
-    <div class="player-card">
+    <div id="leftbox">
+      <img class="avatar" src="../../../assets/avatars/{{players[3].avatar}}.jpg" alt="avatar">
+      <h2 [ngClass]="fontClass">{{players[3].username}}</h2>
+    </div>
+    <div id="middlebox">
+      <h1 class="cent" [ngClass]="fontClass">{{[].constructor(number_of_cards[3]).length}}x</h1>
+    </div>
+    <div class="player-card" id="rightbox">
       <img class="uno-card" src="../../../assets/table-images/uno-card.png" alt="uno card">
     </div>
   </div>
-  <h5 *ngIf="turns_of_players==3 && !end_of_round" class="message upside-down" [ngClass]="fontClass">It's Your Turn</h5>
-  <h5 *ngIf="turns_of_players==3 && end_of_round" class="message upside-down" [ngClass]="fontClass">You Won The Round!
-  </h5>
+  <h1 *ngIf="turns_of_players==3 && !end_of_round" class="message-bottom upside-down" [ngClass]="fontClass">It's Your
+    Turn</h1>
+  <h1 *ngIf="turns_of_players==3 && end_of_round" class="message-bottom upside-down" [ngClass]="fontClass">You Won The
+    Round!
+  </h1>
 
 
   <div *ngIf="reverse" class="v-h-center">
