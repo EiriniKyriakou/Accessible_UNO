@@ -40,6 +40,7 @@ export class PhoneGameComponent implements OnInit {
   end_of_round = false;
   unoClicked = false;
   fontClass: string = 'font';
+  unoColor: string = 'grey'
   cardsClass: string = 'cards';
   cb = false;
 
@@ -266,6 +267,7 @@ export class PhoneGameComponent implements OnInit {
   }
 
   drawCard(num: number) {
+    this.unoColor = 'grey'
     this.unoClicked = false;
     this.gamesService.getActive(true).subscribe((result: any) => {
       if (JSON.stringify(result[0]) === undefined) {
@@ -372,23 +374,11 @@ export class PhoneGameComponent implements OnInit {
 
     if (this.cards.length == 1) {
       this.socketService.publish('one_card', this.my_id);
+      this.unoColor = 'black';
     }
 
     if (this.cards.length == 0) {
       clearInterval(this.theTimer);
-      // Swal.fire({
-      //   title: 'Congratulations!',
-      //   html: 'You won this round. <br>Next Round will start in a few seconds!',
-      //   imageUrl: 'https://www.nicepng.com/png/full/6-69332_fireworks-png-images-free-download-clip-art-free.png',
-      //   imageWidth: 200,
-      //   imageHeight: 100,
-      //   imageAlt: 'Custom image',
-      //   timer: 30000,
-      //   showConfirmButton: false,
-      // }).then(() => {
-      //   this.unoClicked = false;
-      //   this.socketService.publish('start_round', this.my_id);
-      // });
       this.socketService.publish('won_round', this.player);
     }
     //console.log(this.selectedCard);
