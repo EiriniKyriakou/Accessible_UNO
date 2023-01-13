@@ -66,14 +66,14 @@ export class WallComponent implements OnInit {
       this.p1 = false;
     });
 
-    this.socketService.subscribe('new_start', (plr: any) => {
-      this.players = []
-    });
+    // this.socketService.subscribe('new_start', (plr: any) => {
+    //   this.players = []
+    // });
 
     this.socketService.subscribe('start_game', (plr: PlayerModel) => {
       this.p1 = true;
       this.players.push(plr);
-      this.checkWinner(this.players);
+      // this.checkWinner(this.players);
     });
 
     this.socketService.subscribe("wall_update", (plr: PlayerModel) => {
@@ -81,7 +81,7 @@ export class WallComponent implements OnInit {
         if (this.players[i]._id === plr._id) {
           if (this.players[i].score != plr.score) {
             this.players[i] = plr;
-            this.checkWinner(this.players);
+            this.checkWinner(this.players, plr);
           } else {
             this.players[i] = plr;
           }
@@ -89,14 +89,16 @@ export class WallComponent implements OnInit {
       }
     });
 
-    this.socketService.subscribe("wall_poits", (data: any) => {
-      this.checkWinner(this.players);
-    })
+    // this.socketService.subscribe("wall_poits", (data: any) => {
+    //   this.checkWinner(this.players);
+    // })
   }
 
-  checkWinner(players: PlayerModel[]) {
+  checkWinner(players: PlayerModel[], plr: PlayerModel) {
+    let found_winner = false;
     for (let i = 0; i < players.length; i++) {
       if (players[i].score >= 500) {
+        found_winner = true;
         this.condition = true
         this.start = true
         this.red = false
@@ -105,8 +107,13 @@ export class WallComponent implements OnInit {
         this.green = false
         this.winnerPlayer = players[i];
         this.winnerPlayer.wins++;
-        this.socketService.publish("win", this.winnerPlayer)
+        this.socketService.publish("win", this.winnerPlayer);
+        break;
       }
+    }
+    if (found_winner == false) {
+      console.log(plr);
+      this.socketService.publish("win_round", plr);
     }
   }
 

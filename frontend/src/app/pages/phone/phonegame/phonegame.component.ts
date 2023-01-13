@@ -142,14 +142,14 @@ export class PhoneGameComponent implements OnInit {
       console.log('Card on table: ' + this.symbol + ' ' + this.color)
     });
 
-    this.socketService.subscribe('won_round', (data: any) => {
+    this.socketService.subscribe('win_round', (data: any) => {
       console.log('Player with id = ' + data._id + 'won the round');
       this.end_of_round = true;
       this.my_turn = false;
       if (data._id != this.my_id) {
         Swal.fire({
           title: 'Better Luck Next Time',
-          html: 'You won this round. <br>Next Round will start in a few seconds!',
+          html: 'You lost this round. <br>Next Round will start in a few seconds!',
           imageUrl: 'https://cdn-icons-png.flaticon.com/512/4372/4372342.png',
           imageWidth: 200,
           imageHeight: 100,
@@ -159,8 +159,23 @@ export class PhoneGameComponent implements OnInit {
           this.unoClicked = false;
           this.socketService.publish('start_round', this.my_id);
         });
+      } else {
+        Swal.fire({
+          title: 'Congratulations!',
+          html: 'You won this round. <br>Next Round will start in a few seconds!',
+          imageUrl: 'https://www.nicepng.com/png/full/6-69332_fireworks-png-images-free-download-clip-art-free.png',
+          imageWidth: 200,
+          imageHeight: 100,
+          imageAlt: 'Custom image',
+          timer: 30000,
+          showConfirmButton: false,
+        }).then(() => {
+          this.unoClicked = false;
+          this.socketService.publish('start_round', this.my_id);
+        });
       }
     });
+    
 
     this.socketService.subscribe('start_round', (id: any) => {
       console.log('Start round');
@@ -191,9 +206,40 @@ export class PhoneGameComponent implements OnInit {
     });
 
     this.socketService.subscribe('win', (data: any) => {
-      this.playersService.update(this.player).subscribe((result: any) => {
-        setTimeout(() => { this.router.navigate(['/phone']); }, 1000);
-      });
+      console.log('Player with id = ' + data.username + 'won the game');
+      if (data._id != this.my_id) {
+        Swal.fire({
+          title: 'Better Luck Next Time',
+          html: 'You lost the game.',
+          imageUrl: 'https://cdn-icons-png.flaticon.com/512/4372/4372342.png',
+          imageWidth: 200,
+          imageHeight: 100,
+          timer: 30000,
+          showConfirmButton: false,
+        }).then(() => {
+          this.playersService.update(this.player).subscribe((result: any) => {
+            setTimeout(() => { this.router.navigate(['/phone']); }, 1000);
+          });
+        });
+      } else {
+        Swal.fire({
+          title: 'Congratulations!',
+          html: 'You won this game.',
+          imageUrl: 'https://www.nicepng.com/png/full/6-69332_fireworks-png-images-free-download-clip-art-free.png',
+          imageWidth: 200,
+          imageHeight: 100,
+          imageAlt: 'Custom image',
+          timer: 30000,
+          showConfirmButton: false,
+        }).then(() => {
+          this.playersService.update(this.player).subscribe((result: any) => {
+            setTimeout(() => { this.router.navigate(['/phone']); }, 1000);
+          });
+        });
+      }
+      // this.playersService.update(this.player).subscribe((result: any) => {
+      //   setTimeout(() => { this.router.navigate(['/phone']); }, 1000);
+      // });
     });
 
     this.socketService.subscribe('phone_player_update', (data: any) => {
@@ -336,19 +382,19 @@ export class PhoneGameComponent implements OnInit {
 
     if (this.cards.length == 0) {
       clearInterval(this.theTimer);
-      Swal.fire({
-        title: 'Congratulations!',
-        html: 'You won this round. <br>Next Round will start in a few seconds!',
-        imageUrl: 'https://www.nicepng.com/png/full/6-69332_fireworks-png-images-free-download-clip-art-free.png',
-        imageWidth: 200,
-        imageHeight: 100,
-        imageAlt: 'Custom image',
-        timer: 30000,
-        showConfirmButton: false,
-      }).then(() => {
-        this.unoClicked = false;
-        this.socketService.publish('start_round', this.my_id);
-      });
+      // Swal.fire({
+      //   title: 'Congratulations!',
+      //   html: 'You won this round. <br>Next Round will start in a few seconds!',
+      //   imageUrl: 'https://www.nicepng.com/png/full/6-69332_fireworks-png-images-free-download-clip-art-free.png',
+      //   imageWidth: 200,
+      //   imageHeight: 100,
+      //   imageAlt: 'Custom image',
+      //   timer: 30000,
+      //   showConfirmButton: false,
+      // }).then(() => {
+      //   this.unoClicked = false;
+      //   this.socketService.publish('start_round', this.my_id);
+      // });
       this.socketService.publish('won_round', this.player);
     }
     //console.log(this.selectedCard);
