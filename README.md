@@ -92,3 +92,8 @@ npm install array-shuffle
 npm i open-dyslexic require-style
 npm i yo-yo
 ```
+
+>Charts
+```
+npm install chart.js --save
+```

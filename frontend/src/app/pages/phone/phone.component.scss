@@ -66,6 +66,11 @@ label {
   width: 100%
 }
 
+.button {
+  width: 40%;
+  height: 15%;
+}
+
 #button1,
 #button2 {
   display: inline-block;
@@ -119,9 +124,6 @@ input[type="checkbox"] {
   text-decoration: underline;
   cursor: pointer;
 }
-
-
-
 
 table.center {
   margin-left: auto;

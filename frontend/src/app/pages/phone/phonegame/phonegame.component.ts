@@ -58,6 +58,18 @@ export class PhoneGameComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.my_id != '0') {
+      console.log(this.my_id)
+      document.cookie = "id=" + this.my_id;
+      console.log(document.cookie)
+    }
+
+    if (this.my_id === '0') {
+      this.my_id = document.cookie.replace("id=", "");
+      console.log(this.my_id)
+    }
+
+
     //console.log('My id ' + this.my_id);
     setTimeout(() => {
       this.playersService.getById(this.my_id).subscribe((result: any) => {
@@ -334,6 +346,7 @@ export class PhoneGameComponent implements OnInit {
     } else {
       this.throw();
     }
+
     if (this.cards.length <= 7) {
       this.cardsClass = 'cards'
     }
