@@ -40,6 +40,7 @@ export class PhoneComponent implements OnInit {
   public score: number = 0;
   public cards_hand: string[] = [];
   public fontClass: string = 'font';
+  public isDisabled: boolean = false;
   constructor(
     private router: Router,
     private playersService: PlayersService,
@@ -127,6 +128,7 @@ export class PhoneComponent implements OnInit {
     this.isSigned = true
     this.main = true
     this.socketService.subscribe("games_create", (data: any) => {
+      console.log(data)
       this.gamesService.getActive(true).subscribe((result) => {
         var current_game = result;
         this.game_id = result[0]._id;
@@ -158,6 +160,7 @@ export class PhoneComponent implements OnInit {
     this.signup = false
   }
   startGame() {
+    this.isDisabled = true;
     this.gamesService.getById(this.game_id).subscribe((result) => {
       //console.log(this.player)
       this.playersService.getById(this.my_id).subscribe((result) => {

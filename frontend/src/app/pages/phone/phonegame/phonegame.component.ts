@@ -57,6 +57,12 @@ export class PhoneGameComponent implements OnInit {
   }
 
   ngOnInit() {
+    //bro why you do not work!?!?
+    this.smartSpeaker.addCommand('uno', () => {
+      console.log("eisai mortisa")
+      this.uno();
+    });
+
     this.smartSpeaker.initialize();
     this.smartSpeaker.start();
 
@@ -199,12 +205,6 @@ export class PhoneGameComponent implements OnInit {
         }
       });
     });
-
-    //bro why you do not work!?!?
-    // this.smartSpeaker.addCommand('hi', () => {
-    //   console.log("eisai mortisa")
-    //   //this.uno();
-    // });
 
   }
 

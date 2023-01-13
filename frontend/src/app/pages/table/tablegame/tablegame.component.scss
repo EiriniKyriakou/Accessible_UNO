@@ -66,8 +66,9 @@ body {
 
 .upside-down {
     position: absolute;
-    top: 5%;
-    right: 40%;
+    top: 3%;
+    align-items: center;
+    justify-content: center;
     transform: rotate(180deg);
 }
 
@@ -88,8 +89,9 @@ body {
 
 .bottom {
     position: absolute;
-    bottom: 5%;
-    right: 40%;
+    bottom: 3%;
+    align-items: center;
+    justify-content: center;
 }
 
 .column {

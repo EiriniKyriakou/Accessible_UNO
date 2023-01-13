@@ -36,6 +36,7 @@ export class TableWaitingComponent implements OnInit {
       });
 
       this.socketService.subscribe("player_joined", (data: any) => {
+        
         this.game.players.push(data._id);
         console.log("Joined player: " + data._id)
         if(data.dysrhythmia===true){

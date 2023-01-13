@@ -31,7 +31,7 @@ export class SmartSpeakerService {
     public start() {
         this.recognition.start();
         this.recognition.onresult = (event: any) => {
-            let command = event.results[0][0].transcript;
+            let command = event.results[0][0].transcript.toLowerCase();
             console.log("Command given: " + command);
             if (this.commands[command]) {
                 this.commands[command]();
