@@ -171,10 +171,13 @@ export class TableGameComponent implements OnInit {
     });
 
     this.socketService.subscribe('win', (data: any) => {
-      if (this.impVision) {
-        this.smartSpeaker.speak(data.username + " won the game");
-      }
-      setTimeout(() => { this.router.navigate(['/table']); }, 1000);
+      this.game.active = false;
+      this.gamesService.update(this.game).subscribe((result: any) => {
+        if (this.impVision) {
+          this.smartSpeaker.speak(data.username + " won the game");
+        }
+        setTimeout(() => { this.router.navigate(['/table']); }, 1000);
+      });
     });
 
 
@@ -339,6 +342,8 @@ export class TableGameComponent implements OnInit {
     this.uno_player = '';
     this.wait_uno = false;
     this.player_throw_card = '';
+    this.game.active = false;
+    this.gamesService.update(this.game).subscribe((result: any) => { });
   }
 
   zeroPoints(current_game: { players: any }) {
@@ -467,6 +472,7 @@ export class TableGameComponent implements OnInit {
   }
 
   initRound() {
+    this.game.active = true;
     this.game.cards_on_deck = arrayShuffle([
       '0 Red.png',
       '0 Yellow.png',
