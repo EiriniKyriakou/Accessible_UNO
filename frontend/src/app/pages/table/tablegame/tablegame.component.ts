@@ -46,7 +46,14 @@ export class TableGameComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.smartSpeaker.addCommand('uno', () => {
+      console.log("UNO Command")
+      if (this.wait_uno === true){
+        this.socketService.publish('says_uno', this.uno_player); //id
+      }
+    });
+    this.smartSpeaker.initialize();
+    this.smartSpeaker.start();
 
     this.gamesService.getActive(true).subscribe((result: any) => {
       if (JSON.stringify(result[0]) === undefined) {
@@ -64,8 +71,6 @@ export class TableGameComponent implements OnInit {
             this.fontClass = 'open-dyslexic';
           }
           if (this.game.impairedVision == true) {
-            this.smartSpeaker.initialize();
-            this.smartSpeaker.start();
             this.smartSpeaker.speak('The game is about to start.');
             this.impVision = true;
 

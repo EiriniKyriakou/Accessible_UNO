@@ -57,16 +57,6 @@ export class PhoneGameComponent implements OnInit {
   }
 
   ngOnInit() {
-    //bro why you do not work!?!?
-    this.smartSpeaker.addCommand('uno', () => {
-      console.log("eisai mortisa")
-      this.uno();
-    });
-
-    this.smartSpeaker.initialize();
-    this.smartSpeaker.start();
-
-
     //console.log('My id ' + this.my_id);
     setTimeout(() => {
       this.playersService.getById(this.my_id).subscribe((result: any) => {
@@ -250,6 +240,10 @@ export class PhoneGameComponent implements OnInit {
           this.player = result;
         }
       });
+    });
+
+    this.socketService.subscribe('says_uno', (id: string) => {
+      this.uno();
     });
 
   }
