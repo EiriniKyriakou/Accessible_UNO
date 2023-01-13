@@ -140,12 +140,19 @@ export class TableGameComponent implements OnInit {
     });
 
     this.socketService.subscribe('uno_player', (data: PlayerModel) => {
-      console.log("Player " + data.username + " says UNO");
-      if (this.impVision) {
-        this.smartSpeaker.speak(data.username + " said UNO");
+      if (this.wait_uno == true) {
+        data.unos++;
+        this.playersService.update(data).subscribe((result: any) => {
+          this.socketService.publish('phone_player_update', data)
+        });
+        console.log("Player " + data.username + " says UNO");
+        this.socketService.publish('wall_update', data);
+        if (this.impVision) {
+          this.smartSpeaker.speak(data.username + " said UNO");
+        }
+        this.uno_player = '';
+        this.wait_uno = false;
       }
-      this.uno_player = '';
-      this.wait_uno = false;
     });
 
     this.socketService.subscribe('one_card', (data: any) => {

@@ -433,11 +433,11 @@ export class PhoneGameComponent implements OnInit {
     if (this.cards.length == 1) {
       console.log("I say uno")
       this.unoClicked = true
-      this.player.unos++;
-      this.playersService.update(this.player).subscribe((result: any) => {
+      // this.player.unos++;
+      //this.playersService.update(this.player).subscribe((result: any) => {
         this.socketService.publish('uno_player', this.player);
-        this.socketService.publish('wall_update', this.player);
-      });
+        // this.socketService.publish('wall_update', this.player);
+      //});
     }
 
   }
