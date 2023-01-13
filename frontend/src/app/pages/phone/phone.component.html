@@ -106,13 +106,13 @@
 
     <ul class="ul-center" *ngIf="main">
       <br>
-      <li><button *ngIf="join" class="button" type="button" id="#button1" (click)="startGame()"
-          [ngClass]="fontClass" [disabled]="isDisabled">Join Game</button></li>
+      <li><button *ngIf="join" class="button" type="button" id="#button1" (click)="startGame()" [ngClass]="fontClass"
+          [disabled]="isDisabled">Join Game</button></li>
     </ul>
 
     <div *ngIf="hourglass">
       <br>
-      <img class="center" src="../../../assets/photos/hourglass.png" alt="hourglass">
+      <img class="center uno" src="../../../assets/photos/hourglass.png" alt="hourglass">
       <p [ngClass]="fontClass">Waiting Players ...</p>
     </div>
 

@@ -300,18 +300,19 @@ export class PhoneGameComponent implements OnInit {
         });
         this.drawed = true;
       }
+      if (this.cards.length <= 7) {
+        this.cardsClass = 'cards'
+      }
+      if (this.cards.length > 7) {
+        this.cardsClass = 'cardsmoreseven'
+      }
+      if (this.cards.length > 9) {
+        this.cardsClass = 'cardsmorenine'
+      }
     });
 
 
-    if (this.cards.length < 7) {
-      this.cardsClass = 'cards'
-    }
-    if (this.cards.length > 7) {
-      this.cardsClass = 'cardsmoreseven'
-    }
-    if (this.cards.length > 12) {
-      this.cardsClass = 'cardsmorenine'
-    }
+
 
   }
 
@@ -339,7 +340,7 @@ export class PhoneGameComponent implements OnInit {
     if (this.cards.length > 7) {
       this.cardsClass = 'cardsmoreseven'
     }
-    if (this.cards.length > 12) {
+    if (this.cards.length > 9) {
       this.cardsClass = 'cardsmorenine'
     }
 
