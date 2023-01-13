@@ -184,3 +184,21 @@ form {
 .passwordCheck {
     color: red;
 }
+
+.pie{
+    display: block;
+    box-sizing: border-box;
+    height: 30vh !important;
+    width: 30vh  !important;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.bar{
+    display: block;
+    box-sizing: border-box;
+    height: 30vh !important;
+    width: 40vh  !important;
+    margin-left: auto;
+    margin-right: auto;
+}

@@ -10,6 +10,7 @@ import { ItemShopComponent } from './pages/item-shop/item-shop.component';
 import { ItemPreviewComponent } from './pages/item-shop/item-preview/item-preview.component';
 //import { CardComponent } from './pages/card/card.component';
 //import { SidebarComponent } from './pages/sidebar/sidebar.component';
+import { NgChartsModule, NgChartsConfiguration } from 'ng2-charts';
 
 const socketIoConfig: SocketIoConfig = { url: environment.host, options: {} };
 @NgModule({
@@ -18,16 +19,16 @@ const socketIoConfig: SocketIoConfig = { url: environment.host, options: {} };
     TasksComponent,
     ItemShopComponent,
     ItemPreviewComponent,
-  //CardComponent,
-    //SidebarComponent
   ],
   imports: [
     SocketIoModule.forRoot(socketIoConfig),
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    NgChartsModule,
+    
   ],
-  providers: [],
+  providers: [{ provide: NgChartsConfiguration, useValue: { generateColors: false }}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

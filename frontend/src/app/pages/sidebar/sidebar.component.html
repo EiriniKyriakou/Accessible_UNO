@@ -5,7 +5,6 @@
     <div class="spinner horizontal"></div>
     <div class="spinner diagonal part-2"></div>
   </label>
-
   <div id="sidebarMenu" *ngIf="!inProfile&&!editUsername&&!editPassword&&!editAccessibility&&!inStatistics&&isHided">
     <div class="center">
       <h4>Menu</h4>
@@ -117,13 +116,15 @@
     </div>
     <table class="center">
       <tr>
-        <td> Pie Chart
-
+        <td>
+          <canvas #pieCanvas class="pie"></canvas>
         </td>
 
       </tr>
       <tr>
-        <td>Diagram</td>
+        <td>
+          <canvas #barCanvas class="bar"></canvas>
+        </td>
       </tr>
     </table>
   </div>
