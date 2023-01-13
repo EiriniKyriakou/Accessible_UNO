@@ -166,7 +166,7 @@ export class PhoneGameComponent implements OnInit {
         });
       }
     });
-    
+
 
     this.socketService.subscribe('start_round', (id: any) => {
       console.log('Start round');
@@ -322,7 +322,10 @@ export class PhoneGameComponent implements OnInit {
   }
 
   throwCard() {
-    this.drawed = false;
+    if (this.cards[this.selectedCard] != undefined) {
+      this.drawed = false;
+    }
+
     this.throwedCard = this.cards[this.selectedCard];
     console.log("Card I'm about to throw: " + this.throwedCard);
     if (this.throwedCard === '+4 All.png' || this.throwedCard === 'WildCard All.png') {
@@ -330,7 +333,7 @@ export class PhoneGameComponent implements OnInit {
     } else {
       this.throw();
     }
-    if (this.cards.length < 7) {
+    if (this.cards.length <= 7) {
       this.cardsClass = 'cards'
     }
     if (this.cards.length > 7) {
@@ -419,8 +422,8 @@ export class PhoneGameComponent implements OnInit {
       this.unoClicked = true
       // this.player.unos++;
       //this.playersService.update(this.player).subscribe((result: any) => {
-        this.socketService.publish('uno_player', this.player);
-        // this.socketService.publish('wall_update', this.player);
+      this.socketService.publish('uno_player', this.player);
+      // this.socketService.publish('wall_update', this.player);
       //});
     }
 

@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { PlayersService } from 'src/app/global/services/players/players.service';
 import { SmartSpeakerService } from 'src/app/global/services/smart-speaker/smart-speaker.service';
 import arrayShuffle from 'array-shuffle';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-tablegame',
@@ -30,6 +31,7 @@ export class TableGameComponent implements OnInit {
   public end_of_round = false;
   public points_round = 0;
   public winner_id = '';
+  public winner_username = '';
   public player_throw_card = '';
   public fontClass: string = 'font';
   public impVision: boolean = false;
@@ -48,7 +50,7 @@ export class TableGameComponent implements OnInit {
   ngOnInit() {
     this.smartSpeaker.addCommand('uno', () => {
       console.log("UNO Command")
-      if (this.wait_uno === true){
+      if (this.wait_uno === true) {
         this.socketService.publish('says_uno', this.uno_player); //id
       }
     });
@@ -174,6 +176,26 @@ export class TableGameComponent implements OnInit {
       if (this.impVision) {
         this.smartSpeaker.speak(data.username + " won the round");
       }
+
+      for (let i = 0; i < this.players.length; i++) {
+        if (this.players[i]._id === this.winner_id) {
+          this.winner_username = this.players[i].username;
+        }
+      }
+
+      Swal.fire({
+        title: 'Round has ended!',
+        html: this.winner_username + ' won this round.',
+        imageUrl: 'https://cdn.dribbble.com/users/100757/screenshots/1912706/media/db8f55111c06444b63f1e99746d11c4b.gif',
+        imageWidth: 500,
+        imageHeight: 300,
+        imageAlt: 'Custom image',
+        timer: 30000,
+        showConfirmButton: false,
+      }).then(() => {
+
+      });
+
     });
 
     this.socketService.subscribe('start_round', (id: any) => {
@@ -188,7 +210,20 @@ export class TableGameComponent implements OnInit {
         if (this.impVision) {
           this.smartSpeaker.speak(data.username + " won the game");
         }
-        setTimeout(() => { this.router.navigate(['/table']); }, 1000);
+
+        Swal.fire({
+          title: 'End of the game...!',
+          html: data.username + ' won this game.',
+          imageUrl: 'https://media.istockphoto.com/id/1315398548/vector/winner-concept-trophy-cup-illustration.jpg?s=612x612&w=0&k=20&c=KDhA6vyqrvtSNv4PAkRUKUm0cOnd38TaBSpVwQIgeOw=',
+          imageWidth: 500,
+          imageHeight: 300,
+          imageAlt: 'Custom image',
+          timer: 30000,
+          showConfirmButton: false,
+        }).then(() => {
+          setTimeout(() => { this.router.navigate(['/table']); }, 1000);
+        });
+
       });
     });
 
