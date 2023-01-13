@@ -6,7 +6,7 @@
     <div class="spinner diagonal part-2"></div>
   </label>
 
-  <div id="sidebarMenu" *ngIf="!inProfile&&!editUsername&&!editPassword&&!editAccessibility&&isHided">
+  <div id="sidebarMenu" *ngIf="!inProfile&&!editUsername&&!editPassword&&!editAccessibility&&!inStatistics&&isHided">
     <div class="center">
       <h4>Menu</h4>
     </div>
@@ -104,8 +104,27 @@
       <br>
       <br>
       <div class="center">
-      <button class="button" type="button" id="#button2" (click)="editAccessibilityFunction()">Change
-        accessibility</button></div>
+        <button class="button" type="button" id="#button2" (click)="editAccessibilityFunction()">Change
+          accessibility</button>
+      </div>
       <br>
     </form>
   </div>
+
+  <div id="sidebarMenu" *ngIf="inStatistics">
+    <div class="center">
+      <h4>Statistics</h4>
+    </div>
+    <table class="center">
+      <tr>
+        <td> Pie Chart
+
+        </td>
+
+      </tr>
+      <tr>
+        <td>Diagram</td>
+      </tr>
+    </table>
+  </div>
+</div>

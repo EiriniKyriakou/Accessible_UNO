@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 export class SidebarComponent  {
   isHided=false 
   inProfile=false
+  inStatistics=false
   editUsername=false
   editPassword=false
   editAccessibility=false
@@ -25,6 +26,8 @@ export class SidebarComponent  {
   @Output() onClickAction: EventEmitter <any> = new EventEmitter;
   @Input()
   player!: PlayerModel;
+
+
 
   constructor(private playersService: PlayersService, private router: Router) {  }
 
@@ -43,6 +46,9 @@ export class SidebarComponent  {
     this.onClickAction.emit(this.isHided);
     if(this.inProfile){
       this.inProfile=!this.inProfile
+    }
+    if(this.inStatistics){
+      this.inStatistics=false;
     }
     
   }
@@ -87,6 +93,7 @@ export class SidebarComponent  {
     this.editAccessibility=true
     this.inProfile=false
   }
+
   editAccessibilityFunction(){
     this.editAccessibility=false;
     this.inProfile=true
@@ -107,6 +114,6 @@ export class SidebarComponent  {
   }
 
   statistics(){
-
+    this.inStatistics = true;
   }
 }
