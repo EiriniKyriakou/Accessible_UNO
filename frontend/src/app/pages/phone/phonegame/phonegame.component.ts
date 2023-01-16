@@ -60,7 +60,7 @@ export class PhoneGameComponent implements OnInit {
   ngOnInit() {
     if (this.my_id != '0') {
       console.log(this.my_id)
-      document.cookie = "id=" + this.my_id;
+      document.cookie = "id=" + this.my_id + ";";
       console.log(document.cookie)
     }
 
@@ -183,7 +183,6 @@ export class PhoneGameComponent implements OnInit {
         });
       }
     });
-
 
     this.socketService.subscribe('start_round', (id: any) => {
       console.log('Start round');
@@ -338,10 +337,6 @@ export class PhoneGameComponent implements OnInit {
         this.cardsClass = 'cardsmorenine'
       }
     });
-
-
-
-
   }
 
   pass() {

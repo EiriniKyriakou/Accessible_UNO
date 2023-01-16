@@ -51,7 +51,21 @@ export class PhoneComponent implements OnInit {
     this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/background.png)');
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    if (document.cookie != '') {
+      this.my_id = document.cookie.replace("id=", "");
+      console.log("ID:" + this.my_id);
+      this.playersService.getById(this.my_id).subscribe((result) => {
+        this.player = result;
+        console.log("I'm");
+        console.log(this.player)
+        if (this.player.dyslexia === true) {
+          this.fontClass = 'open-dyslexic';
+        }
+        this.signInB();
+      });
+    }
+  }
 
   public postPlayer(): void {
     // Emit event for update tasks
@@ -99,10 +113,10 @@ export class PhoneComponent implements OnInit {
           text: 'Wrong username or password!',
         })
       } else {
-
         this.socketService.publish("players_signin", player);
         this.player = result[0];
         this.my_id = result[0]._id;
+        document.cookie = "id=" + this.my_id + ";";
         //console.log("This player signed in: ")
         //console.log(this.player)
         if (this.player.dyslexia === true) {
@@ -159,6 +173,7 @@ export class PhoneComponent implements OnInit {
     this.sign = true
     this.signup = false
   }
+
   startGame() {
     this.isDisabled = true;
     this.gamesService.getById(this.game_id).subscribe((result) => {
@@ -194,8 +209,5 @@ export class PhoneComponent implements OnInit {
       this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/background.png)');
     }
   }
-
-
-
 
 }
