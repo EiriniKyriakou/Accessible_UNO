@@ -54,7 +54,7 @@ export class TableGameComponent implements OnInit {
         this.socketService.publish('says_uno', this.uno_player); //id
       }
     });
-    this.smartSpeaker.addCommand('pass', () => {
+    this.smartSpeaker.addCommand(['pass', 'bus'], () => {
       console.log("PASS Command")
       this.socketService.publish('says_pass', this.turn); //id
     });
