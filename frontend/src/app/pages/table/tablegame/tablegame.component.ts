@@ -48,7 +48,7 @@ export class TableGameComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.smartSpeaker.stop();
+    
     this.smartSpeaker.addCommand('uno', () => {
       console.log("UNO Command")
       if (this.wait_uno === true) {
