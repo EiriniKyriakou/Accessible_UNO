@@ -54,6 +54,10 @@ export class TableGameComponent implements OnInit {
         this.socketService.publish('says_uno', this.uno_player); //id
       }
     });
+    this.smartSpeaker.addCommand('pass', () => {
+      console.log("PASS Command")
+      this.socketService.publish('says_pass', this.turn); //id
+    });
     this.smartSpeaker.initialize();
     this.smartSpeaker.start();
 
@@ -63,7 +67,7 @@ export class TableGameComponent implements OnInit {
       } else {
         this.game = result[0];
         this.socketService.publish('new_game', this.game);
-
+        console.log(this.game.players)
         this.zeroPoints(this.game);
         setTimeout(() => {
           if (this.game.colorblindness == true) {
@@ -227,7 +231,10 @@ export class TableGameComponent implements OnInit {
       });
     });
 
-
+    this.socketService.subscribe('error_pass', (msg: string) => {
+      console.log(msg);
+      this.smartSpeaker.speak(msg);
+    })
   }
 
   setTurn(bool: boolean) {

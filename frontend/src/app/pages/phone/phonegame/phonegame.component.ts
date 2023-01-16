@@ -88,6 +88,11 @@ export class PhoneGameComponent implements OnInit {
           if (this.player.dyslexia === true) {
             this.fontClass = 'open-dyslexic';
           }
+
+          if (this.player.impairedVision === true) {
+            this.smartSpeaker.initialize();
+            this.smartSpeaker.start();
+          }
           var i = 0;
           for (let card of this.cards) {
             let splitted = card.split(' ', 2);
@@ -257,6 +262,17 @@ export class PhoneGameComponent implements OnInit {
 
     this.socketService.subscribe('says_uno', (id: string) => {
       this.uno();
+    });
+
+    this.socketService.subscribe('says_pass', (id: string) => {
+      console.log(id)
+      if (id === this.my_id ){
+        if (this.drawed === true){
+          this.pass();
+        } else {
+          this.socketService.publish('error_pass', "You can't say pass before you draw a card.");
+        }
+      }
     });
 
   }

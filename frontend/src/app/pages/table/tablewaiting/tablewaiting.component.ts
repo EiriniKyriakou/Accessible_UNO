@@ -14,6 +14,7 @@ import { PlayersService } from 'src/app/global/services/players/players.service'
 export class TableWaitingComponent implements OnInit {
   public game = new GameModel();
   //public players: string[] = [];
+  public timeout: any;
 
   constructor(
     private router: Router,
@@ -25,7 +26,7 @@ export class TableWaitingComponent implements OnInit {
   }
 
   ngOnInit() {
-    setTimeout(() => this.changePage(), 60000);  //60s
+    this.timeout = setTimeout(() => this.changePage(), 60000);  //60s
     setTimeout(() => {
       this.gamesService.getActive(true).subscribe((result: any) => {
         if (JSON.stringify(result) === "[]") {
@@ -65,5 +66,10 @@ export class TableWaitingComponent implements OnInit {
     });
     this.socketService.publish("game_start", this.game);
     setTimeout(() => { this.router.navigate(['/tablegame']); }, 1000);
+  }
+
+  start_now(){
+    clearTimeout(this.timeout);
+    this.changePage();
   }
 }
