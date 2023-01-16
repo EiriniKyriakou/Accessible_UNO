@@ -298,7 +298,7 @@ export class PhoneGameComponent implements OnInit {
       hoverCard.style.marginTop = '-12%';
     }
     if (this.player.impairedVision == true) {
-      this.smartSpeaker.speak('Card is' + this.cardValue[index].number + "and" + this.cardValue[index].color.replace(".png", ""));
+      this.smartSpeaker.speak('Card is' + this.cardValue[index].number + " " + this.cardValue[index].color.replace(".png", ""));
     }
     this.selectedCard = index;
   }

@@ -24,7 +24,9 @@ export class TableComponent implements OnInit {
         this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/background.png)');
     }
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.socketService.publish('new_game', ""); 
+    }
 
     public postGame(): void { // Emit event for update tasks
         const game = new GameModel();

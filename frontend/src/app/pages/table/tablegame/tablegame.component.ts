@@ -101,7 +101,8 @@ export class TableGameComponent implements OnInit {
           } while (check);
           //console.log(firstCard)
           this.playedCard(firstCard);
-          this.removeCards(this.game); //old cards of players
+          //this.removeCards(this.game); //old
+          setTimeout(() => { this.removeCards(this.game); }, 1000); //old cards of players
           // 
         }, 1000);
 
@@ -326,39 +327,57 @@ export class TableGameComponent implements OnInit {
   removeCards(current_game: { players: any }) {
     //this.socketService.publish('new_start', this.game.players);
     let players = this.game.players;
-    for (let player of players) {
-      this.playersService.getById(player).subscribe((plr: PlayerModel) => {
-        plr.cards_hand = [];
-        this.players.push(plr);
-        //this.socketService.publish('start_game', plr);
-        this.playersService.update(plr).subscribe((result: any) => {
-          console.log('In remove cards:')
-          console.log(result);
+    const delay = (ms: number | undefined) => new Promise(resolve => setTimeout(resolve, ms)); //new
+    (async () => { //new
+      for (let player of players) {
+        await delay(Math.random() * 1000); //new
+        this.playersService.getById(player).subscribe((plr: PlayerModel) => {
+          plr.cards_hand = [];
+          this.players.push(plr);
+          //this.socketService.publish('start_game', plr);
+          this.playersService.update(plr).subscribe((result: any) => {
+            console.log('In remove cards:')
+            console.log(result);
+            this.dealCards(result);
+          });
         });
-      });
-    }
+      }
+    })(); //new
     console.log('The players of the game:');
     console.log(this.players);
-    setTimeout(() => {
-      this.dealCards(current_game);
-    }, 1000);
+    setTimeout(() => { //new
+      //this.dealCardsOriginal(current_game); //old
+      this.number_of_cards = [7, 7, 7, 7];
+      this.setTurn(true);
+    }, 3000); //new
   }
 
-  dealCards(current_game: { players: any }) {
-    let players = this.game.players;
-    for (let player of players) {
-      this.playersService.getById(player).subscribe((plr: any) => {
-        for (let i = 0; i < 7; i++) {
-          plr.cards_hand.push(this.game.cards_on_deck[0]);
-          this.game.cards_on_deck.shift();
-        }
-        this.gamesService.update(this.game).subscribe((result: any) => { });
-        this.playersService.update(plr).subscribe((result: any) => { });
-      });
+  dealCards(plr: PlayerModel) {
+    for (let i = 0; i < 7; i++) {
+      plr.cards_hand.push(this.game.cards_on_deck[0]);
+      this.game.cards_on_deck.shift();
     }
-    this.number_of_cards = [7, 7, 7, 7];
-    this.setTurn(true);
+    this.gamesService.update(this.game).subscribe((result: any) => { });
+    this.playersService.update(plr).subscribe((result: any) => { });
+    // this.number_of_cards = [7, 7, 7, 7];
+    // this.setTurn(true);
   }
+
+  // dealCardsOriginal(current_game: { players: any }) {
+  //   let players = this.game.players;
+  //   for (let player of players) {
+  //     this.playersService.getById(player).subscribe((plr: any) => {
+  //       for (let i = 0; i < 7; i++) {
+  //         plr.cards_hand.push(this.game.cards_on_deck[0]);
+  //         this.game.cards_on_deck.shift();
+  //       }
+  //       this.gamesService.update(this.game).subscribe((result: any) => { });
+  //       this.playersService.update(plr).subscribe((result: any) => { });
+  //     });
+  //   }
+  //   this.number_of_cards = [7, 7, 7, 7];
+  //   this.setTurn(true);
+  // }
 
   updatePlayer(data: PlayerModel) {
     let i = 0;
@@ -661,7 +680,8 @@ export class TableGameComponent implements OnInit {
       console.log('First card on table: ' + firstCard)
 
       this.playedCard(firstCard);
-      this.removeCards(this.game); //old cards of players
+      //this.removeCards(this.game); //old cards of players
+      setTimeout(() => { this.removeCards(this.game); }, 1000); 
     });
   }
 
