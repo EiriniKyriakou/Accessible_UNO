@@ -159,7 +159,9 @@ export class PhoneComponent implements OnInit {
         console.log("No Active Game")
       } else {
         this.game_id = result[0]._id;
-        this.joinGameOption();
+        if(JSON.stringify(current_game[0].players) === "[]"){
+          this.joinGameOption();
+        }
       }
     });
   }

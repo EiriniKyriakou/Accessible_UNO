@@ -65,10 +65,24 @@ export class PhoneGameComponent implements OnInit {
     }
 
     if (this.my_id === '0') {
-      this.my_id = document.cookie.replace("id=", "");
-      console.log(this.my_id)
+      if (document.cookie != ''){
+        this.my_id = document.cookie.replace("id=", "");
+        console.log(this.my_id)
+      }else {
+        this.router.navigate(['/phone']);
+      }
     }
 
+    this.gamesService.getActive(true).subscribe((games: any) => {
+      if (JSON.stringify(games[0]) === undefined) {
+        console.log('No active Game');
+        this.router.navigate(['/phone']);
+      } else {
+        if(!games[0].players.includes(this.my_id)){
+          this.router.navigate(['/phone']);
+        }
+      }
+    });
 
     //console.log('My id ' + this.my_id);
     setTimeout(() => {
