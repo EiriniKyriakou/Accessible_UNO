@@ -65,10 +65,10 @@ export class PhoneGameComponent implements OnInit {
     }
 
     if (this.my_id === '0') {
-      if (document.cookie != ''){
+      if (document.cookie != '') {
         this.my_id = document.cookie.replace("id=", "");
         console.log(this.my_id)
-      }else {
+      } else {
         this.router.navigate(['/phone']);
       }
     }
@@ -78,7 +78,7 @@ export class PhoneGameComponent implements OnInit {
         console.log('No active Game');
         this.router.navigate(['/phone']);
       } else {
-        if(!games[0].players.includes(this.my_id)){
+        if (!games[0].players.includes(this.my_id)) {
           this.router.navigate(['/phone']);
         }
       }
@@ -203,6 +203,7 @@ export class PhoneGameComponent implements OnInit {
       this.cards = [];
       this.cardValue = [];
       this.cardsReady = false;
+      this.cardsClass = 'cards'
       setTimeout(() => {
         this.playersService.getById(this.my_id).subscribe((result: any) => {
           if (JSON.stringify(result) === undefined) {
@@ -279,14 +280,16 @@ export class PhoneGameComponent implements OnInit {
 
     this.socketService.subscribe('says_pass', (id: string) => {
       console.log(id)
-      if (id === this.my_id ){
-        if (this.drawed === true){
+      if (id === this.my_id) {
+        if (this.drawed === true) {
           this.pass();
         } else {
           this.socketService.publish('error_pass', "You can't say pass before you draw a card.");
         }
       }
     });
+
+
 
   }
 
