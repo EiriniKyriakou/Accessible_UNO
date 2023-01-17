@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@200&display=swap');
 
 .open-dyslexic {
-    font-family: 'Lexend'; //'OpenDyslexicRegular';
+    font-family: 'Lexend';
 }
 
 .font {
@@ -148,21 +148,20 @@ body {
     float: left;
     width: 70%;
     height: 70%;
-    margin-left: 15%;
+    margin-left: 25%;
 }
 
 #middlebox {
     float: left;
     width: 20%;
     height: 70%;
-    margin-left: 15%;
+    margin-left: 25%;
     margin-top: 9%;
-    // height: 280px;
 }
 
 #rightbox {
     float: right;
     width: 10%;
     height: 70%;
-    margin-left: 15%;
+    margin-left: 20%;
 }

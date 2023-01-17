@@ -12,9 +12,9 @@
       <img class="uno-card" src="../../../assets/table-images/uno-card.png" alt="uno card">
     </div>
   </div>
-  <h1 *ngIf="turns_of_players==0 && !end_of_round && players[0]!=undefined" class="message-top right" [ngClass]="fontClass">It's Your Turn</h1>
-  <!-- <h1 *ngIf="turns_of_players==0 && end_of_round" class="message-top right" [ngClass]="fontClass">You Won The Round!
-  </h1> -->
+  <h1 *ngIf="turns_of_players==0 && !end_of_round && players[0]!=undefined" class="message-top right"
+    [ngClass]="fontClass">It's Your Turn</h1>
+  >
 
   <div class="player bottom" *ngIf="length>1 && players[1]!=undefined">
     <div id="leftbox">
@@ -28,9 +28,8 @@
       <img class="uno-card" src="../../../assets/table-images/uno-card.png" alt="uno card">
     </div>
   </div>
-  <h1 *ngIf="turns_of_players==1 && !end_of_round && players[1]!=undefined" class="message-top bottom" [ngClass]="fontClass">It's Your Turn</h1>
-  <!-- <h1 *ngIf="turns_of_players==1 && end_of_round" class="message-top bottom" [ngClass]="fontClass">You Won The Round!
-  </h1> -->
+  <h1 *ngIf="turns_of_players==1 && !end_of_round && players[1]!=undefined" class="message-top bottom"
+    [ngClass]="fontClass">It's Your Turn</h1>
 
   <div class="player left" *ngIf="length>2 && players[2]!=undefined">
     <div id="leftbox">
@@ -44,9 +43,9 @@
       <img class="uno-card" src="../../../assets/table-images/uno-card.png" alt="uno card">
     </div>
   </div>
-  <h1 *ngIf="turns_of_players==2 && !end_of_round && players[2]!=undefined" class="message-left left" [ngClass]="fontClass">It's Your Turn</h1>
-  <!-- <h1 *ngIf="turns_of_players==2 && end_of_round" class="message-left left" [ngClass]="fontClass">You Won The Round!
-  </h1> -->
+  <h1 *ngIf="turns_of_players==2 && !end_of_round && players[2]!=undefined" class="message-left left"
+    [ngClass]="fontClass">It's Your Turn</h1>
+
 
   <div class="player upside-down" *ngIf="length>3 && players[3]!=undefined">
     <div id="leftbox">
@@ -60,11 +59,9 @@
       <img class="uno-card" src="../../../assets/table-images/uno-card.png" alt="uno card">
     </div>
   </div>
-  <h1 *ngIf="turns_of_players==3 && !end_of_round && players[3]!=undefined" class="message-bottom upside-down" [ngClass]="fontClass">It's Your
+  <h1 *ngIf="turns_of_players==3 && !end_of_round && players[3]!=undefined" class="message-bottom upside-down"
+    [ngClass]="fontClass">It's Your
     Turn</h1>
-  <!-- <h1 *ngIf="turns_of_players==3 && end_of_round" class="message-bottom upside-down" [ngClass]="fontClass">You Won The
-    Round!
-  </h1> -->
 
 
   <div *ngIf="reverse" class="v-h-center">
