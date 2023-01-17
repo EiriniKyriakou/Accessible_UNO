@@ -69,6 +69,39 @@ export class WallComponent implements OnInit {
     // this.socketService.subscribe('new_start', (plr: any) => {
     //   this.players = []
     // });
+    this.socketService.subscribe('quit', (plr: PlayerModel) => {
+      let idx = -1;
+      //εδω υπαρχει θεμα δεν γινεται remove o quit player dustuxws
+      for (let i = 0; i < this.players.length; i++) {
+        if (this.players[i]._id === plr._id) {
+          idx = this.players.indexOf(this.players[i]);
+        }
+      }
+      if (idx > -1) {
+        this.players.splice(idx, 1);
+      }
+      let maxPoints = -1;
+      let player = -1;
+      for (let i = 0; i < this.players.length; i++) {
+        if (maxPoints < this.players[i].score) {
+          maxPoints = this.players[i].score;
+          player = i;
+        }
+      }
+      ///
+      this.winnerPlayer = this.players[player];
+      this.winnerPlayer.wins++;
+      this.socketService.publish("win", this.winnerPlayer);
+      this.condition = true
+      this.start = true
+      this.red = false
+      this.blue = false
+      this.yellow = false
+      this.green = false
+
+
+
+    });
 
     this.socketService.subscribe('start_game', (plr: PlayerModel) => {
       this.p1 = true;

@@ -470,6 +470,12 @@ export class PhoneGameComponent implements OnInit {
     }
 
   }
+
+  quit() {
+    this.socketService.publish('quit', this.my_id);
+    this.router.navigate(['/phone']);
+  }
+
   getClickAction(_event: any) {
     this.hided = _event;
     if (_event) {
