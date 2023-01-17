@@ -2,7 +2,6 @@ import { Component, OnInit, Renderer2, Output, ElementRef, ViewChild } from '@an
 import { Router } from '@angular/router';
 import { SocketsService } from 'src/app/global/services/sockets/sockets.service';
 import { GamesService } from 'src/app/global/services/games/game.service';
-import { PlayerModel } from 'src/app/global/models/players/player.model';
 import { GameModel } from 'src/app/global/models/games/game.model';
 import { PlayersService } from 'src/app/global/services/players/players.service';
 
