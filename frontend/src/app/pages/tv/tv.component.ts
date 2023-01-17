@@ -24,7 +24,6 @@ export class TVComponent implements OnInit {
     });
 
     this.socketService.subscribe('won_round', (id: any) => {
-      this.game_time = false;
       console.log('Player ' + id + ' won the round');
       this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/win.jpg)');
     });
@@ -34,12 +33,12 @@ export class TVComponent implements OnInit {
     });
 
     this.socketService.subscribe('game_start', (id: any) => {
-      this.game_time = false;
       this.waiting = false;
+
       this.game_time = true;
     });
 
-    this.socketService.subscribe('new_game', (id: any) => {
+    this.socketService.subscribe('waiting', (id: any) => {
       this.waiting = true;
     });
 

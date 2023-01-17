@@ -26,6 +26,8 @@ export class TableWaitingComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.socketService.publish("waiting", this.game);
+
     this.timeout = setTimeout(() => this.changePage(), 60000);  //60s
     setTimeout(() => {
       this.gamesService.getActive(true).subscribe((result: any) => {
@@ -35,6 +37,7 @@ export class TableWaitingComponent implements OnInit {
           this.game = result[0];
         }
       });
+
 
       this.socketService.subscribe("player_joined", (data: any) => {
         if (!this.game.players.includes(data._id)) {
@@ -68,7 +71,7 @@ export class TableWaitingComponent implements OnInit {
     setTimeout(() => { this.router.navigate(['/tablegame']); }, 1000);
   }
 
-  start_now(){
+  start_now() {
     clearTimeout(this.timeout);
     this.changePage();
   }
