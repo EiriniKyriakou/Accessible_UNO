@@ -69,11 +69,11 @@ export class WallComponent implements OnInit {
     // this.socketService.subscribe('new_start', (plr: any) => {
     //   this.players = []
     // });
-    this.socketService.subscribe('quit', (plr: PlayerModel) => {
+    this.socketService.subscribe('quit', (id: string) => {
       let idx = -1;
-      //εδω υπαρχει θεμα δεν γινεται remove o quit player dustuxws
+
       for (let i = 0; i < this.players.length; i++) {
-        if (this.players[i]._id === plr._id) {
+        if (this.players[i]._id === id) {
           idx = this.players.indexOf(this.players[i]);
         }
       }
@@ -88,7 +88,6 @@ export class WallComponent implements OnInit {
           player = i;
         }
       }
-      ///
       this.winnerPlayer = this.players[player];
       this.winnerPlayer.wins++;
       this.socketService.publish("win", this.winnerPlayer);
@@ -110,6 +109,7 @@ export class WallComponent implements OnInit {
     });
 
     this.socketService.subscribe("wall_update", (plr: PlayerModel) => {
+
       for (let i = 0; i < this.players.length; i++) {
         if (this.players[i]._id === plr._id) {
           if (this.players[i].score != plr.score) {
