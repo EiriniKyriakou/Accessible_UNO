@@ -6,13 +6,11 @@ import { PhoneGameComponent } from './pages/phone/phonegame/phonegame.component'
 import { TableComponent } from './pages/table/table.component';
 import { TVComponent } from './pages/tv/tv.component';
 import { WallComponent } from './pages/wall/wall.component';
-import { ItemShopComponent } from './pages/item-shop/item-shop.component';
 import { TableWaitingComponent } from './pages/table/tablewaiting/tablewaiting.component';
 import { TableGameComponent } from './pages/table/tablegame/tablegame.component';
 
 const routes: Routes = [
   // { path: 'socket-events', loadChildren: () => import('./pages/socket-events/socket-events.module').then(m => m.SocketEventsModule) },
-  { path: 'tasks', loadChildren: () => import('./pages/tasks/tasks.module').then(m => m.TasksModule) },
   { path: 'home', loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule) },
   { path: 'phone', loadChildren: () => import('./pages/phone/phone.module').then(m => m.PhoneModule) },
   { path: 'phonegame', loadChildren: () => import('./pages/phone/phonegame/phonegame.module').then(m => m.PhoneGameModule) },
@@ -21,7 +19,6 @@ const routes: Routes = [
   { path: 'tablegame',loadChildren: () => import('./pages/table/tablegame/tablegame.module').then(m=>m.TableGameModule)},
   { path: 'tv',loadChildren: () => import('./pages/tv/tv.module').then(m=>m.TVModule)},
   { path: 'wall',loadChildren: () => import('./pages/wall/wall.module').then(m=>m.WallModule)},
-  { path: 'item-shop', component: ItemShopComponent},
   { path: '**', redirectTo: 'home', pathMatch: 'full' },
   //{ path: '**', redirectTo: 'phone', pathMatch: 'full' },
 ];
