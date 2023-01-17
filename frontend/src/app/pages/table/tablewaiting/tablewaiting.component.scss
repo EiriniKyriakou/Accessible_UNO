@@ -1,37 +1,22 @@
-// img {  
-//     max-width: 100%;  
-//     height: auto;  
-    
-// }  
 .center {
     display: block;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
 }
-// .upside-down-hourglass {
-//     top: 0;
-//     right: 0;
-//     margin: auto;
-//     padding: 10px;
-//     /* Rotate from top left corner (not default) */
-//     transform: rotate(180deg);
-// } 
 
-.upside-down{
+.upside-down {
     top: 0;
     right: 0;
     margin: auto;
     width: 100%;
-    //padding: 10px;
     /* Rotate from top left corner (not default) */
     transform: rotate(180deg);
 }
+
 .right {
     position: absolute;
     right: 750px;
-    //width: 100%;
-    //height: 3git20px;
     height: 320px;
     transform: rotate(90deg);
     display: inline-block;
@@ -39,14 +24,13 @@
 }
 
 .left {
-  position: absolute;
-  left: 750px;
-  display: inline;
-  //width: 100%;
-  height: 320px;
-  transform: rotate(-90deg);
-  display: inline-block;
-  white-space: nowrap;
+    position: absolute;
+    left: 750px;
+    display: inline;
+    height: 320px;
+    transform: rotate(-90deg);
+    display: inline-block;
+    white-space: nowrap;
 }
 
 // aside {
@@ -64,9 +48,10 @@
     width: 50%;
 
 }
+
 /* Clear floats after the columns */
 .row:after {
     content: "";
     display: table;
     clear: both;
-  }
+}

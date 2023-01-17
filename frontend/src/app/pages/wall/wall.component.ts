@@ -122,9 +122,7 @@ export class WallComponent implements OnInit {
       }
     });
 
-    // this.socketService.subscribe("wall_poits", (data: any) => {
-    //   this.checkWinner(this.players);
-    // })
+
   }
 
   checkWinner(players: PlayerModel[], plr: PlayerModel) {
