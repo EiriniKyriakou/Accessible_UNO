@@ -9,7 +9,8 @@ import { SocketsService } from 'src/app/global/services/sockets/sockets.service'
 export class TVComponent implements OnInit {
   card = "";
   number: any;
-
+  game_time = false;
+  waiting = false;
   constructor(private renderer: Renderer2, private socketService: SocketsService,) {
     this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/background-tv-wall.png)');
   }
@@ -23,13 +24,25 @@ export class TVComponent implements OnInit {
     });
 
     this.socketService.subscribe('won_round', (id: any) => {
+      this.game_time = false;
       console.log('Player ' + id + ' won the round');
-      this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/win.png)');
+      this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/win.jpg)');
     });
 
     this.socketService.subscribe('start_round', (id: any) => {
       this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/background-tv-wall.png)');
     });
+
+    this.socketService.subscribe('game_start', (id: any) => {
+      this.game_time = false;
+      this.waiting = false;
+      this.game_time = true;
+    });
+
+    this.socketService.subscribe('new_game', (id: any) => {
+      this.waiting = true;
+    });
+
   }
 
 }

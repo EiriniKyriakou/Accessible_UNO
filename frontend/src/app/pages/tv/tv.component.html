@@ -18,3 +18,17 @@
     </div>
   </div>
 </div>
+
+<div *ngIf="game_time">
+  <h1>It's game time!</h1>
+  <div class="cards">
+    <img class="card" src="../../../assets/backgrounds/game_time.gif">
+  </div>
+</div>
+
+<div *ngIf="waiting">
+  <h1>Oof waiting...!</h1>
+  <div class="cards">
+    <img class="card" src="../../../assets/backgrounds/waiting-impatiently.gif">
+  </div>
+</div>

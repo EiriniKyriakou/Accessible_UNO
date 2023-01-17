@@ -43,6 +43,7 @@ export class PhoneGameComponent implements OnInit {
   unoColor: string = 'grey'
   cardsClass: string = 'cards';
   cb = false;
+  
 
   constructor(
     private socketService: SocketsService,
