@@ -48,7 +48,6 @@ export class TableGameComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.smartSpeaker.addCommand('uno', () => {
       console.log("UNO Command")
       if (this.wait_uno === true) {
@@ -59,6 +58,11 @@ export class TableGameComponent implements OnInit {
       console.log("PASS Command")
       this.socketService.publish('says_pass', this.turn); //id
     });
+    this.smartSpeaker.addCommand(['draw','draw card'], () => {
+      console.log("DRAW Command")
+      this.socketService.publish('says_draw', this.turn); //id
+    });
+    
     this.smartSpeaker.initialize();
     this.smartSpeaker.start();
 
@@ -130,12 +134,11 @@ export class TableGameComponent implements OnInit {
 
     this.socketService.subscribe('draw_card', (data: any) => {
       console.log('Player Drew a Card');
-      if (data.number_of_cards == 1) {
-        if (this.impVision) {
+      if (this.impVision) {
+        if (data.number_of_cards === 1) {
           this.smartSpeaker.speak(data.player.username + " a drew a card");
-        }
-      } else {
-        if (this.impVision) {
+        } else {
+          console.log(data.player.username + " took " + data.number_of_cards + " cards")
           this.smartSpeaker.speak(data.player.username + " took " + data.number_of_cards + " cards");
         }
       }
@@ -360,7 +363,7 @@ export class TableGameComponent implements OnInit {
       this.game.cards_on_deck.shift();
     }
     this.gamesService.update(this.game).subscribe((result: any) => { });
-    this.playersService.update(plr).subscribe((result: any) => { 
+    this.playersService.update(plr).subscribe((result: any) => {
       this.socketService.publish("cards_ready", plr);
     });
     // this.number_of_cards = [7, 7, 7, 7];

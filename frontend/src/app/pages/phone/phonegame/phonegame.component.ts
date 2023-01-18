@@ -70,6 +70,7 @@ export class PhoneGameComponent implements OnInit {
       if (document.cookie != '') {
         this.my_id = document.cookie.replace("id=", "");
         console.log(this.my_id)
+        this.initPlayer();
       } else {
         this.router.navigate(['/phone']);
       }
@@ -82,51 +83,17 @@ export class PhoneGameComponent implements OnInit {
       } else {
         if (!games[0].players.includes(this.my_id)) {
           this.router.navigate(['/phone']);
+        } else if (this.game.last_card != "" && this.game.last_card != undefined) {
+          let splitted = this.game.last_card.split(' ', 2);
+          this.setCard(splitted[0], splitted[1], this.cardValue.length, this.player.dysrhythmia, this.player.colorblindness, this.player.dyslexia);
         }
       }
     });
+
     this.socketService.subscribe('cards_ready', (plr: PlayerModel) => {
       if (plr._id === this.my_id) {
-          console.log("My cards are ready");
-        this.playersService.getById(this.my_id).subscribe((result: any) => {
-          if (JSON.stringify(result) === undefined) {
-            console.log('error');
-          } else {
-            this.player = result;
-            this.cards = this.player.cards_hand;
-            console.log("I'm the player:");
-            console.log(this.player);
-            if (this.player.colorblindness === true) {
-              this.card_type = 'other';
-              this.cb = true;
-            }
-
-            if (this.player.dyslexia === true) {
-              this.fontClass = 'open-dyslexic';
-            }
-
-            if (this.player.impairedVision === true) {
-              this.smartSpeaker.addCommand(['draw', 'draw card'], () => {
-                console.log("DRAW Command");
-                if (this.my_turn === true) {
-                  if (this.drawed === false)
-                    this.drawCard(1);
-                }
-              });
-              this.smartSpeaker.initialize();
-              this.smartSpeaker.start();
-            }
-            var i = 0;
-            for (let card of this.cards) {
-              let splitted = card.split(' ', 2);
-              this.setCard(splitted[0], splitted[1], i, this.player.dysrhythmia, this.player.colorblindness, this.player.dyslexia);
-              i++;
-            }
-          }
-        });
-        this.cardsReady = true;
-        clearInterval(this.theTimer);
-        this.startTimer(1);
+        console.log("My cards are ready");
+        setTimeout(() => { this.initPlayer() }, 1000);
       }
     });
 
@@ -301,6 +268,46 @@ export class PhoneGameComponent implements OnInit {
 
   }
 
+  initPlayer() {
+    this.cards = [];
+    this.playersService.getById(this.my_id).subscribe((result: any) => {
+      if (JSON.stringify(result) === undefined) {
+        console.log('error');
+      } else {
+        this.player = result;
+        this.cards = this.player.cards_hand;
+        console.log("I'm the player:");
+        console.log(this.player);
+        if (this.player.colorblindness === true) {
+          this.card_type = 'other';
+          this.cb = true;
+        }
+        if (this.player.dyslexia === true) {
+          this.fontClass = 'open-dyslexic';
+        }
+        if (this.player.impairedVision === true) {
+          this.socketService.subscribe('says_draw', (id: string) => {
+            if (id === this.my_id && this.my_turn === true) {
+              if (this.drawed === false)
+                this.drawCard(1);
+            }
+          });
+          this.smartSpeaker.initialize();
+          this.smartSpeaker.start();
+        }
+        var i = 0;
+        for (let card of this.cards) {
+          let splitted = card.split(' ', 2);
+          this.setCard(splitted[0], splitted[1], i, this.player.dysrhythmia, this.player.colorblindness, this.player.dyslexia);
+          i++;
+        }
+      }
+    });
+    this.cardsReady = true;
+    clearInterval(this.theTimer);
+    this.startTimer(1);
+  }
+
   onMouseEnter(hoverCard: HTMLElement, index: any) {
     if (this.cards.length == 1) {
       hoverCard.style.marginTop = '-1%';
@@ -458,7 +465,7 @@ export class PhoneGameComponent implements OnInit {
               number_of_cards: num
             }
             this.socketService.publish('draw_card', tmp);
-            //console.log('I draw');
+            console.log('I draw');
             if (this.endOfTimer === true) {
               this.pass();
             }
@@ -643,6 +650,7 @@ export class PhoneGameComponent implements OnInit {
     }
     this.throw();
   }
+
   WildCardRed() {
     this.choose_color = false;
     //console.log(this.throwCard);
@@ -653,6 +661,7 @@ export class PhoneGameComponent implements OnInit {
     }
     this.throw();
   }
+
   WildCardYellow() {
     this.choose_color = false;
     //console.log(this.throwCard);
