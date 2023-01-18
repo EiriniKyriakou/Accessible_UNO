@@ -10,15 +10,17 @@ import { TableWaitingComponent } from './pages/table/tablewaiting/tablewaiting.c
 import { TableGameComponent } from './pages/table/tablegame/tablegame.component';
 
 const routes: Routes = [
+  // { path: 'socket-events', loadChildren: () => import('./pages/socket-events/socket-events.module').then(m => m.SocketEventsModule) },
   { path: 'home', loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule) },
   { path: 'phone', loadChildren: () => import('./pages/phone/phone.module').then(m => m.PhoneModule) },
   { path: 'phonegame', loadChildren: () => import('./pages/phone/phonegame/phonegame.module').then(m => m.PhoneGameModule) },
-  { path: 'table', loadChildren: () => import('./pages/table/table.module').then(m => m.TableModule) },
-  { path: 'tablewaiting', loadChildren: () => import('./pages/table/tablewaiting/tablewaiting.module').then(m => m.TableWaitingModule) },
-  { path: 'tablegame', loadChildren: () => import('./pages/table/tablegame/tablegame.module').then(m => m.TableGameModule) },
-  { path: 'tv', loadChildren: () => import('./pages/tv/tv.module').then(m => m.TVModule) },
-  { path: 'wall', loadChildren: () => import('./pages/wall/wall.module').then(m => m.WallModule) },
+  { path: 'table',loadChildren: () => import('./pages/table/table.module').then(m=>m.TableModule)},
+  { path: 'tablewaiting',loadChildren: () => import('./pages/table/tablewaiting/tablewaiting.module').then(m=>m.TableWaitingModule)},
+  { path: 'tablegame',loadChildren: () => import('./pages/table/tablegame/tablegame.module').then(m=>m.TableGameModule)},
+  { path: 'tv',loadChildren: () => import('./pages/tv/tv.module').then(m=>m.TVModule)},
+  { path: 'wall',loadChildren: () => import('./pages/wall/wall.module').then(m=>m.WallModule)},
   { path: '**', redirectTo: 'home', pathMatch: 'full' },
+  //{ path: '**', redirectTo: 'phone', pathMatch: 'full' },
 ];
 
 @NgModule({

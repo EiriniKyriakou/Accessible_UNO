@@ -51,7 +51,25 @@ export class CardComponent {
             number: this.selectedCard?.number,
           });
         }
+        // this.test = new CardModel({
+        //   name: this.selectedCard?.name,
+        //   number: this.selectedCard?.number,
+        // });
 
+        // this.gamesService.getActive(true).subscribe((result: any) => {
+        //   var current_game = result[0];
+
+        //   if (JSON.stringify(current_game) === '[]') {
+        //     console.log('empty');
+        //   } else {
+        //     this.game = current_game;
+        //     var firstCard = current_game.cards_on_deck[0];
+        //     current_game.played_cards.push(firstCard);
+        //     current_game.cards_on_deck.shift();
+        //     let newGame = this.game;
+        //     this.gamesService.update(newGame).subscribe((result: any) => {});
+        //   }
+        // });
       }
     }, 1000);
   }
