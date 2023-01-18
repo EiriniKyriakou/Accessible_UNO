@@ -83,9 +83,15 @@ export class PhoneGameComponent implements OnInit {
       } else {
         if (!games[0].players.includes(this.my_id)) {
           this.router.navigate(['/phone']);
-        } else if (this.game.last_card != "" && this.game.last_card != undefined) {
-          let splitted = this.game.last_card.split(' ', 2);
-          this.setCard(splitted[0], splitted[1], this.cardValue.length, this.player.dysrhythmia, this.player.colorblindness, this.player.dyslexia);
+        } else if (games[0].last_card != "") {
+          if (games[0].turn == this.my_id){
+            this.my_turn = true;
+          }
+          let splitted = games[0].last_card.split(' ', 2);
+          console.log(games[0].last_card)
+          this.symbol = splitted[0];
+          this.color = splitted[1];
+          console.log(this.symbol + " " + this.color);
         }
       }
     });
