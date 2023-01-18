@@ -66,11 +66,19 @@ export class PhoneComponent implements OnInit {
       });
     }
 
-    this.socketService.subscribe("not_enough_plr", (data: any) => {
+    this.socketService.subscribe("not_enough_plr", (id: any) => {
       this.hourglass = false;
       this.join = false;
       this.main = true;
       this.isDisabled = false;
+      if (id === this.my_id) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Not enough players!',
+          timer: 5000
+        })
+      }
     });
   }
 
@@ -166,7 +174,7 @@ export class PhoneComponent implements OnInit {
         console.log("No Active Game")
       } else {
         this.game_id = result[0]._id;
-        if(JSON.stringify(current_game[0].players) === "[]"){
+        if (JSON.stringify(current_game[0].players) === "[]") {
           this.joinGameOption();
         }
       }

@@ -65,7 +65,10 @@ export class TableWaitingComponent implements OnInit {
     //let newGame=this.game;
     console.log(this.game)
     //newGame.players=this.players;
-    if (this.game.players.length < 2){
+    if (this.game.players.length < 2) {
+      if (this.game.players.length === 1) {
+        this.socketService.publish("not_enough_plr", this.game.players[0]);
+      }
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
@@ -74,16 +77,15 @@ export class TableWaitingComponent implements OnInit {
       }).then((result) => {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
-          this.socketService.publish("not_enough_plr", this.game);
-          this.router.navigate(['/table'])
+          this.notEnoughPlayers();
         }
-        this.router.navigate(['/table'])
+        this.notEnoughPlayers();
       })
-    }else{
-    this.gamesService.update(this.game).subscribe((result: any) => {
-      this.socketService.publish("game_start", this.game);
-      setTimeout(() => { this.router.navigate(['/tablegame']); }, 1000);
-    });
+    } else {
+      this.gamesService.update(this.game).subscribe((result: any) => {
+        this.socketService.publish("game_start", this.game);
+        setTimeout(() => { this.router.navigate(['/tablegame']); }, 1000);
+      });
     }
   }
 
@@ -92,13 +94,10 @@ export class TableWaitingComponent implements OnInit {
     this.changePage();
   }
 
-  notEnoughPlayers(){
-    if (this.game.players.length == 1){
-      this.socketService.publish("not_enough_plr", this.game);
-    }
+  notEnoughPlayers() {
     this.game.active = false;
     this.gamesService.update(this.game).subscribe((result: any) => {
-    this.router.navigate(['/table'])
+      this.router.navigate(['/table'])
     });
   }
 }
