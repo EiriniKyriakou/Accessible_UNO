@@ -42,13 +42,16 @@ h1 {
     width: 200px;
     height: 200px;
     border-radius: 50%;
+    border-color: #2952A3;
+    border-style: solid;
+    border-width: 1rem;
 }
 
 
 #contain {
     width: 770px;
     min-height: 170px;
-    margin: 10px auto 60px auto;
+    margin: 200px auto 100px auto;
     font-size: 15px;
     position: relative;
 }
