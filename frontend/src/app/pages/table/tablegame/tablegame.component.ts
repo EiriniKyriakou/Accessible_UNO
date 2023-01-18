@@ -48,7 +48,7 @@ export class TableGameComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+
     this.smartSpeaker.addCommand('uno', () => {
       console.log("UNO Command")
       if (this.wait_uno === true) {
@@ -259,6 +259,8 @@ export class TableGameComponent implements OnInit {
         }
       }
       this.socketService.publish('turn', this.turn);
+      let pTurn = this.players[this.turns_of_players];
+      this.socketService.publish("turnPlayer", pTurn);
       if (bool === true) {
         username = this.players[this.turns_of_players].username;
         console.log("Current turn: " + username)
@@ -683,7 +685,7 @@ export class TableGameComponent implements OnInit {
 
       this.playedCard(firstCard);
       //this.removeCards(this.game); //old cards of players
-      setTimeout(() => { this.removeCards(this.game); }, 1000); 
+      setTimeout(() => { this.removeCards(this.game); }, 1000);
     });
   }
 

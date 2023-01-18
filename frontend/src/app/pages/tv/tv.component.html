@@ -19,16 +19,38 @@
   </div>
 </div>
 
-<div *ngIf="game_time">
-  <h1>It's game time!</h1>
-  <div class="cards">
-    <img class="card" src="../../../assets/backgrounds/game_time.gif">
+<div class="container mt-5">
+  <div *ngIf="game_time">
+    <h1>It's game time!</h1>
+    <div class="cards">
+      <img class="card" src="../../../assets/backgrounds/game_time.gif">
+    </div>
+  </div>
+
+  <div *ngIf="waiting">
+    <h1>Oof waiting...!</h1>
+    <div class="cards">
+      <img class="card" src="../../../assets/backgrounds/waiting-impatiently.gif">
+    </div>
   </div>
 </div>
 
-<div *ngIf="waiting">
-  <h1>Oof waiting...!</h1>
-  <div class="cards">
-    <img class="card" src="../../../assets/backgrounds/waiting-impatiently.gif">
+
+<div class="container mt-5" *ngIf="turn&&(turnPlayer!= undefined)">
+  <br>
+  <h1> It's your turn...</h1>
+  <br>
+  <div id="contain">
+
+    <div class="image">
+      <img class="avatarWinner" src="../../../assets/avatars/{{turnPlayer.avatar}}.jpg" alt="avatar">
+    </div>
+
+    <div class="title">
+      <h1>{{turnPlayer.username}}</h1>
+    </div>
+
   </div>
+
+
 </div>
