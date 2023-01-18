@@ -1,4 +1,5 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
+import { PlayerModel } from 'src/app/global/models/players/player.model';
 import { SocketsService } from 'src/app/global/services/sockets/sockets.service';
 import Swal from 'sweetalert2';
 
@@ -12,12 +13,16 @@ export class TVComponent implements OnInit {
   number: any;
   game_time = false;
   waiting = false;
+  turnPlayer: PlayerModel | undefined;
+  turn = false;
+
   constructor(private renderer: Renderer2, private socketService: SocketsService,) {
     this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/background-tv-wall.png)');
   }
 
   ngOnInit() {
     this.socketService.subscribe('card_played', (data: any) => {
+      this.turn = false;
       this.waiting = false;
       this.game_time = false;
       this.card = data.card;
@@ -26,13 +31,21 @@ export class TVComponent implements OnInit {
       console.log(this.card)
     });
     this.socketService.subscribe("win", (id: any) => {
+      this.turn = false;
       this.waiting = false;
       this.game_time = false;
       console.log('Player ' + id + ' won the round');
       this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/win.jpg)');
     });
 
+    this.socketService.subscribe("turnPlayer", (pTurn: PlayerModel) => {
+      this.turn = true;
+      this.game_time = false;
+      this.turnPlayer = pTurn;
+    });
+
     this.socketService.subscribe('won_round', (id: any) => {
+      this.turn = false;
       this.waiting = false;
       this.game_time = false;
       console.log('Player ' + id + ' won the round');
@@ -52,18 +65,20 @@ export class TVComponent implements OnInit {
     });
 
     this.socketService.subscribe('start_round', (id: any) => {
-
+      this.turn = false;
       this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/background-tv-wall.png)');
     });
 
     this.socketService.subscribe('game_start', (id: any) => {
       this.waiting = false;
-
+      this.turn = false;
       this.game_time = true;
     });
 
     this.socketService.subscribe('waiting', (id: any) => {
+      this.turn = false;
       this.game_time = false;
+      this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/background-tv-wall.png)');
       this.waiting = true;
     });
 

@@ -1,8 +1,8 @@
-.cards{
+.cards {
     margin-top: 5%;
 }
 
-.card{
+.card {
     margin: auto;
     width: 40%;
 }
@@ -20,12 +20,50 @@
     transform: rotate(-180deg);
 }
 
-.letters{
+.letters {
     font-weight: bold;
     font-size: 350%;
     color: white;
 }
 
-h1{
+
+
+h1 {
     font-weight: bold;
+    width: 500px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+//avatar
+
+.avatarWinner {
+    vertical-align: middle;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+}
+
+
+#contain {
+    width: 770px;
+    min-height: 170px;
+    margin: 10px auto 60px auto;
+    font-size: 15px;
+    position: relative;
+}
+
+.image {
+    float: left;
+    width: 200px;
+    height: 200px;
+    padding: 5px;
+}
+
+.title {
+    float: left;
+    color: #000;
+    font-size: 60px;
+    margin-top: 75px;
+    padding: 5px;
 }
