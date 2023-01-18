@@ -262,6 +262,7 @@ export class TableGameComponent implements OnInit {
       this.socketService.publish('turn', this.turn);
       if (bool === true) {
         username = this.players[this.turns_of_players].username;
+        console.log("Current turn: " + username)
         if (this.impVision) {
           this.smartSpeaker.speak("It's " + username + "'s turn to play.");
         }
