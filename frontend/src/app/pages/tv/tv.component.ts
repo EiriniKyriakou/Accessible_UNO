@@ -22,11 +22,11 @@ export class TVComponent implements OnInit {
 
   ngOnInit() {
     this.socketService.subscribe('card_played', (data: any) => {
-      this.turn = false;
       this.waiting = false;
       this.game_time = false;
       this.card = data.card;
       let splitted = this.card.split(' ', 2);
+      this.turn = false;
       this.number = splitted[0];
       console.log(this.card)
     });
