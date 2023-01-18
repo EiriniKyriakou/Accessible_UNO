@@ -1,31 +1,31 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
-import { Router } from '@angular/router';
-import { GameModel } from 'src/app/global/models/games/game.model';
-import { GamesService } from 'src/app/global/services/games/game.service';
-import { SocketsService } from 'src/app/global/services/sockets/sockets.service';
+import {Component, OnInit, Renderer2} from '@angular/core';
+import {Router} from '@angular/router';
+import {GameModel} from 'src/app/global/models/games/game.model';
+import {GamesService} from 'src/app/global/services/games/game.service';
+import {SocketsService} from 'src/app/global/services/sockets/sockets.service';
 import arrayShuffle from 'array-shuffle';
 
-@Component({ selector: 'app-table', templateUrl: './table.component.html', styleUrls: ['./table.component.scss'] })
+@Component({selector: 'app-table', templateUrl: './table.component.html', styleUrls: ['./table.component.scss']})
 export class TableComponent implements OnInit {
-    public game: GameModel[] = [];
-    public cards_on_deck: string[] = [];
-    public played_cards: string[] = [];
-    public players: string[] = [];
-    public turn: string = '';
-    public last_card: string = '';
-    public current_player: string = '';
-    public dysrhythmia: boolean = false;
-    public dyslexia: boolean = false;
-    public impairedVision: boolean = false;
+    public game : GameModel[] = [];
+    public cards_on_deck : string[] = [];
+    public played_cards : string[] = [];
+    public players : string[] = [];
+    public turn : string = '';
+    public last_card : string = '';
+    public current_player : string = '';
+    public dysrhythmia : boolean = false;
+    public dyslexia : boolean = false;
+    public impairedVision : boolean = false;
     public colorblindness: boolean = false;
-    public active: boolean = true;
+    public active : boolean = true;
 
-    constructor(private renderer: Renderer2, private router: Router, private gamesService: GamesService, private socketService: SocketsService) {
+    constructor(private renderer : Renderer2, private router : Router, private gamesService : GamesService, private socketService : SocketsService) {
         this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/background.png)');
     }
 
     ngOnInit() {
-        this.socketService.publish('new_game', "");
+        this.socketService.publish('new_game', ""); 
     }
 
     public postGame(): void { // Emit event for update tasks
@@ -148,7 +148,7 @@ export class TableComponent implements OnInit {
         game.dysrhythmia = false;
         game.dyslexia = false;
         game.impairedVision = false;
-        game.colorblindness = false;
+        game.colorblindness =false;
         game.active = true;
 
         this.gamesService.create(game).subscribe((result) => {
@@ -167,7 +167,7 @@ export class TableComponent implements OnInit {
         });
     }
 
-    startGame($myParam: string = ''): void {
+    startGame($myParam : string = ''): void {
         this.socketService.publish('new_game', "");
         this.inactiveGames();
 
@@ -178,27 +178,28 @@ export class TableComponent implements OnInit {
         this.router.navigate(navigationDetails);
     }
 
-    inactiveGames() {
-        this.gamesService.getActive(true).subscribe((result: any) => {
+    inactiveGames(){
+        this.gamesService.getActive(true).subscribe((result:any) => {
 
-            if (JSON.stringify(result) === "[]") {
-                console.log("No Active Games");
-                console.log("Post game");
-                this.postGame();
-            } else {
-                let i = -1;
-                let length = result.length - 1;
-                for (let active_game of result) {
+            if(JSON.stringify(result) === "[]"){
+              console.log("No Active Games");
+              console.log("Post game");
+              this.postGame();
+            }else{
+                let i=-1;
+                let length = result.length-1;
+                for(let active_game of result){
                     active_game.active = false;
-                    this.gamesService.update(active_game).subscribe((result: any) => {
+                    this.gamesService.update(active_game).subscribe((result:any) => {
                         i++;
-                        if (i === length) {
+                        //console.log("i=",i)
+                        if (i === length){
                             console.log("Post game");
                             this.postGame();
                         }
                     });
                 }
             }
-        });
+          });
     }
 }

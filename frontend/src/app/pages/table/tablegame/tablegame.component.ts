@@ -48,7 +48,7 @@ export class TableGameComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    
     this.smartSpeaker.addCommand('uno', () => {
       console.log("UNO Command")
       if (this.wait_uno === true) {
@@ -359,8 +359,25 @@ export class TableGameComponent implements OnInit {
     }
     this.gamesService.update(this.game).subscribe((result: any) => { });
     this.playersService.update(plr).subscribe((result: any) => { });
+    // this.number_of_cards = [7, 7, 7, 7];
+    // this.setTurn(true);
   }
 
+  // dealCardsOriginal(current_game: { players: any }) {
+  //   let players = this.game.players;
+  //   for (let player of players) {
+  //     this.playersService.getById(player).subscribe((plr: any) => {
+  //       for (let i = 0; i < 7; i++) {
+  //         plr.cards_hand.push(this.game.cards_on_deck[0]);
+  //         this.game.cards_on_deck.shift();
+  //       }
+  //       this.gamesService.update(this.game).subscribe((result: any) => { });
+  //       this.playersService.update(plr).subscribe((result: any) => { });
+  //     });
+  //   }
+  //   this.number_of_cards = [7, 7, 7, 7];
+  //   this.setTurn(true);
+  // }
 
   updatePlayer(data: PlayerModel) {
     let i = 0;
@@ -664,7 +681,7 @@ export class TableGameComponent implements OnInit {
 
       this.playedCard(firstCard);
       //this.removeCards(this.game); //old cards of players
-      setTimeout(() => { this.removeCards(this.game); }, 1000);
+      setTimeout(() => { this.removeCards(this.game); }, 1000); 
     });
   }
 
