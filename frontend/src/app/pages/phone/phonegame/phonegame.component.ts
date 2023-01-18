@@ -9,6 +9,7 @@ import { GameModel } from 'src/app/global/models/games/game.model';
 import { Router } from '@angular/router';
 import { SmartSpeakerService } from 'src/app/global/services/smart-speaker/smart-speaker.service';
 import Swal from 'sweetalert2';
+import arrayShuffle from 'array-shuffle';
 
 @Component({
   selector: 'app-home',
@@ -105,6 +106,13 @@ export class PhoneGameComponent implements OnInit {
           }
 
           if (this.player.impairedVision === true) {
+            this.smartSpeaker.addCommand(['draw','draw card'], () => {
+              console.log("DRAW Command");
+              if (this.my_turn === true) {
+                if (this.drawed === false)
+                this.drawCard(1);
+              }
+            });
             this.smartSpeaker.initialize();
             this.smartSpeaker.start();
           }
@@ -290,8 +298,6 @@ export class PhoneGameComponent implements OnInit {
       }
     });
 
-
-
   }
 
   onMouseEnter(hoverCard: HTMLElement, index: any) {
@@ -322,6 +328,11 @@ export class PhoneGameComponent implements OnInit {
         //console.log('The game (before i draw a card):');
         //console.log(this.game);
         for (let i = 0; i < num; i++) {
+          console.log("Remaning cards: "+this.game.cards_on_deck.length);
+          if (this.game.cards_on_deck.length == 0){
+            this.game.cards_on_deck = arrayShuffle(this.game.played_cards);
+            this.game.played_cards = [];
+          }
           let tokenCard = this.game.cards_on_deck[0];
           this.cards.push(tokenCard);
           this.player.cards_hand = this.cards;
