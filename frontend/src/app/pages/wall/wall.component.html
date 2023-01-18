@@ -15,9 +15,8 @@
     </tr>
     <tr *ngFor="let player of players">
       <td>
-        <img class="avatar" src="../../../assets/avatars/{{player.avatar}}.jpg" alt="avatar">
-        <br>
-        <h3 class='child flex-child'>{{player.username}}</h3>
+        <img class="avatar same-line" src="../../../assets/avatars/{{player.avatar}}.jpg" alt="avatar">
+        <h3 class='child same-line'>{{player.username}}</h3>
       </td>
       <td>
         <h3>{{player.score}}/500</h3>
