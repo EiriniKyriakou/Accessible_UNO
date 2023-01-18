@@ -65,6 +65,13 @@ export class PhoneComponent implements OnInit {
         this.signInB();
       });
     }
+
+    this.socketService.subscribe("not_enough_plr", (data: any) => {
+      this.hourglass = false;
+      this.join = false;
+      this.main = true;
+      this.isDisabled = false;
+    });
   }
 
   public postPlayer(): void {

@@ -4,6 +4,7 @@ import { SocketsService } from 'src/app/global/services/sockets/sockets.service'
 import { GamesService } from 'src/app/global/services/games/game.service';
 import { GameModel } from 'src/app/global/models/games/game.model';
 import { PlayersService } from 'src/app/global/services/players/players.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-tablewaiting',
@@ -64,14 +65,40 @@ export class TableWaitingComponent implements OnInit {
     //let newGame=this.game;
     console.log(this.game)
     //newGame.players=this.players;
+    if (this.game.players.length < 2){
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Not enough players!',
+        timer: 5000
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          this.socketService.publish("not_enough_plr", this.game);
+          this.router.navigate(['/table'])
+        }
+        this.router.navigate(['/table'])
+      })
+    }else{
     this.gamesService.update(this.game).subscribe((result: any) => {
       this.socketService.publish("game_start", this.game);
       setTimeout(() => { this.router.navigate(['/tablegame']); }, 1000);
     });
+    }
   }
 
   start_now() {
     clearTimeout(this.timeout);
     this.changePage();
+  }
+
+  notEnoughPlayers(){
+    if (this.game.players.length == 1){
+      this.socketService.publish("not_enough_plr", this.game);
+    }
+    this.game.active = false;
+    this.gamesService.update(this.game).subscribe((result: any) => {
+    this.router.navigate(['/table'])
+    });
   }
 }

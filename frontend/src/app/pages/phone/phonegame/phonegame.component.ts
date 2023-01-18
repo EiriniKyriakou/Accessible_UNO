@@ -87,6 +87,7 @@ export class PhoneGameComponent implements OnInit {
     });
     this.socketService.subscribe('cards_ready', (plr: PlayerModel) => {
       if (plr._id === this.my_id) {
+          console.log("My cards are ready");
         this.playersService.getById(this.my_id).subscribe((result: any) => {
           if (JSON.stringify(result) === undefined) {
             console.log('error');
