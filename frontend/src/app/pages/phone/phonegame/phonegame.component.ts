@@ -87,6 +87,7 @@ export class PhoneGameComponent implements OnInit {
     });
 
     //console.log('My id ' + this.my_id);
+    console.log(this.player.cards_hand)
     setTimeout(() => {
       this.playersService.getById(this.my_id).subscribe((result: any) => {
         if (JSON.stringify(result) === undefined) {

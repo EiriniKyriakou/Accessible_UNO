@@ -65,9 +65,9 @@ export class TableWaitingComponent implements OnInit {
     console.log(this.game)
     //newGame.players=this.players;
     this.gamesService.update(this.game).subscribe((result: any) => {
+      this.socketService.publish("game_start", this.game);
+      setTimeout(() => { this.router.navigate(['/tablegame']); }, 1000);
     });
-    this.socketService.publish("game_start", this.game);
-    setTimeout(() => { this.router.navigate(['/tablegame']); }, 1000);
   }
 
   start_now() {

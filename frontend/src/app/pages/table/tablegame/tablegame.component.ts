@@ -80,7 +80,6 @@ export class TableGameComponent implements OnInit {
           if (this.game.impairedVision == true) {
             this.smartSpeaker.speak('The game is about to start.');
             this.impVision = true;
-
           }
           this.card_type;
           this.length = this.game.players.length;
