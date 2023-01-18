@@ -44,7 +44,7 @@ export class PhoneGameComponent implements OnInit {
   unoColor: string = 'grey'
   cardsClass: string = 'cards';
   cb = false;
-  
+
 
   constructor(
     private socketService: SocketsService,
@@ -85,50 +85,49 @@ export class PhoneGameComponent implements OnInit {
         }
       }
     });
+    this.socketService.subscribe('cards_ready', (plr: PlayerModel) => {
+      if (plr._id === this.my_id) {
+        this.playersService.getById(this.my_id).subscribe((result: any) => {
+          if (JSON.stringify(result) === undefined) {
+            console.log('error');
+          } else {
+            this.player = result;
+            this.cards = this.player.cards_hand;
+            console.log("I'm the player:");
+            console.log(this.player);
+            if (this.player.colorblindness === true) {
+              this.card_type = 'other';
+              this.cb = true;
+            }
 
-    //console.log('My id ' + this.my_id);
-    console.log(this.player.cards_hand)
-    setTimeout(() => {
-      this.playersService.getById(this.my_id).subscribe((result: any) => {
-        if (JSON.stringify(result) === undefined) {
-          console.log('error');
-        } else {
-          this.player = result;
-          this.cards = this.player.cards_hand;
-          console.log("I'm the player:");
-          console.log(this.player);
-          if (this.player.colorblindness === true) {
-            this.card_type = 'other';
-            this.cb = true;
-          }
+            if (this.player.dyslexia === true) {
+              this.fontClass = 'open-dyslexic';
+            }
 
-          if (this.player.dyslexia === true) {
-            this.fontClass = 'open-dyslexic';
+            if (this.player.impairedVision === true) {
+              this.smartSpeaker.addCommand(['draw', 'draw card'], () => {
+                console.log("DRAW Command");
+                if (this.my_turn === true) {
+                  if (this.drawed === false)
+                    this.drawCard(1);
+                }
+              });
+              this.smartSpeaker.initialize();
+              this.smartSpeaker.start();
+            }
+            var i = 0;
+            for (let card of this.cards) {
+              let splitted = card.split(' ', 2);
+              this.setCard(splitted[0], splitted[1], i, this.player.dysrhythmia, this.player.colorblindness, this.player.dyslexia);
+              i++;
+            }
           }
-
-          if (this.player.impairedVision === true) {
-            this.smartSpeaker.addCommand(['draw','draw card'], () => {
-              console.log("DRAW Command");
-              if (this.my_turn === true) {
-                if (this.drawed === false)
-                this.drawCard(1);
-              }
-            });
-            this.smartSpeaker.initialize();
-            this.smartSpeaker.start();
-          }
-          var i = 0;
-          for (let card of this.cards) {
-            let splitted = card.split(' ', 2);
-            this.setCard(splitted[0], splitted[1], i, this.player.dysrhythmia, this.player.colorblindness, this.player.dyslexia);
-            i++;
-          }
-        }
-      });
-      this.cardsReady = true;
-      clearInterval(this.theTimer);
-      this.startTimer(1);
-    }, 6000);
+        });
+        this.cardsReady = true;
+        clearInterval(this.theTimer);
+        this.startTimer(1);
+      }
+    });
 
     this.socketService.subscribe('turn', (data: any) => {
       this.drawed = false;
@@ -329,8 +328,8 @@ export class PhoneGameComponent implements OnInit {
         //console.log('The game (before i draw a card):');
         //console.log(this.game);
         for (let i = 0; i < num; i++) {
-          console.log("Remaning cards: "+this.game.cards_on_deck.length);
-          if (this.game.cards_on_deck.length == 0){
+          console.log("Remaning cards: " + this.game.cards_on_deck.length);
+          if (this.game.cards_on_deck.length == 0) {
             this.game.cards_on_deck = arrayShuffle([
               '0 Red.png',
               '0 Yellow.png',

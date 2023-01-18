@@ -358,7 +358,9 @@ export class TableGameComponent implements OnInit {
       this.game.cards_on_deck.shift();
     }
     this.gamesService.update(this.game).subscribe((result: any) => { });
-    this.playersService.update(plr).subscribe((result: any) => { });
+    this.playersService.update(plr).subscribe((result: any) => { 
+      this.socketService.publish("cards_ready", plr);
+    });
     // this.number_of_cards = [7, 7, 7, 7];
     // this.setTurn(true);
   }
