@@ -296,6 +296,9 @@ export class PhoneGameComponent implements OnInit {
           this.smartSpeaker.start();
         }
         var i = 0;
+        if (this.player.impairedVision == true) {
+          this.smartSpeaker.speak("Your cards are: ")
+        }
         for (let card of this.cards) {
           let splitted = card.split(' ', 2);
           this.setCard(splitted[0], splitted[1], i, this.player.dysrhythmia, this.player.colorblindness, this.player.dyslexia);
@@ -316,7 +319,13 @@ export class PhoneGameComponent implements OnInit {
       hoverCard.style.marginTop = '-12%';
     }
     if (this.player.impairedVision == true) {
-      this.smartSpeaker.speak('Card is' + this.cardValue[index].number + " " + this.cardValue[index].color.replace(".png", ""));
+      if (this.cardValue[index].number === "+4") {
+        this.smartSpeaker.speak('Card is ' + "+4 Wildcard ")
+      } else if (this.cardValue[index].number == "WildCard") {
+        this.smartSpeaker.speak('Card is ' + "Wildcard ")
+      } else {
+        this.smartSpeaker.speak('Card is ' + this.cardValue[index].number + " " + this.cardValue[index].color.replace(".png", ""));
+      }
     }
     this.selectedCard = index;
   }
@@ -326,6 +335,13 @@ export class PhoneGameComponent implements OnInit {
   }
 
   drawCard(num: number) {
+    if (this.player.impairedVision == true) {
+      if ( num === 1){
+        this.smartSpeaker.speak('Your new card is ');
+      }else {
+        this.smartSpeaker.speak('Your new cards are ');
+      }
+    }
     this.unoColor = 'grey'
     this.unoClicked = false;
     this.gamesService.getActive(true).subscribe((result: any) => {
@@ -626,6 +642,15 @@ export class PhoneGameComponent implements OnInit {
       colorblindness: clrblind,
       dyslexia: dys
     };
+    if (this.player.impairedVision == true) {
+      if (num === "+4") {
+        this.smartSpeaker.speak(num + "Wildcard ")
+      } else if (num == "WildCard") {
+        this.smartSpeaker.speak("Wildcard ")
+      } else {
+        this.smartSpeaker.speak(num + " " + des.replace(".png", "") + " ")
+      }
+    }
     //console.log(this.cardValue[index])
   }
 
