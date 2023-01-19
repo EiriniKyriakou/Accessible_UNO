@@ -8,11 +8,6 @@
     font-family: Verdana, Geneva, sans-serif;
 }
 
-html,
-body {
-    height: 100%;
-}
-
 .parent {
     height: 100vh;
     display: flex;
@@ -20,48 +15,19 @@ body {
     justify-content: center;
 }
 
+.left-marg {
+    margin-left: 2vh;
+}
+
 .uno-card {
-    height: 85%;
-    margin-right: -25px;
+    height: 9vh;
     box-shadow: 0 0 3px;
 }
 
-.player {
-    display: flex;
-    height: 15%;
-}
-
-.player-card {
-    width: 99%;
-}
-
-.pause {
-    flex-grow: 1;
-    margin-left: 40px;
-    margin-top: auto;
-    margin-bottom: auto;
-}
-
-.message-top {
-    margin-top: 5%;
-    margin-left: -5%;
-}
-
-.message-left {
-    margin-bottom: 5%;
-    margin-right: -5%;
-}
-
-.message-bottom {
-    margin-bottom: 5%;
-    margin-right: 3%;
-}
-
-.center {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
+.num-cards {
+    width: 9vh;
+    margin-right: 2vh;
+    text-align: right;
 }
 
 .upside-down {
@@ -72,17 +38,17 @@ body {
     transform: rotate(180deg);
 }
 
-.right {
+.left {
     position: absolute;
-    top: 45%;
+    margin: auto 0;
     left: 0;
     width: fit-content;
     transform: rotate(90deg);
 }
 
-.left {
+.right {
     position: absolute;
-    top: 45%;
+    margin: auto 0;
     right: 0;
     transform: rotate(-90deg);
 }
@@ -94,18 +60,7 @@ body {
     justify-content: center;
 }
 
-.column {
-    float: left;
-    width: 50%;
-}
-
-.row:after {
-    content: "";
-    display: table;
-    clear: both;
-}
-
-.v-h-center{
+.v-h-center {
     height: 47vh;
     width: 60vh;
     position: relative;
@@ -134,14 +89,8 @@ body {
 
 .stack {
     width: 25%;
-
 }
 
-.cent {
-    margin-top: 20%;
-}
-
-//avatar
 .avatar {
     vertical-align: middle;
     width: 50px;
@@ -150,24 +99,24 @@ body {
 }
 
 ////stoixisi
-#leftbox {
-    float: left;
-    width: 70%;
-    height: 70%;
-    margin-left: 25%;
-}
+// #leftbox {
+//     float: left;
+//     width: 70%;
+//     height: 70%;
+//     margin-left: 25%;
+// }
 
-#middlebox {
-    float: left;
-    width: 20%;
-    height: 70%;
-    margin-left: 25%;
-    margin-top: 9%;
-}
+// #middlebox {
+//     float: left;
+//     width: 20%;
+//     height: 70%;
+//     margin-left: 25%;
+//     margin-top: 9%;
+// }
 
-#rightbox {
-    float: right;
-    width: 10%;
-    height: 70%;
-    margin-left: 20%;
-}
+// #rightbox {
+//     float: right;
+//     width: 10%;
+//     height: 70%;
+//     margin-left: 20%;
+// }
