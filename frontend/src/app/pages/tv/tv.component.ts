@@ -56,11 +56,17 @@ export class TVComponent implements OnInit {
     this.socketService.subscribe("turnPlayer", (pTurn: PlayerModel) => {
       if (this.meme) {
         this.turn = false;
-        setTimeout(() => { this.meme = false; }, 2000);
+        setTimeout(() => {
+          this.meme = false;
+          this.turn = true;
+          this.game_time = false;
+          this.turnPlayer = pTurn;
+        }, 2000);
+      } else {
+        this.turn = true;
+        this.game_time = false;
+        this.turnPlayer = pTurn;
       }
-      setTimeout(() => { this.turn = true; }, 2000);
-      this.game_time = false;
-      this.turnPlayer = pTurn;
     });
 
     this.socketService.subscribe('win_round', (plr: PlayerModel) => {
