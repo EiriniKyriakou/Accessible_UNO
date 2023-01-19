@@ -2,7 +2,10 @@
 
   <table class="left" *ngIf="length>0 && players[0]!=undefined">
     <tr style="height: 10vh">
-      <td><img class="avatar" src="../../../assets/avatars/{{players[0].avatar}}.jpg" alt="avatar"></td>
+      <td *ngIf="!(turns_of_players==0 && !end_of_round && players[0]!=undefined)"><img class="avatar"
+          src="../../../assets/avatars/{{players[0].avatar}}.jpg" alt="avatar"></td>
+      <td *ngIf="turns_of_players==0 && !end_of_round && players[0]!=undefined"><img class="avatarTurn"
+          src="../../../assets/avatars/{{players[0].avatar}}.jpg" alt="avatar"></td>
       <td>
         <h2 class="left-marg" [ngClass]="fontClass">{{players[0].username}}</h2>
       </td>
@@ -11,17 +14,20 @@
       </td>
       <td><img class="uno-card" src="../../../assets/table-images/uno-card.png" alt="uno card"></td>
     </tr>
-    <tr style="height: 6vh">
+    <!-- <tr style="height: 6vh">
       <td colspan="4">
         <h1 *ngIf="turns_of_players==0 && !end_of_round && players[0]!=undefined" [ngClass]="fontClass">It's Your Turn
         </h1>
       </td>
-    </tr>
+    </tr> -->
   </table>
 
   <table class="bottom" *ngIf="length>1 && players[1]!=undefined">
     <tr style="height: 10vh">
-      <td><img class="avatar" src="../../../assets/avatars/{{players[1].avatar}}.jpg" alt="avatar"></td>
+      <td *ngIf="!(turns_of_players==1 && !end_of_round && players[1]!=undefined)"><img class="avatar"
+          src="../../../assets/avatars/{{players[1].avatar}}.jpg" alt="avatar"></td>
+      <td *ngIf="turns_of_players==1 && !end_of_round && players[1]!=undefined"><img class="avatarTurn"
+          src="../../../assets/avatars/{{players[1].avatar}}.jpg" alt="avatar"></td>
       <td>
         <h2 class="left-marg" [ngClass]="fontClass">{{players[1].username}}</h2>
       </td>
@@ -30,17 +36,20 @@
       </td>
       <td><img class="uno-card" src="../../../assets/table-images/uno-card.png" alt="uno card"></td>
     </tr>
-    <tr style="height: 6vh">
+    <!-- <tr style="height: 6vh">
       <td colspan="4">
         <h1 *ngIf="turns_of_players==1 && !end_of_round && players[1]!=undefined" [ngClass]="fontClass">It's Your Turn
         </h1>
       </td>
-    </tr>
+    </tr> -->
   </table>
 
   <table class="right" *ngIf="length>0 && players[2]!=undefined">
     <tr style="height: 10vh">
-      <td><img class="avatar" src="../../../assets/avatars/{{players[2].avatar}}.jpg" alt="avatar"></td>
+      <td *ngIf="!(turns_of_players==2 && !end_of_round && players[2]!=undefined)"><img class="avatar"
+          src="../../../assets/avatars/{{players[2].avatar}}.jpg" alt="avatar"></td>
+      <td *ngIf="turns_of_players==2 && !end_of_round && players[2]!=undefined"><img class="avatarTurn"
+          src="../../../assets/avatars/{{players[2].avatar}}.jpg" alt="avatar"></td>
       <td>
         <h2 class="left-marg" [ngClass]="fontClass">{{players[2].username}}</h2>
       </td>
@@ -49,17 +58,20 @@
       </td>
       <td><img class="uno-card" src="../../../assets/table-images/uno-card.png" alt="uno card"></td>
     </tr>
-    <tr style="height: 6vh">
+    <!-- <tr style="height: 6vh">
       <td colspan="4">
         <h1 *ngIf="turns_of_players==2 && !end_of_round && players[2]!=undefined" [ngClass]="fontClass">It's Your Turn
         </h1>
       </td>
-    </tr>
+    </tr> -->
   </table>
 
   <table class="upside-down" *ngIf="length>0 && players[3]!=undefined">
     <tr style="height: 10vh">
-      <td><img class="avatar" src="../../../assets/avatars/{{players[3].avatar}}.jpg" alt="avatar"></td>
+      <td *ngIf="!(turns_of_players==3 && !end_of_round && players[3]!=undefined)"><img class="avatar"
+          src="../../../assets/avatars/{{players[3].avatar}}.jpg" alt="avatar"></td>
+      <td *ngIf="turns_of_players==3 && !end_of_round && players[3]!=undefined"><img class="avatarTurn"
+          src="../../../assets/avatars/{{players[3].avatar}}.jpg" alt="avatar"></td>
       <td>
         <h2 class="left-marg" [ngClass]="fontClass">{{players[3].username}}</h2>
       </td>
@@ -68,12 +80,12 @@
       </td>
       <td><img class="uno-card" src="../../../assets/table-images/uno-card.png" alt="uno card"></td>
     </tr>
-    <tr style="height: 6vh">
+    <!-- <tr style="height: 6vh">
       <td colspan="4">
         <h1 *ngIf="turns_of_players==3 && !end_of_round && players[3]!=undefined" [ngClass]="fontClass">It's Your Turn
         </h1>
       </td>
-    </tr>
+    </tr> -->
   </table>
 
   <div class="v-h-center">
