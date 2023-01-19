@@ -1,4 +1,4 @@
-<div class="main parent">
+<div class="parent">
 
   <div class="player right" id="container" *ngIf="length>0 && players[0]!=undefined">
     <div id="leftbox">
@@ -63,19 +63,14 @@
     [ngClass]="fontClass">It's Your
     Turn</h1>
 
-
-  <div *ngIf="reverse" class="v-h-center">
-    <img class="arrows" src="../../../assets/table-images/arrow-turns-reverse.png" alt="reverse arrows for turn">
-    <div class="cards-center">
-      <div class="card" *ngFor="let card of cards" style="height: fit-content">
-        <card *ngIf="cardValue!=undefined" [selectedCard]="cardValue"></card>
-      </div>
-      <img class="stack" src="../../../assets/table-images/uno-card.png" alt="uno card">
+  <div class="v-h-center">
+    <div *ngIf="reverse">
+      <img class="arrows" src="../../../assets/table-images/arrow-turns-reverse.png" alt="reverse arrows for turn">
     </div>
-  </div>
+    <div *ngIf="!reverse">
+      <img class="arrows" src="../../../assets/table-images/arrow-turns.png" alt="arrows for turn">
+    </div>
 
-  <div *ngIf="!reverse" class="v-h-center">
-    <img class="arrows" src="../../../assets/table-images/arrow-turns.png" alt="arrows for turn">
     <div class="cards-center">
       <div class="card" *ngFor="let card of cards" style="height: fit-content">
         <card *ngIf="cardValue!=undefined" [selectedCard]="cardValue"></card>
