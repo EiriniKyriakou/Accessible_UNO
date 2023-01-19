@@ -168,7 +168,7 @@ export class TableComponent implements OnInit {
     }
 
     startGame($myParam : string = ''): void {
-        this.socketService.publish('new_game', "");
+        //this.socketService.publish('new_game', "");
         this.inactiveGames();
 
         const navigationDetails: string[] = ['/tablewaiting'];

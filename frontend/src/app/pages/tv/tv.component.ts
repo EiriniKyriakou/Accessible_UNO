@@ -15,21 +15,36 @@ export class TVComponent implements OnInit {
   waiting = false;
   turnPlayer: PlayerModel | undefined;
   turn = false;
+  meme = false;
 
   constructor(private renderer: Renderer2, private socketService: SocketsService,) {
     this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/background-tv-wall.png)');
   }
 
   ngOnInit() {
+    this.socketService.subscribe('new_game', (game: any) => {
+      this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/background-tv-wall.png)');
+      this.game_time = false;
+      this.waiting = false;
+      this.turn = false;
+      this.meme = false;
+    });
+
     this.socketService.subscribe('card_played', (data: any) => {
       this.waiting = false;
-      this.game_time = false;
       this.card = data.card;
       let splitted = this.card.split(' ', 2);
-      this.turn = false;
       this.number = splitted[0];
+      if (this.number === '+2' || this.number === '+4') {
+        this.meme = true;
+        this.turn = false;
+        this.game_time = false;
+      } else {
+        this.meme = false;
+      }
       console.log(this.card)
     });
+
     this.socketService.subscribe("win", (id: any) => {
       this.turn = false;
       this.waiting = false;
@@ -39,20 +54,25 @@ export class TVComponent implements OnInit {
     });
 
     this.socketService.subscribe("turnPlayer", (pTurn: PlayerModel) => {
-      this.turn = true;
+      if (this.meme) {
+        this.turn = false;
+        setTimeout(() => { this.meme = false; }, 2000);
+      }
+      setTimeout(() => { this.turn = true; }, 2000);
       this.game_time = false;
       this.turnPlayer = pTurn;
     });
 
-    this.socketService.subscribe('won_round', (id: any) => {
+    this.socketService.subscribe('win_round', (plr: PlayerModel) => {
       this.turn = false;
+      this.meme = false;
       this.waiting = false;
       this.game_time = false;
-      console.log('Player ' + id + ' won the round');
+      console.log('Player ' + plr.username + ' won the round');
       this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/background-tv-wall.png)');
       Swal.fire({
         title: 'Waiting for the new round!',
-        html: '',
+        html: plr.username + ' won the round',
         imageUrl: 'https://cdn.dribbble.com/users/100757/screenshots/1912706/media/db8f55111c06444b63f1e99746d11c4b.gif',
         imageWidth: 500,
         imageHeight: 300,
@@ -66,18 +86,21 @@ export class TVComponent implements OnInit {
 
     this.socketService.subscribe('start_round', (id: any) => {
       this.turn = false;
+      this.meme = false;
       this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/background-tv-wall.png)');
     });
 
     this.socketService.subscribe('game_start', (id: any) => {
       this.waiting = false;
       this.turn = false;
+      this.meme = false;
       this.game_time = true;
     });
 
     this.socketService.subscribe('waiting', (id: any) => {
       this.turn = false;
       this.game_time = false;
+      this.meme = false;
       this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/background-tv-wall.png)');
       this.waiting = true;
     });
