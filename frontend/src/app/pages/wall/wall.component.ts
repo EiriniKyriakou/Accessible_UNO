@@ -18,6 +18,7 @@ export class WallComponent implements OnInit {
   p1 = false;
   players: PlayerModel[] = [];
   winnerPlayer: PlayerModel | undefined;
+  turn: boolean[] = [false, false, false, false];
 
   constructor(private renderer: Renderer2,
     private socketService: SocketsService) {
@@ -55,6 +56,16 @@ export class WallComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.socketService.subscribe("turnPlayer", (pTurn: PlayerModel) => {
+      this.turn = [false, false, false, false];
+      for (let i = 0; i < this.players.length; i++) {
+        if (this.players[i]._id === pTurn._id) {
+          this.turn[i] = true;
+        }
+      }
+    });
+
     this.socketService.subscribe('new_game', (game: any) => {
       this.players = [];
       this.condition = false

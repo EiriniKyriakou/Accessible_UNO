@@ -13,9 +13,13 @@
         <h3>Wild Cards</h3>
       </th>
     </tr>
-    <tr *ngFor="let player of players">
-      <td>
+    <tr *ngFor="let player of players; let i = index">
+      <td *ngIf="!turn[i]">
         <img class="avatar same-line" src="../../../assets/avatars/{{player.avatar}}.jpg" alt="avatar">
+        <h3 class='child same-line'>{{player.username}}</h3>
+      </td>
+      <td *ngIf="turn[i]">
+        <img class="avatarTurn same-line" src="../../../assets/avatars/{{player.avatar}}.jpg" alt="avatar">
         <h3 class='child same-line'>{{player.username}}</h3>
       </td>
       <td>
