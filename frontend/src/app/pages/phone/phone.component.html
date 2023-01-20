@@ -11,7 +11,8 @@
     </ul>
 
     <!--Sign in-->
-    <form #playerInForm="ngForm" (ngSubmit)="playerInForm.form.valid && signinPlayer()" *ngIf="sign&&!hided&&!signup">
+    <form (keydown.enter)="$event.preventDefault()" #playerInForm="ngForm"
+      (ngSubmit)="playerInForm.form.valid && signinPlayer()" *ngIf="sign&&!hided&&!signup">
       <!--  <form *ngIf="sign&&!hided&&!signup">  -->
       <br>
       <label for="username">Username:</label><br>
@@ -25,7 +26,8 @@
     </form>
 
     <!--Sign up-->
-    <form #playerForm="ngForm" (ngSubmit)="playerForm.form.valid && postPlayer()" *ngIf="sign&&signup&&!hided">
+    <form (keydown.enter)="$event.preventDefault()" #playerForm="ngForm"
+      (ngSubmit)="playerForm.form.valid && postPlayer()" *ngIf="sign&&signup&&!hided">
       <br>
       <label class="left" for="username">Username:</label><br>
       <input class="input" type="text" id="fname" [(ngModel)]="username" name="username">
@@ -108,7 +110,7 @@
       <br>
       <li><button *ngIf="join" class="button" type="button" id="#button1" (click)="startGame()" [ngClass]="fontClass"
           [disabled]="isDisabled">Join Game</button></li>
-          <br>
+      <br>
     </ul>
 
     <div *ngIf="hourglass">
