@@ -55,13 +55,11 @@ export class TVComponent implements OnInit {
 
     this.socketService.subscribe("turnPlayer", (pTurn: PlayerModel) => {
       if (this.meme) {
-        this.turn = false;
-        setTimeout(() => {
-          this.meme = false;
-          this.turn = true;
-          this.game_time = false;
-          this.turnPlayer = pTurn;
-        }, 2000);
+        this.turnPlayer = pTurn;
+        this.turn = true;
+        this.meme = false;
+        this.game_time = false;
+
       } else {
         this.turn = true;
         this.game_time = false;
@@ -101,6 +99,7 @@ export class TVComponent implements OnInit {
       this.turn = false;
       this.meme = false;
       this.game_time = true;
+
     });
 
     this.socketService.subscribe('waiting', (id: any) => {
