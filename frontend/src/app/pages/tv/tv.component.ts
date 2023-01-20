@@ -14,8 +14,10 @@ export class TVComponent implements OnInit {
   game_time = false;
   waiting = false;
   turnPlayer: PlayerModel | undefined;
+  unoPlayer: PlayerModel | undefined;
   turn = false;
   meme = false;
+  uno = false;
 
   constructor(private renderer: Renderer2, private socketService: SocketsService,) {
     this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/background-tv-wall.png)');
@@ -109,6 +111,20 @@ export class TVComponent implements OnInit {
       this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/background-tv-wall.png)');
       this.waiting = true;
     });
+
+    this.socketService.subscribe('uno_player', (plr: PlayerModel) => {
+      this.unoPlayer = plr;
+      // this.uno = true;
+      Swal.fire({
+        position: 'center',
+        html: "<h3> Wow somebody said UNO ...</h3><br><table style='margin-left:auto;margin-right:auto;'><tr><td><img style='vertical- align: middle;width: 200px;height: 200px;border-radius: 50%;border-color: #f25e8d;border-style: solid;border-width: 1rem;' src = '../../../assets/avatars/" + this.unoPlayer.avatar + ".jpg' alt='avatar'><h3 class='child same-line'>" + this.unoPlayer.username + "</h3></td></tr></table>",
+        icon: 'info',
+        title: 'UNO!',
+        showConfirmButton: false,
+        timer: 3500
+      })
+    });
+
 
   }
 
