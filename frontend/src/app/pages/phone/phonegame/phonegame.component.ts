@@ -271,14 +271,6 @@ export class PhoneGameComponent implements OnInit {
         }
       }
     });
-    
-    this.socketService.subscribe('says_throw', (id: string) => {
-      console.log(id)
-      if (id === this.my_id) {
-        this.throwCard();
-      }
-    });
-
   }
 
   initPlayer() {
@@ -303,6 +295,12 @@ export class PhoneGameComponent implements OnInit {
             if (id === this.my_id && this.my_turn === true) {
               if (this.drawed === false)
                 this.drawCard(1);
+            }
+          });
+          this.socketService.subscribe('says_throw', (id: string) => {
+            console.log(id)
+            if (id === this.my_id && this.my_turn === true) {
+              this.throwCard();
             }
           });
           this.smartSpeaker.initialize();
