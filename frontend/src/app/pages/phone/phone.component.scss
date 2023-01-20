@@ -69,12 +69,14 @@ label {
 .button {
   width: 40%;
   height: 15%;
+  outline: none;
+
 }
 
 #button1,
 #button2 {
   display: inline-block;
-  border: none;
+  border: 1px none #DAD8DB;
 }
 
 ul {
