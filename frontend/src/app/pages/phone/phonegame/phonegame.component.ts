@@ -271,6 +271,13 @@ export class PhoneGameComponent implements OnInit {
         }
       }
     });
+    
+    this.socketService.subscribe('says_throw', (id: string) => {
+      console.log(id)
+      if (id === this.my_id) {
+        this.throwCard();
+      }
+    });
 
   }
 
@@ -455,6 +462,9 @@ export class PhoneGameComponent implements OnInit {
       });
       this.selectedCard = null;
     } else {
+      if (this.player.impairedVision == true) {
+        this.smartSpeaker.speak("You cannot play this card!")
+      }
       Swal.fire({
         icon: 'error',
         title: 'Oops...',

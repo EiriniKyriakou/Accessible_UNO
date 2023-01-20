@@ -62,6 +62,10 @@ export class TableGameComponent implements OnInit {
       console.log("DRAW Command")
       this.socketService.publish('says_draw', this.turn); //id
     });
+    this.smartSpeaker.addCommand(['throw','throw this card'], () => {
+      console.log("ThROW Command")
+      this.socketService.publish('says_throw', this.turn); //id
+    });
     this.smartSpeaker.initialize();
     this.smartSpeaker.start();
 
