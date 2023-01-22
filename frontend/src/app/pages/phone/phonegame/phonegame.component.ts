@@ -84,7 +84,7 @@ export class PhoneGameComponent implements OnInit {
         if (!games[0].players.includes(this.my_id)) {
           this.router.navigate(['/phone']);
         } else if (games[0].last_card != "") {
-          if (games[0].turn == this.my_id){
+          if (games[0].turn == this.my_id) {
             this.my_turn = true;
           }
           let splitted = games[0].last_card.split(' ', 2);
@@ -347,9 +347,9 @@ export class PhoneGameComponent implements OnInit {
 
   drawCard(num: number) {
     if (this.player.impairedVision == true) {
-      if ( num === 1){
+      if (num === 1) {
         this.smartSpeaker.speak('Your new card is ');
-      }else {
+      } else {
         this.smartSpeaker.speak('Your new cards are ');
       }
     }
@@ -370,7 +370,7 @@ export class PhoneGameComponent implements OnInit {
           }
           let tokenCard = this.game.cards_on_deck[0];
           var splitted = tokenCard.split(' ', 2);
-          if (splitted[0] === "+4" || splitted[0] === "WildCard"){
+          if (splitted[0] === "+4" || splitted[0] === "WildCard") {
             splitted[1] = "All.png"
           }
           this.cards.push(splitted[0] + " " + splitted[1]);
