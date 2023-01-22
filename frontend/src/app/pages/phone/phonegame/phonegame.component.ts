@@ -44,7 +44,7 @@ export class PhoneGameComponent implements OnInit {
   unoColor: string = 'grey'
   cardsClass: string = 'cards';
   cb = false;
-
+  firstRound = true;
 
   constructor(
     private socketService: SocketsService,
@@ -70,6 +70,7 @@ export class PhoneGameComponent implements OnInit {
       if (document.cookie != '') {
         this.my_id = document.cookie.replace("id=", "");
         console.log(this.my_id)
+        this.firstRound = false;
         this.initPlayer();
       } else {
         this.router.navigate(['/phone']);
@@ -187,27 +188,7 @@ export class PhoneGameComponent implements OnInit {
       this.cardValue = [];
       this.cardsReady = false;
       this.cardsClass = 'cards'
-      setTimeout(() => {
-        this.playersService.getById(this.my_id).subscribe((result: any) => {
-          if (JSON.stringify(result) === undefined) {
-            console.log('error');
-          } else {
-            this.player = result;
-            this.cards = this.player.cards_hand;
-            //console.log("I'm the player:");
-            //console.log(this.player);
-            var i = 0;
-            for (let card of this.cards) {
-              let splitted = card.split(' ', 2);
-              this.setCard(splitted[0], splitted[1], i, this.player.dysrhythmia, this.player.colorblindness, this.player.dyslexia);
-              i++;
-            }
-          }
-        });
-        this.cardsReady = true;
-        clearInterval(this.theTimer);
-        this.startTimer(1);
-      }, 6000);
+      this.firstRound = false;
     });
 
     this.socketService.subscribe('win', (data: any) => {
@@ -303,8 +284,10 @@ export class PhoneGameComponent implements OnInit {
               this.throwCard();
             }
           });
-          this.smartSpeaker.initialize();
-          this.smartSpeaker.start();
+          if (this.firstRound === true){
+            this.smartSpeaker.initialize();
+            this.smartSpeaker.start();
+          }
         }
         var i = 0;
         if (this.player.impairedVision == true) {
@@ -392,7 +375,9 @@ export class PhoneGameComponent implements OnInit {
             }
           });
         });
-        this.drawed = true;
+        if (num === 1){
+          this.drawed = true;
+        }
       }
       if (this.cards.length <= 7) {
         this.cardsClass = 'cards'

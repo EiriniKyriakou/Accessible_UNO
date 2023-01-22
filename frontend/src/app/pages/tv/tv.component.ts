@@ -24,7 +24,7 @@ export class TVComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.socketService.subscribe('new_game', (game: any) => {
+    this.socketService.subscribe('game_start', (game: any) => {
       this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/background-tv-wall.png)');
       this.game_time = true;
       this.waiting = false;
@@ -101,13 +101,8 @@ export class TVComponent implements OnInit {
       this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/background-tv-wall.png)');
     });
 
-    this.socketService.subscribe('game_start', (id: any) => {
-      setTimeout(() => {
-        this.waiting = false;
-        this.turn = false;
-        this.meme = false;
-        this.game_time = true;
-      }, 4000);
+    this.socketService.subscribe('new_game', (id: any) => {
+      this.renderer.setStyle(document.body, 'background-image', 'url(../../../assets/backgrounds/background-tv-wall.png)');
     });
 
     this.socketService.subscribe('waiting', (id: any) => {
